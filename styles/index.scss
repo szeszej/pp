@@ -1,0 +1,430 @@
+@import url("https://fonts.googleapis.com/css?family=Michroma|Orbitron|Oswald|Dancing+Script|Raleway");
+@import "swcrawl";
+@import "variables";
+
+body {
+  margin: 0;
+  letter-spacing: 0.1em;
+  font-family: "Oswald", sans-serif;
+  font-size: 18px;
+
+  img {
+    max-width: 100%;
+    display: block;
+    height: auto;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  .wrappersidebar {
+    display: grid;
+    grid-template-columns: 20% auto 20%;
+    grid-template-rows: 10em 5em auto auto;
+    grid-template-areas:
+      "header header header"
+      "menu menu menu"
+      "sideleft content sideright"
+      "footer footer footer";
+
+    .leftsidebar {
+      grid-area: sideleft;
+      background-image: url("https://i.imgur.com/4tYoVKR.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      /* background-attachment: fixed; /* może się przydać przy odpowiednim ustawieniu obrazka - nie lata przy rozwijaniu list */
+    }
+    .rightsidebar {
+      grid-area: sideright;
+      background-image: url("https://i.imgur.com/2GXKNfB.png");
+      background-size: auto 130%;
+      background-position: center 45%;
+      background-repeat: no-repeat;
+      /* background-attachment: fixed; /* może się przydać przy odpowiednim ustawieniu obrazka - nie lata przy rozwijaniu list */
+    }
+
+    /* poniżej tylko dla strony zasad */
+
+    .rules {
+      width: 90%;
+    }
+
+    hr {
+      border-color: $swclr;
+      width: 90%;
+      margin-bottom: 1em;
+      margin-top: 1em;
+    }
+
+    li {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+    }
+
+    /* powyżej tylko dla strony zasad */
+
+    /* poniżej tylko dla strony zasad edh*/
+
+    .bold {
+      font-weight: bold;
+      letter-spacing: inherit;
+    }
+
+    .imgintxt {
+      max-height: 1em;
+      display: inline;
+    }
+
+    .banned {
+      columns: 3;
+      column-gap: 2em;
+    }
+
+    /* powyżej tylko dla strony zasad edh */
+  }
+
+  /* poniżej tylko dla strony głównej */
+
+  .wrapperhomepage {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 10em 5em auto auto;
+    grid-template-areas:
+      "header"
+      "menu"
+      "content"
+      "footer";
+
+    //powyże tylko dla strony głównej
+  }
+
+  header {
+    margin: 0;
+    top: 0;
+    position: relative;
+    grid-area: header;
+    display: flex;
+    flex-direction: row;
+    background-image: url("https://i.imgur.com/GQCFJZO.png");
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    box-sizing: border-box;
+    background-color: black;
+    img {
+      max-height: 8em;
+    }
+    .logo {
+      color: black;
+      font-size: 32px;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-family: "Star Jedi", "Michroma", arial;
+      .logotext {
+        margin-top: 0.5em;
+      }
+    }
+  }
+
+  nav {
+    grid-area: menu;
+    background-color: $swclr;
+    display: flex;
+    text-transform: uppercase;
+    justify-content: space-around;
+    align-items: center;
+    border-top: solid 2px #7f1734;
+    .menuitem {
+      margin: 1em;
+      text-align: center;
+      color: black;
+      text-decoration: underline;
+    }
+  }
+
+  main {
+    grid-area: content;
+    background-color: black;
+    color: $swclr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding-bottom: 2em;
+    .subtitle {
+      margin: 1em;
+      h1 {
+        text-align: center;
+      }
+    }
+  }
+
+  .ranking {
+    background-color: black;
+    height: 90%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2em;
+    .rank {
+      display: grid;
+      grid-template-areas:
+        "number name expand"
+        "info info info";
+      grid-template-columns: 3em auto 3em;
+      grid-template-rows: 3.5em auto;
+      background-color: black;
+      margin: 1em;
+      width: 90%;
+      border: solid $swclr 2px;
+      .number {
+        grid-area: number;
+        text-align: center;
+        background-color: $swclr;
+        color: black;
+        border: 1px solid black;
+      }
+      .name {
+        grid-area: name;
+        text-align: left;
+        padding-left: 1em;
+        display: flex;
+        justify-content: space-between;
+        .zydnum {
+          display: flex;
+          flex-wrap: wrap;
+          width: 9em;
+          justify-content: center;
+          align-items: center;
+          img {
+            max-height: 3em;
+          }
+        }
+      }
+      .expand {
+        grid-area: expand;
+        text-align: center;
+      }
+      /* poniżej 3 zerżnięte z netu*/
+      .collapsible {
+        background-color: $swclr;
+        border: 0px;
+        font-size: 25px;
+        border: 1px solid black;
+      }
+
+      .collapsible:after {
+        content: "+";
+      }
+
+      .active:after {
+        content: "-";
+        position: relative;
+        bottom: 0.14em;
+        font-size: 30px;
+      }
+
+      /* koniec zżynania */
+
+      button:focus {
+        outline-style: none;
+        box-shadow: none;
+        border-color: transparent;
+        border: 1px solid black;
+      }
+
+      .info {
+        grid-area: info;
+        border: solid $swclr 1px;
+        padding-left: 1em;
+        display: none;
+        flex-direction: column;
+        .winsline {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          box-sizing: border-box;
+          font-size: 12px;
+          .cmdname {
+            padding: 0.15em;
+          }
+          .wins {
+            text-align: right;
+            padding: 0.15em;
+            padding-right: 1em;
+            span {
+              letter-spacing: initial;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  footer {
+    grid-area: footer;
+    color: black;
+    background-color: $swclr;
+    text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1em;
+    h2 {
+      color: black;
+    }
+    .facebook {
+      line-height: 3em;
+    }
+    img {
+      display: inline;
+      max-height: 1em;
+    }
+    .created {
+      font-size: 10px;
+    }
+  }
+
+  @media only screen and (max-width: 1140px) {
+    .logotext {
+      font-size: 25px;
+    }
+    header {
+      background-size: auto;
+    }
+    h1 {
+      font-size: 20px;
+    }
+    h2 {
+      font-size: 16px;
+    }
+    .wrappersidebar {
+      grid-template-columns: 100%;
+      grid-template-areas:
+        "header"
+        "menu"
+        "content"
+        "footer";
+    }
+    .wrapperhomepage .aftercrawl .quotebox {
+      .quote {
+        font-size: 40px;
+      }
+
+      .author {
+        font-size: 20px;
+      }
+    }
+    .ranking {
+      width: 95%;
+    }
+    .timeplace {
+      width: 85%;
+    }
+    .rules {
+      font-size: 14px;
+    }
+
+    .rank {
+      font-size: 14px;
+    }
+
+    .winsline {
+      font-size: 10px;
+    }
+    footer {
+      font-size: 14px;
+      h2 {
+        font-size: 16px;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 750px) {
+    .wrapperhomepage {
+      grid-template-rows: 7.5em 4em auto auto;
+    }
+    .wrappersidebar {
+      grid-template-rows: 7.5em 4em auto auto;
+    }
+    nav {
+      font-size: 12px;
+    }
+  }
+
+  @media only screen and (max-width: 630px) {
+    .logotext {
+      font-size: 20px;
+      padding-bottom: 0.5em;
+    }
+  }
+  @media only screen and (max-width: 570px) {
+    .logotext {
+      font-size: 16px;
+    }
+    .wrapperhomepage {
+      grid-template-rows: 5em 3em auto auto;
+      .aftercrawl .quotebox {
+        .quote {
+          font-size: 20px;
+        }
+        .author {
+          font-size: 10px;
+        }
+      }
+    }
+    .wrappersidebar {
+      grid-template-rows: 5em 3em auto auto;
+    }
+    nav {
+      font-size: 10px;
+    }
+    h1 {
+      font-size: 16px;
+    }
+    h2 {
+      font-size: 12px;
+    }
+    .rank {
+      font-size: 10px;
+    }
+    .active:after {
+      bottom: 0.25em;
+    }
+    .winsline {
+      font-size: 8px;
+    }
+    footer {
+      font-size: 10px;
+      h2 {
+        font-size: 12px;
+      }
+    }
+    .wrappersidebar .banned {
+      columns: 2;
+    }
+    .created {
+      font-size: 8px;
+    }
+  }
+
+  @media only screen and (max-width: 440px) {
+    .logotext {
+      font-size: 14px;
+    }
+  }
+
+  @media only screen and (max-width: 330px) {
+    .rank {
+      grid-template-rows: auto auto;
+    }
+  }
+}
