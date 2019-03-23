@@ -1,0 +1,483 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Michroma|Orbitron|Oswald|Dancing+Script|Raleway");
+.fade {
+  position: relative;
+  width: 100%;
+  min-height: 2em;
+  background-image: linear-gradient(0deg, transparent, black 75%);
+  z-index: 1;
+}
+
+.star-wars {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  color: #ffe919;
+  height: 60vh;
+  min-height: 3.5em;
+  font-family: "Pathway Gothic One", sans-serif;
+  font-size: 500%;
+  font-weight: 600;
+  letter-spacing: 6px;
+  line-height: 150%;
+  perspective: 400px;
+  text-align: justify;
+}
+
+.crawl {
+  position: relative;
+  top: 99999px;
+  transform-origin: 50% 100%;
+  animation: crawl 60s linear 0s 1 normal forwards;
+}
+
+@keyframes crawl {
+  0% {
+    top: 50vh;
+    transform: rotateX(20deg) translateZ(0);
+  }
+  100% {
+    top: -6000px;
+    transform: rotateX(25deg) translateZ(-2500px);
+  }
+}
+
+.aftercrawl {
+  position: absolute;
+  animation: show 2s ease-in 30s 1 normal forwards;
+  width: 80%;
+  line-height: normal;
+  font-weight: normal;
+  letter-spacing: normal;
+  perspective: none;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+.aftercrawl .quotebox {
+  margin-right: 0.5em;
+  text-align: right;
+}
+
+.aftercrawl .quotebox .quote {
+  font-size: 60px;
+  font-family: "Raleway", sans-serif;
+}
+
+.aftercrawl .quotebox .author {
+  font-size: 40px;
+  font-family: "Dancing Script", cursive;
+}
+
+.aftercrawl .coelho {
+  min-height: 2.5em;
+  min-width: 2em;
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media only screen and (max-width: 570px) {
+  .star-wars {
+    font-size: 300%;
+  }
+  .crawl {
+    animation: crawl 90s linear;
+  }
+}
+
+body {
+  margin: 0;
+  letter-spacing: 0.1em;
+  font-family: "Oswald", sans-serif;
+  font-size: 18px;
+  /* poniżej tylko dla strony głównej */
+}
+
+body img {
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
+
+body a {
+  color: inherit;
+}
+
+body .wrappersidebar {
+  display: grid;
+  grid-template-columns: 20% auto 20%;
+  grid-template-rows: 10em 5em auto auto;
+  grid-template-areas: "header header header" "menu menu menu" "sideleft content sideright" "footer footer footer";
+  /* poniżej tylko dla strony zasad */
+  /* powyżej tylko dla strony zasad */
+  /* poniżej tylko dla strony zasad edh*/
+  /* powyżej tylko dla strony zasad edh */
+}
+
+body .wrappersidebar .leftsidebar {
+  grid-area: sideleft;
+  position: sticky;
+  top: 0;
+  height: 1440px;
+  background-image: url("https://i.imgur.com/u1ZajFd.jpg");
+  background-position: 30% -50px;
+  background-repeat: no-repeat;
+  background-color: black;
+  background-origin: border-box;
+  z-index: -1;
+}
+
+body .wrappersidebar .rightsidebar {
+  grid-area: sideright;
+  position: sticky;
+  top: 0;
+  height: 1440px;
+  background-image: url("https://i.imgur.com/lDg06rG.jpg");
+  background-position: 70% -50px;
+  background-repeat: no-repeat;
+  background-color: black;
+  background-origin: border-box;
+  z-index: -1;
+}
+
+body .wrappersidebar .rules {
+  width: 90%;
+}
+
+body .wrappersidebar hr {
+  border-color: #ffe919;
+  width: 90%;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+body .wrappersidebar li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+body .wrappersidebar .bold {
+  font-weight: bold;
+  letter-spacing: inherit;
+}
+
+body .wrappersidebar .imgintxt {
+  max-height: 1em;
+  display: inline;
+}
+
+body .wrappersidebar .banned {
+  columns: 3;
+  column-gap: 2em;
+}
+
+body .wrapperhomepage {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 10em 5em auto auto;
+  grid-template-areas: "header" "menu" "content" "footer";
+}
+
+body header {
+  margin: 0;
+  top: 0;
+  position: relative;
+  grid-area: header;
+  display: flex;
+  flex-direction: row;
+  background-image: url("https://i.imgur.com/ypadTAW.jpg");
+  background-position: center;
+  background-size: contain;
+  background-color: black;
+  background-repeat: no-repeat;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+body nav {
+  grid-area: menu;
+  background-color: #ffe919;
+  display: flex;
+  text-transform: uppercase;
+  justify-content: space-around;
+  align-items: center;
+}
+
+body nav .menuitem {
+  margin: 1em;
+  text-align: center;
+  color: black;
+  text-decoration: underline;
+}
+
+body main {
+  grid-area: content;
+  background-color: black;
+  color: #ffe919;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding-bottom: 2em;
+}
+
+body main .subtitle {
+  margin: 1em;
+}
+
+body main .subtitle h1 {
+  text-align: center;
+}
+
+body .ranking {
+  background-color: black;
+  height: 90%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+body .ranking .rank {
+  display: grid;
+  grid-template-areas: "number name expand" "info info info";
+  grid-template-columns: 3em auto 3em;
+  grid-template-rows: 3.5em auto;
+  background-color: black;
+  margin: 1em;
+  width: 90%;
+  border: solid #ffe919 2px;
+}
+
+body .ranking .rank .number {
+  grid-area: number;
+  text-align: center;
+  background-color: #ffe919;
+  color: black;
+  border: 1px solid black;
+}
+
+body .ranking .rank .name {
+  grid-area: name;
+  text-align: left;
+  padding-left: 1em;
+  display: flex;
+  justify-content: space-between;
+}
+
+body .ranking .rank .name .zydnum {
+  display: flex;
+  flex-wrap: wrap;
+  width: 9em;
+  justify-content: center;
+  align-items: center;
+}
+
+body .ranking .rank .name .zydnum img {
+  max-height: 3em;
+}
+
+body .ranking .rank .collapsible {
+  grid-area: expand;
+  background-color: #ffe919;
+  border: 0px;
+  font-size: 25px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+body .ranking .rank .expand {
+  display: block;
+  position: relative;
+  margin: auto;
+  font-size: 30px;
+}
+
+body .ranking .rank button:focus {
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+  border: 1px solid black;
+}
+
+body .ranking .rank .info {
+  grid-area: info;
+  border: solid #ffe919 1px;
+  padding-left: 1em;
+  display: none;
+  flex-direction: column;
+}
+
+body .ranking .rank .info .winsline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+body .ranking .rank .info .winsline .cmdname {
+  padding: 0.15em;
+}
+
+body .ranking .rank .info .winsline .wins {
+  text-align: right;
+  padding: 0.15em;
+  padding-right: 1em;
+}
+
+body .ranking .rank .info .winsline .wins span {
+  letter-spacing: initial;
+}
+
+body footer {
+  grid-area: footer;
+  color: black;
+  background-color: #ffe919;
+  text-align: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1em;
+}
+
+body footer h2 {
+  color: black;
+}
+
+body footer .facebook {
+  line-height: 3em;
+}
+
+body footer img {
+  display: inline;
+  max-height: 1em;
+}
+
+body footer .created {
+  font-size: 10px;
+}
+
+@media only screen and (max-width: 1330px) {
+  body .wrappersidebar {
+    grid-template-columns: 100%;
+    grid-template-areas: "header" "menu" "content" "footer";
+  }
+}
+
+@media only screen and (max-width: 1140px) {
+  body header {
+    background-size: 110% auto;
+  }
+  body h1 {
+    font-size: 20px;
+  }
+  body h2 {
+    font-size: 16px;
+  }
+  body .wrapperhomepage .aftercrawl .quotebox .quote {
+    font-size: 40px;
+  }
+  body .wrapperhomepage .aftercrawl .quotebox .author {
+    font-size: 20px;
+  }
+  body .ranking {
+    width: 95%;
+  }
+  body .ranking .rank {
+    font-size: 14px;
+  }
+  body .ranking .rank .winsline {
+    font-size: 10px;
+  }
+  body .timeplace {
+    width: 85%;
+  }
+  body .rules {
+    font-size: 14px;
+  }
+  body footer {
+    font-size: 14px;
+  }
+  body footer h2 {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  body .wrapperhomepage {
+    grid-template-rows: 7.5em 4em auto auto;
+  }
+  body .wrappersidebar {
+    grid-template-rows: 7.5em 4em auto auto;
+  }
+  body nav {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 570px) {
+  body .wrapperhomepage {
+    grid-template-rows: 5em 3em auto auto;
+  }
+  body .wrapperhomepage .aftercrawl .quotebox .quote {
+    font-size: 20px;
+  }
+  body .wrapperhomepage .aftercrawl .quotebox .author {
+    font-size: 10px;
+  }
+  body .wrappersidebar {
+    grid-template-rows: 5em 3em auto auto;
+  }
+  body nav {
+    font-size: 10px;
+  }
+  body h1 {
+    font-size: 16px;
+  }
+  body h2 {
+    font-size: 12px;
+  }
+  body .rank {
+    font-size: 10px;
+  }
+  body .rank .collapsible .expand {
+    font-size: 15px;
+  }
+  body .rank .winsline {
+    font-size: 8px;
+  }
+  body footer {
+    font-size: 10px;
+  }
+  body footer h2 {
+    font-size: 12px;
+  }
+  body .wrappersidebar .banned {
+    columns: 2;
+  }
+  body .created {
+    font-size: 8px;
+  }
+}
+
+@media only screen and (max-width: 410px) {
+  body .ranking .rank {
+    grid-template-rows: auto auto;
+  }
+}

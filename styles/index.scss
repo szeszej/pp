@@ -30,19 +30,27 @@ body {
 
     .leftsidebar {
       grid-area: sideleft;
-      background-image: url("https://i.imgur.com/4tYoVKR.png");
-      background-size: cover;
-      background-position: center;
+      position: sticky;
+      top: 0;
+      height: 1440px; //wysokość tła
+      background-image: url("https://i.imgur.com/u1ZajFd.jpg");
+      background-position: 30% -50px;
       background-repeat: no-repeat;
-      /* background-attachment: fixed; /* może się przydać przy odpowiednim ustawieniu obrazka - nie lata przy rozwijaniu list */
+      background-color: black;
+      background-origin: border-box;
+      z-index: -1;
     }
     .rightsidebar {
       grid-area: sideright;
-      background-image: url("https://i.imgur.com/2GXKNfB.png");
-      background-size: auto 130%;
-      background-position: center 45%;
+      position: sticky;
+      top: 0;
+      height: 1440px; //wysokość tła
+      background-image: url("https://i.imgur.com/lDg06rG.jpg");
+      background-position: 70% -50px;
       background-repeat: no-repeat;
-      /* background-attachment: fixed; /* może się przydać przy odpowiednim ustawieniu obrazka - nie lata przy rozwijaniu list */
+      background-color: black;
+      background-origin: border-box;
+      z-index: -1;
     }
 
     /* poniżej tylko dla strony zasad */
@@ -107,27 +115,14 @@ body {
     grid-area: header;
     display: flex;
     flex-direction: row;
-    background-image: url("https://i.imgur.com/GQCFJZO.png");
+    background-image: url("https://i.imgur.com/ypadTAW.jpg");
+    background-position: center;
+    background-size: contain;
+    background-color: black;
     background-repeat: no-repeat;
     justify-content: center;
     align-items: center;
-    background-size: cover;
-    background-position: center;
     box-sizing: border-box;
-    background-color: black;
-    img {
-      max-height: 8em;
-    }
-    .logo {
-      color: black;
-      font-size: 32px;
-      font-weight: bold;
-      text-transform: uppercase;
-      font-family: "Star Jedi", "Michroma", arial;
-      .logotext {
-        margin-top: 0.5em;
-      }
-    }
   }
 
   nav {
@@ -137,7 +132,6 @@ body {
     text-transform: uppercase;
     justify-content: space-around;
     align-items: center;
-    border-top: solid 2px #7f1734;
     .menuitem {
       margin: 1em;
       text-align: center;
@@ -207,30 +201,22 @@ body {
           }
         }
       }
-      .expand {
-        grid-area: expand;
-        text-align: center;
-      }
-      /* poniżej 3 zerżnięte z netu*/
+
       .collapsible {
+        grid-area: expand;
         background-color: $swclr;
         border: 0px;
         font-size: 25px;
         border: 1px solid black;
+        text-align: center;
       }
 
-      .collapsible:after {
-        content: "+";
-      }
-
-      .active:after {
-        content: "-";
+      .expand {
+        display: block;
         position: relative;
-        bottom: 0.14em;
+        margin: auto;
         font-size: 30px;
       }
-
-      /* koniec zżynania */
 
       button:focus {
         outline-style: none;
@@ -293,19 +279,7 @@ body {
     }
   }
 
-  @media only screen and (max-width: 1140px) {
-    .logotext {
-      font-size: 25px;
-    }
-    header {
-      background-size: auto;
-    }
-    h1 {
-      font-size: 20px;
-    }
-    h2 {
-      font-size: 16px;
-    }
+  @media only screen and (max-width: 1330px) {
     .wrappersidebar {
       grid-template-columns: 100%;
       grid-template-areas:
@@ -313,6 +287,18 @@ body {
         "menu"
         "content"
         "footer";
+    }
+  }
+
+  @media only screen and (max-width: 1140px) {
+    header {
+      background-size: 110% auto;
+    }
+    h1 {
+      font-size: 20px;
+    }
+    h2 {
+      font-size: 16px;
     }
     .wrapperhomepage .aftercrawl .quotebox {
       .quote {
@@ -325,20 +311,18 @@ body {
     }
     .ranking {
       width: 95%;
+      .rank {
+        font-size: 14px;
+        .winsline {
+          font-size: 10px;
+        }
+      }
     }
     .timeplace {
       width: 85%;
     }
     .rules {
       font-size: 14px;
-    }
-
-    .rank {
-      font-size: 14px;
-    }
-
-    .winsline {
-      font-size: 10px;
     }
     footer {
       font-size: 14px;
@@ -360,16 +344,7 @@ body {
     }
   }
 
-  @media only screen and (max-width: 630px) {
-    .logotext {
-      font-size: 20px;
-      padding-bottom: 0.5em;
-    }
-  }
   @media only screen and (max-width: 570px) {
-    .logotext {
-      font-size: 16px;
-    }
     .wrapperhomepage {
       grid-template-rows: 5em 3em auto auto;
       .aftercrawl .quotebox {
@@ -395,13 +370,14 @@ body {
     }
     .rank {
       font-size: 10px;
+      .collapsible .expand {
+        font-size: 15px;
+      }
+      .winsline {
+        font-size: 8px;
+      }
     }
-    .active:after {
-      bottom: 0.25em;
-    }
-    .winsline {
-      font-size: 8px;
-    }
+
     footer {
       font-size: 10px;
       h2 {
@@ -416,14 +392,8 @@ body {
     }
   }
 
-  @media only screen and (max-width: 440px) {
-    .logotext {
-      font-size: 14px;
-    }
-  }
-
-  @media only screen and (max-width: 330px) {
-    .rank {
+  @media only screen and (max-width: 410px) {
+    .ranking .rank {
       grid-template-rows: auto auto;
     }
   }

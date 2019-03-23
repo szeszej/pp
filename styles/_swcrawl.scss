@@ -1,3 +1,5 @@
+//dodać przycisk do ominięcia animacji, poeksperymentować z eventem animationend
+
 @import "variables";
 
 .fade {
@@ -31,16 +33,6 @@
   animation: crawl 60s linear 0s 1 normal forwards;
 }
 
-.crawl > .title {
-  font-size: 90%;
-  text-align: center;
-}
-
-.crawl > .title h1 {
-  margin: 0 0 100px;
-  text-transform: uppercase;
-}
-
 @keyframes crawl {
   0% {
     top: 50vh;
@@ -54,7 +46,7 @@
 
 .aftercrawl {
   position: absolute;
-  animation: show 60s ease-in 0s 1 normal forwards;
+  animation: show 2s ease-in 30s 1 normal forwards;
   width: 80%;
   line-height: normal;
   font-weight: normal;
@@ -64,6 +56,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  opacity: 0;
 
   .quotebox {
     margin-right: 0.5em;
@@ -88,9 +81,6 @@
 
 @keyframes show {
   0% {
-    opacity: 0;
-  }
-  85% {
     opacity: 0;
   }
   100% {

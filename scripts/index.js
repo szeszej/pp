@@ -1,10 +1,10 @@
-//to do: animacja rozwijania, zwijanie info przy rozwijaniu innego
+//to do: animacja rozwijania??, zmienić stringi na .createElement() etc
 
 const PLAYERS = [
   // Tabela graczy
   {
     name: "Bartosz Kłak", //imię
-    zydelion: 4, //ilość wygranych dni
+    zydelion: 3, //ilość wygranych dni
     commander: [
       //nazwa generała plus ilość wygranych gier danym generałem
       ["Riku of Two Reflections", 2],
@@ -14,8 +14,13 @@ const PLAYERS = [
   },
   {
     name: "Mateusz Kobielski",
-    zydelion: 2,
-    commander: [["Cromat", 4], ["Rafiq of the Many", 1]]
+    zydelion: 3,
+    commander: [
+      ["Cromat", 4],
+      ["Rafiq of the Many", 1],
+      ["The Locust God", 1],
+      ["Atraxa, Praetors' Voice", 1]
+    ]
   },
   {
     name: "Waldemar Piekarz",
@@ -97,7 +102,8 @@ function totalWin(playerNumber) {
   return sumOfWins.reduce((a, b) => a + b, 0); // funkcja, która podaje mi łączną liczbę wygranych meczy danego graczaa
 }
 
-const CMD_INFO = function(commandersArray, totalWins) { //funkcja, która tworzy linijki w liście rozwijanej commanderów
+const CMD_INFO = function(commandersArray, totalWins) {
+  //funkcja, która tworzy linijki w liście rozwijanej commanderów
   let commanderLines = commandersArray.map(
     item =>
       `<div class="winsline"><div class="cmdname"><p>` +
@@ -113,7 +119,7 @@ const CMD_INFO = function(commandersArray, totalWins) { //funkcja, która tworzy
   return concatHtml(commanderLines); //funkcja która tworzy linijki z info o generałach w liście rozwijanejj
 };
 
-let zydImg = `<img src="https://nilotoys.com/wp-content/uploads/2015/04/5N12.png" alt="zydelion">`; //kod obrazka
+let zydImg = `<img src="https://i.imgur.com/Aw33YCy.png" alt="zydelion">`; //kod obrazka
 const ZYD_IMG = zydNum =>
   zydNum <= 3 ? zydImg.repeat(zydNum) : `<p>` + zydNum + `x</p>` + zydImg; //funkcja która liczy, ile ma być obrazków - jak mało to tyle obrazków, jak dużo to liczba i obrazek
 
@@ -134,8 +140,8 @@ const TIE = function() {
   return rankIfTie;
 };
 
-
-const RANKING = function() { //funkcja, która tworzy boxy w rankingu
+const RANKING = function() {
+  //funkcja, która tworzy boxy w rankingu
   let fullRanking = SORTED_PLAYERS.map(
     (item, index) =>
       `<div class="rank"><div class="number"><p>${
@@ -144,28 +150,36 @@ const RANKING = function() { //funkcja, która tworzy boxy w rankingu
         SORTED_PLAYERS[index].name
       }</p></div><div class="zydnum">${ZYD_IMG(
         SORTED_PLAYERS[index].zydelion
-      )}</div></div><button class="collapsible"><div class="expand"></div></button><div class="info">${CMD_INFO(
+      )}</div></div><button class="collapsible"><p class="expand">+</p></button><div class="info">${CMD_INFO(
         playerCommanders(index),
         totalWin(index)
       )}</div></div>`
   );
   return concatHtml(fullRanking);
 };
-//metody wstawiania ściągnięte z netu, ale reszta moja
 
-window.onload = function() {
-  document.getElementById("ranklist").innerHTML = RANKING(); //wstawiamy ranking
-  //kod listy rozwijanej, który ukradłem z netu
-  var coll = document.getElementsByClassName("collapsible");
-  for (let i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
-      this.classList.toggle("active");
-      var content = this.nextElementSibling;
-      if (content.style.display === "flex") {
-        content.style.display = "none";
-      } else {
-        content.style.display = "flex";
-      }
-    });
-  }
-};
+document.getElementById("ranklist").innerHTML = RANKING(); //wstawiamy ranking
+
+// zrefaktoryzować poniżej żeby odwoływało się do jednej oddzielnej funkcji. użyć tej metody z książki, która definiowała this?
+
+var coll = document.getElementsByClassName("collapsible"); //kod listy rozwijanej
+for (let i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    let activeCollapsible = document.querySelector(".active");
+    if (activeCollapsible !== null && activeCollapsible != this) { //resetujemy już rozwiniętą listę (żeby tylko 1 była rozwinięta na raz)
+      activeCollapsible.nextElementSibling.style.display = "none";
+      activeCollapsible.firstElementChild.textContent = "+";
+      activeCollapsible.classList.remove("active");   
+    }
+    let content = this.nextElementSibling;
+    if (content.style.display === "flex") { //jeśli lista jest rozwinięta to zwijamy
+      content.style.display = "none";
+      this.firstElementChild.textContent = "+";
+      this.classList.remove("active");
+    } else { // jeśli lista jest zwinięta, to rozwijamy
+      content.style.display = "flex";
+      this.firstElementChild.textContent = "−";
+      this.classList.add("active");
+    }
+  });
+}
