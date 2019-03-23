@@ -1,0 +1,19 @@
+{
+  "name": "lle",
+  "version": "1.0.0",
+  "description": "lubelska liga edh",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/szeszej/lle.git"
+  },
+  "author": "Ja",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/szeszej/lle/issues"
+  },
+  "homepage": "https://github.com/szeszej/lle#readme"
+}
