@@ -160,7 +160,7 @@ const RANKING = function() {
 
 document.getElementById("ranklist").innerHTML = RANKING(); //wstawiamy ranking
 
-// zrefaktoryzować poniżej żeby odwoływało się do jednej oddzielnej funkcji. użyć tej metody z książki, która definiowała this?
+// zrefaktoryzować poniżej żeby odwoływało się do jednej oddzielnej funkcji. stwrzyć funkcję, która zamiast this będzie używała event.target
 
 var coll = document.getElementsByClassName("collapsible"); //kod listy rozwijanej
 for (let i = 0; i < coll.length; i++) {
@@ -169,7 +169,7 @@ for (let i = 0; i < coll.length; i++) {
     if (activeCollapsible !== null && activeCollapsible != this) { //resetujemy już rozwiniętą listę (żeby tylko 1 była rozwinięta na raz)
       activeCollapsible.nextElementSibling.style.display = "none";
       activeCollapsible.firstElementChild.textContent = "+";
-      activeCollapsible.classList.remove("active");   
+      activeCollapsible.classList.remove("active");
     }
     let content = this.nextElementSibling;
     if (content.style.display === "flex") { //jeśli lista jest rozwinięta to zwijamy
