@@ -6,6 +6,7 @@
   "description": "lubelska liga commandera",
   "main": "index.js",
   "devDependencies": {
+    "gulp": "^4.0.0",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
     "webpack": "^4.29.6"
