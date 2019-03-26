@@ -2,7 +2,9 @@
   "name": "lle",
   "version": "1.0.0",
   "requires": true,
-  "dependencies": {},
+  "dependencies": {
+    "gulp-sass": "^4.0.2"
+  },
   "description": "lubelska liga commandera",
   "main": "index.js",
   "devDependencies": {

@@ -119,7 +119,7 @@ const CMD_INFO = function(commandersArray, totalWins) {
   return concatHtml(commanderLines); //funkcja która tworzy linijki z info o generałach w liście rozwijanejj
 };
 
-let zydImg = `<img src="https://i.imgur.com/Aw33YCy.png" alt="zydelion">`; //kod obrazka
+let zydImg = `<img src="./resources/images/Krzesełko.png" alt="zydelion">`; //kod obrazka
 const ZYD_IMG = zydNum =>
   zydNum <= 3 ? zydImg.repeat(zydNum) : `<p>` + zydNum + `x</p>` + zydImg; //funkcja która liczy, ile ma być obrazków - jak mało to tyle obrazków, jak dużo to liczba i obrazek
 

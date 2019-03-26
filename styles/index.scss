@@ -33,7 +33,7 @@ body {
       position: sticky;
       top: 0;
       height: 1440px; //wysokość tła
-      background-image: url("https://i.imgur.com/u1ZajFd.jpg");
+      background-image: url("../resources/images/Sith_001.jpg");
       background-position: 30% -50px;
       background-repeat: no-repeat;
       background-color: black;
@@ -45,7 +45,7 @@ body {
       position: sticky;
       top: 0;
       height: 1440px; //wysokość tła
-      background-image: url("https://i.imgur.com/lDg06rG.jpg");
+      background-image: url("../resources/images/Jedi.jpg");
       background-position: 70% -50px;
       background-repeat: no-repeat;
       background-color: black;
@@ -115,7 +115,7 @@ body {
     grid-area: header;
     display: flex;
     flex-direction: row;
-    background-image: url("https://i.imgur.com/ypadTAW.jpg");
+    background-image: url("../resources/images/Banner 3.jpg");
     background-position: center;
     background-size: contain;
     background-color: black;
