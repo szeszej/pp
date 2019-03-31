@@ -169,7 +169,7 @@ SORTED_PLAYERS.map(function(item, index) {
   rankBox.appendChild(nameBox);
   let expandBox = document.createElement("button"); //dodajemy przycisk do rozwijania listy rozwijanej commanderów
   expandBox.setAttribute("class", "collapsible");
-  expandBox.innerHTML = '<p class="expand">+</p>';
+  expandBox.innerHTML = '<p class="expand">▼</p>';
   rankBox.appendChild(expandBox);
   rankBox.appendChild(CMD_INFO(playerCommanders(index), totalWin(index))); //dodajemy rozwijaną listę commanderów
   rankBoxes.appendChild(rankBox); //wszystko wsadzamy w ranking
@@ -184,17 +184,17 @@ for (let i = 0; i < coll.length; i++) {
     let activeCollapsible = document.querySelector(".active");
     if (activeCollapsible !== null && activeCollapsible != this) { //resetujemy już rozwiniętą listę (żeby tylko 1 była rozwinięta na raz)
       activeCollapsible.nextElementSibling.style.display = "none";
-      activeCollapsible.firstElementChild.textContent = "+";
+      activeCollapsible.firstElementChild.textContent = "▼";
       activeCollapsible.classList.remove("active");
     }
     let content = this.nextElementSibling;
     if (content.style.display === "flex") { //jeśli lista jest rozwinięta to zwijamy
       content.style.display = "none";
-      this.firstElementChild.textContent = "+";
+      this.firstElementChild.textContent = "▼";
       this.classList.remove("active");
     } else { // jeśli lista jest zwinięta, to rozwijamy
       content.style.display = "flex";
-      this.firstElementChild.textContent = "−";
+      this.firstElementChild.textContent = "▲";
       this.classList.add("active");
     }
   });
