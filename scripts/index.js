@@ -150,7 +150,7 @@ const RANKING = function() {
         SORTED_PLAYERS[index].name
       }</p></div><div class="zydnum">${ZYD_IMG(
         SORTED_PLAYERS[index].zydelion
-      )}</div></div><button class="collapsible"><p class="expand">+</p></button><div class="info">${CMD_INFO(
+      )}</div></div><button class="collapsible"><p class="expand">▼</p></button><div class="info">${CMD_INFO(
         playerCommanders(index),
         totalWin(index)
       )}</div></div>`
@@ -168,17 +168,17 @@ for (let i = 0; i < coll.length; i++) {
     let activeCollapsible = document.querySelector(".active");
     if (activeCollapsible !== null && activeCollapsible != this) { //resetujemy już rozwiniętą listę (żeby tylko 1 była rozwinięta na raz)
       activeCollapsible.nextElementSibling.style.display = "none";
-      activeCollapsible.firstElementChild.textContent = "+";
+      activeCollapsible.firstElementChild.textContent = "▼";
       activeCollapsible.classList.remove("active");
     }
     let content = this.nextElementSibling;
     if (content.style.display === "flex") { //jeśli lista jest rozwinięta to zwijamy
       content.style.display = "none";
-      this.firstElementChild.textContent = "+";
+      this.firstElementChild.textContent = "▼";
       this.classList.remove("active");
     } else { // jeśli lista jest zwinięta, to rozwijamy
       content.style.display = "flex";
-      this.firstElementChild.textContent = "−";
+      this.firstElementChild.textContent = "▲";
       this.classList.add("active");
     }
   });
