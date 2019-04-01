@@ -174,7 +174,9 @@ SORTED_PLAYERS.map(function(item, index) {
   rankBox.appendChild(CMD_INFO(playerCommanders(index), totalWin(index))); //dodajemy rozwijaną listę commanderów
   rankBoxes.appendChild(rankBox); //wszystko wsadzamy w ranking
 });
-fullRanking.appendChild(rankBoxes); //dodajemy fragment zawierający pełny ranking do własciwego rankingu (performance!)
+if (fullRanking != null) {
+  fullRanking.appendChild(rankBoxes); //dodajemy fragment zawierający pełny ranking do własciwego rankingu (performance!)
+};
 
 // zrefaktoryzować poniżej żeby odwoływało się do jednej oddzielnej funkcji. stwrzyć funkcję, która zamiast this będzie używała event.target
 
@@ -198,4 +200,58 @@ for (let i = 0; i < coll.length; i++) {
       this.classList.add("active");
     }
   });
+};
+
+function getCardImage(cardLink, cardName) {
+  let request = new XMLHttpRequest();
+  request.open(
+    "GET",
+    `https://api.magicthegathering.io/v1/cards?name=` + cardName,
+    true
+  );
+  request.onload = function() {
+    var data = JSON.parse(this.response);
+    if (request.status >= 200 && request.status < 400) {
+      for (let i = 0; i < data.cards.length; i++) {
+        if (data.cards[i].name == cardName) {
+          let cardPreview = document.createElement("div");
+          cardPreview.setAttribute("class", "cardpreview");
+          cardPreview.innerHTML = `<img src="` + data.cards[i].imageUrl + `">`;
+          cardLink.appendChild(cardPreview);
+          break;
+        }
+      }
+    } else {
+      console.log("error");
+    }
+  };
+  request.send();
 }
+
+var cardLinks = document.getElementsByClassName("mtgcard");
+
+for (let i = 0; i < cardLinks.length; i++) {
+  let request = new XMLHttpRequest();
+  request.open(
+    "GET",
+    `https://api.magicthegathering.io/v1/cards?name=` + cardLinks[i].textContent,
+    true
+  );
+  request.onload = function() {
+    var data = JSON.parse(this.response);
+    if (request.status >= 200 && request.status < 400) {
+      for (let j = 0; j < data.cards.length; j++) {
+        if (data.cards[j].name == cardLinks[i].textContent) {
+          cardLinks[i].setAttribute("href", `http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=` + data.cards[j].multiverseid);
+        }
+      }
+    } else {
+      console.log("error");
+    }
+  };
+  request.send();
+};
+
+for (let i = 0; i < cardLinks.length; i++) {
+  cardLinks[i].addEventListener("pointerover", getCardImage(cardLinks[i], cardLinks[i].textContent));
+};

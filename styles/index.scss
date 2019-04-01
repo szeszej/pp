@@ -254,6 +254,21 @@ body {
     }
   }
 
+  .mtgcard .cardpreview {
+    display: none;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    position: absolute;
+  }
+
+    .mtgcard:hover .cardpreview {
+    display: block;
+  }
+
   footer {
     grid-area: footer;
     color: black;
