@@ -90,7 +90,7 @@ body {
     display: grid;
     grid-template-columns: 20% auto 20%;
     grid-template-rows: 10em 5em auto auto;
-    grid-template-areas: "header header header" "menu menu menu" "sideleft content sideright" "footer footer footer";
+    grid-template-areas: "header header header" "menu menu menu" "sideleft content sideright" "footer footer footer";
     /* poniżej tylko dla strony zasad */
     /* powyżej tylko dla strony zasad */
     /* poniżej tylko dla strony zasad edh*/
@@ -140,7 +140,7 @@ body {
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 10em 5em auto auto;
-    grid-template-areas: "header" "menu" "content" "footer"; }
+    grid-template-areas: "header" "menu" "content" "footer"; }
   body header {
     margin: 0;
     top: 0;
@@ -192,7 +192,7 @@ body {
     margin-bottom: 2em; }
     body .ranking .rank {
       display: grid;
-      grid-template-areas: "number name expand" "info info info";
+      grid-template-areas: "number name expand" "info info info";
       grid-template-columns: 3em auto 3em;
       grid-template-rows: 3.5em auto;
       background-color: black;
@@ -222,7 +222,7 @@ body {
       body .ranking .rank .collapsible {
         grid-area: expand;
         background-color: #ffe919;
-        border: 0px;
+        border: 0;
         font-size: 25px;
         border: 1px solid black;
         text-align: center;
@@ -253,19 +253,32 @@ body {
             padding: 0.15em; }
           body .ranking .rank .info .winsline .wins {
             text-align: right;
-            padding: 0.15em;
-            padding-right: 1em; }
+            padding: 0.15em 1em 0.15em 0.15em; }
             body .ranking .rank .info .winsline .wins span {
               letter-spacing: initial; }
-  body .mtgcard .cardpreview {
-    display: none;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-    position: absolute; }
+  body .mtgcard {
+    position: relative; }
+    body .mtgcard .cardpreview {
+      display: none;
+      width: 12em;
+      background-color: transparent;
+      padding: 0.3em 0;
+      position: absolute;
+      top: -0.3em;
+      left: 105%;
+      z-index: 1; }
+      body .mtgcard .cardpreview img {
+        clip-path: polygon(0% 5%, 5% 0%, 95% 0%, 100% 5%, 100% 95%, 95% 100%, 5% 100%, 0 95%); }
+    body .mtgcard .cardpreview::after {
+      content: " ";
+      position: absolute;
+      top: 2%;
+      right: 100%;
+      /* To the left of the tooltip */
+      margin-top: 0.3em;
+      border-width: 0.4em;
+      border-style: solid;
+      border-color: transparent yellow transparent transparent; }
   body .mtgcard:hover .cardpreview {
     display: block; }
   body footer {
@@ -291,7 +304,7 @@ body {
   @media only screen and (max-width: 1330px) {
     body .wrappersidebar {
       grid-template-columns: 100%;
-      grid-template-areas: "header" "menu" "content" "footer"; } }
+      grid-template-areas: "header" "menu" "content" "footer"; } }
   @media only screen and (max-width: 1140px) {
     body header {
       background-size: 110% auto; }
