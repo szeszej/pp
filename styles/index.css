@@ -20,7 +20,13 @@
   letter-spacing: 6px;
   line-height: 150%;
   perspective: 400px;
-  text-align: justify; }
+  text-align: justify;
+  width: 100%; }
+  .star-wars .skip {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    z-index: 2; }
 
 .crawl {
   position: relative;
@@ -38,7 +44,6 @@
 
 .aftercrawl {
   position: absolute;
-  width: 80%;
   line-height: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -50,7 +55,8 @@
   opacity: 0; }
   .aftercrawl .quotebox {
     margin-right: 0.5em;
-    text-align: right; }
+    text-align: right;
+    width: 80%; }
     .aftercrawl .quotebox .quote {
       font-size: 60px;
       font-family: "Raleway", sans-serif; }
@@ -67,11 +73,23 @@
   100% {
     opacity: 1; } }
 
+@media only screen and (max-width: 1100px) {
+  .star-wars {
+    font-size: 400%; }
+  .crawl {
+    animation: crawl 40s linear; } }
+
+@media only screen and (max-width: 700px) {
+  .star-wars {
+    font-size: 300%; }
+  .crawl {
+    animation: crawl 35s linear; } }
+
 @media only screen and (max-width: 570px) {
   .star-wars {
     font-size: 300%; }
   .crawl {
-    animation: crawl 90s linear; } }
+    animation: crawl 35s linear; } }
 
 body {
   margin: 0;

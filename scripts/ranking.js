@@ -6,107 +6,107 @@
 const PLAYERS = [
   // Tabela graczy
   {
-  "name": "Bartosz Kłak", //imię
-  "zydelion": 4,  //ilość wygranych dni
-  "commander": [  //nazwa generała plus ilość wygranych gier danym generałem
-    ["Riku of Two Reflections", 3],
-    ["Muldrotha, the Gravetide", 5],
-    ["Breya, Etherium Shaper", 3]
-  ]
-},
-{
-  "name": "Mateusz Kobielski",
-  "zydelion": 3,
-  "commander": [
-    ["Cromat", 4],
-    ["Rafiq of the Many", 1],
-["The Locust God", 1],
-["Atraxa, Praetors' Voice", 1]
-  ]
-},
-{
-  "name": "Waldemar Piekarz",
-  "zydelion": 3,
-  "commander": [
-    ["Thrasios, Triton Hero<br>Ikra Shidiqi, the Usurper", 5], //podwójny generał
-["Lord Windgrace", 3]
-  ]
-},
-{
-  "name": "Krzysztof Brygała",
-  "zydelion": 2,
-  "commander": [
-    ["The Gitrog Monster", 1],
-    ["Rashmi, Eternities Crafter", 1],
-    ["Inalla, Archmage Ritualist", 2]
-  ]
-},
-{
-  "name": "Sebastian Piłat",
-  "zydelion": 2,
-  "commander": [
-    ["Jeleva, Nephalia's Scourge", 6]
-  ]
-},
-{
-  "name": "Eryk Małecki",
-  "zydelion": 3,
-  "commander": [
-    ["Grand Arbiter Augustin IV", 1],
-    ["Anafenza, the Foremost", 3],
-    ["Gaddock Teeg", 3]
-  ]
-},
-{
-  "name": "Jakub Grela",
-  "zydelion": 2,
-  "commander": [
-    ["Derevi, Empyrial Tactician", 5],
-["Nicol Bolas, the Ravager", 1]
-  ]
-},
-{
-  "name": "Krzysztof Guz",
-  "zydelion": 1,
-  "commander": [
-    ["Karlov of the Ghost Council", 3]
-  ]
-},
-{
-  "name": "Jarosław Mroziński",
-  "zydelion": 1,
-  "commander": [
-    ["Brago, King Eternal", 2]
-  ]
-},
-{
-  "name": "Michał Kowalczyk",
-  "zydelion": 2,
-  "commander": [
-    ["Thrasios, Triton Hero<br>Tymna the Weaver", 7]
-  ]
-},
-{
-  "name": "Dominik Kuszneruk",
-  "zydelion": 1,
-  "commander": [
-    ["Mikaeus, the Unhallowed", 4]
-  ]
-},
-{
-  "name": "Paweł Ostrowski",
-  "zydelion": 1,
-  "commander": [
-    ["Jace, Vryn's Prodigy", 3]
-  ]
-},
-{
-  "name": "Bartosz Jurczyk",
-  "zydelion": 1,
-  "commander": [
-    ["Atraxa, Praetors' Voice", 3]
-  ]
-}
+    "name": "Bartosz Kłak", //imię
+    "zydelion": 4, //ilość wygranych dni
+    "commander": [ //nazwa generała plus ilość wygranych gier danym generałem
+      ["Riku of Two Reflections", 3],
+      ["Muldrotha, the Gravetide", 5],
+      ["Breya, Etherium Shaper", 3]
+    ]
+  },
+  {
+    "name": "Mateusz Kobielski",
+    "zydelion": 3,
+    "commander": [
+      ["Cromat", 4],
+      ["Rafiq of the Many", 1],
+      ["The Locust God", 1],
+      ["Atraxa, Praetors' Voice", 1]
+    ]
+  },
+  {
+    "name": "Waldemar Piekarz",
+    "zydelion": 3,
+    "commander": [
+      ["Thrasios, Triton Hero<br>Ikra Shidiqi, the Usurper", 5], //podwójny generał
+      ["Lord Windgrace", 3]
+    ]
+  },
+  {
+    "name": "Krzysztof Brygała",
+    "zydelion": 2,
+    "commander": [
+      ["The Gitrog Monster", 1],
+      ["Rashmi, Eternities Crafter", 1],
+      ["Inalla, Archmage Ritualist", 2]
+    ]
+  },
+  {
+    "name": "Sebastian Piłat",
+    "zydelion": 2,
+    "commander": [
+      ["Jeleva, Nephalia's Scourge", 6]
+    ]
+  },
+  {
+    "name": "Eryk Małecki",
+    "zydelion": 3,
+    "commander": [
+      ["Grand Arbiter Augustin IV", 1],
+      ["Anafenza, the Foremost", 3],
+      ["Gaddock Teeg", 3]
+    ]
+  },
+  {
+    "name": "Jakub Grela",
+    "zydelion": 2,
+    "commander": [
+      ["Derevi, Empyrial Tactician", 5],
+      ["Nicol Bolas, the Ravager", 1]
+    ]
+  },
+  {
+    "name": "Krzysztof Guz",
+    "zydelion": 1,
+    "commander": [
+      ["Karlov of the Ghost Council", 3]
+    ]
+  },
+  {
+    "name": "Jarosław Mroziński",
+    "zydelion": 1,
+    "commander": [
+      ["Brago, King Eternal", 2]
+    ]
+  },
+  {
+    "name": "Michał Kowalczyk",
+    "zydelion": 2,
+    "commander": [
+      ["Thrasios, Triton Hero<br>Tymna the Weaver", 7]
+    ]
+  },
+  {
+    "name": "Dominik Kuszneruk",
+    "zydelion": 1,
+    "commander": [
+      ["Mikaeus, the Unhallowed", 4]
+    ]
+  },
+  {
+    "name": "Paweł Ostrowski",
+    "zydelion": 1,
+    "commander": [
+      ["Jace, Vryn's Prodigy", 3]
+    ]
+  },
+  {
+    "name": "Bartosz Jurczyk",
+    "zydelion": 1,
+    "commander": [
+      ["Atraxa, Praetors' Voice", 3]
+    ]
+  }
 ];
 
 const SORTED_PLAYERS = PLAYERS.sort((a, b) => b.zydelion - a.zydelion); //sortujemy graczy po ilości wygranych zydelionów

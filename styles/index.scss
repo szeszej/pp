@@ -7,6 +7,7 @@ body {
   letter-spacing: 0.1em;
   font-family: "Oswald", sans-serif;
   font-size: 18px;
+
   img {
     max-width: 100%;
     display: block;
@@ -34,7 +35,6 @@ body {
       background-color: black;
       background-origin: border-box;
       z-index: -1;
-
     }
 
     .rightsidebar {
@@ -137,6 +137,7 @@ body {
     align-items: center;
     box-sizing: border-box;
     padding-bottom: 2em;
+
     .subtitle {
       margin: 1em;
 
@@ -251,8 +252,8 @@ body {
   .mtgcard {
     position: relative;
     display: inline-block;
-    .cardpreview {
 
+    .cardpreview {
       display: none;
       width: 200px;
       background-color: transparent;
@@ -294,6 +295,7 @@ body {
     justify-content: center;
     align-items: center;
     padding-top: 1em;
+
     h2 {
       color: black;
     }
@@ -315,9 +317,11 @@ body {
     .wrappersidebar {
       grid-template-columns: 100%;
       grid-template-areas: "header" "menu" "content" "footer";
+
       .leftsidebar {
         display: none;
       }
+
       .rightsidebar {
         display: none;
       }
