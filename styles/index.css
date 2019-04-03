@@ -26,7 +26,7 @@
   position: relative;
   top: 99999px;
   transform-origin: 50% 100%;
-  animation: crawl 60s linear 0s 1 normal forwards; }
+  animation: crawl 45s linear 0s 1 normal forwards; }
 
 @keyframes crawl {
   0% {
@@ -38,7 +38,6 @@
 
 .aftercrawl {
   position: absolute;
-  animation: show 2s ease-in 30s 1 normal forwards;
   width: 80%;
   line-height: normal;
   font-weight: normal;

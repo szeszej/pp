@@ -1,3 +1,16 @@
+var swCrawl = document.querySelector("#lastparagraph");
+var afterCrawl = document.querySelector(".aftercrawl");
+
+setInterval(function () {
+  let crawlPosition = swCrawl.getBoundingClientRect();
+  if (crawlPosition.y < 120 && crawlPosition.y > 0) {
+    afterCrawl.style.animation = "show 2s ease-in 0s 1 normal forwards";
+  }
+  console.log(swCrawl.getBoundingClientRect());
+}, 1000);
+
+
+
 var cardLinks = document.getElementsByClassName("mtgcard"); //lista wszystkich kart na stronie
 var apiRequestUrl = `https://api.scryfall.com/cards/search?q=`; //początek URLa do zapytania do API
 var returnedCards = []; //tutaj będą przechowywane karty pobrane z API
