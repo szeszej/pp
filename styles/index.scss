@@ -7,7 +7,6 @@ body {
   letter-spacing: 0.1em;
   font-family: "Oswald", sans-serif;
   font-size: 18px;
-
   img {
     max-width: 100%;
     display: block;
@@ -35,6 +34,7 @@ body {
       background-color: black;
       background-origin: border-box;
       z-index: -1;
+
     }
 
     .rightsidebar {
@@ -90,6 +90,9 @@ body {
     grid-template-rows: 10em 5em auto auto;
     grid-template-areas: "header" "menu" "content" "footer";
     //powyże tylko dla strony głównej
+    main {
+      overflow: hidden;
+    }
   }
 
   header {
@@ -133,9 +136,7 @@ body {
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
-    overflow: hidden;
     padding-bottom: 2em;
-
     .subtitle {
       margin: 1em;
 
@@ -249,10 +250,11 @@ body {
 
   .mtgcard {
     position: relative;
-
+    display: inline-block;
     .cardpreview {
+
       display: none;
-      width: 12em;
+      width: 200px;
       background-color: transparent;
       padding: 0.3em 0;
       position: absolute;
@@ -270,7 +272,6 @@ body {
       position: absolute;
       top: 2%;
       right: 100%;
-      /* To the left of the tooltip */
       margin-top: 0.3em;
       border-width: 0.4em;
       border-style: solid;
@@ -293,7 +294,6 @@ body {
     justify-content: center;
     align-items: center;
     padding-top: 1em;
-
     h2 {
       color: black;
     }
@@ -315,6 +315,12 @@ body {
     .wrappersidebar {
       grid-template-columns: 100%;
       grid-template-areas: "header" "menu" "content" "footer";
+      .leftsidebar {
+        display: none;
+      }
+      .rightsidebar {
+        display: none;
+      }
     }
   }
   @media only screen and (max-width: 1140px) {

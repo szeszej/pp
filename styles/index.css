@@ -141,6 +141,8 @@ body {
     grid-template-columns: 100%;
     grid-template-rows: 10em 5em auto auto;
     grid-template-areas: "header" "menu" "content" "footer"; }
+    body .wrapperhomepage main {
+      overflow: hidden; }
   body header {
     margin: 0;
     top: 0;
@@ -176,7 +178,6 @@ body {
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
-    overflow: hidden;
     padding-bottom: 2em; }
     body main .subtitle {
       margin: 1em; }
@@ -257,10 +258,11 @@ body {
             body .ranking .rank .info .winsline .wins span {
               letter-spacing: initial; }
   body .mtgcard {
-    position: relative; }
+    position: relative;
+    display: inline-block; }
     body .mtgcard .cardpreview {
       display: none;
-      width: 12em;
+      width: 200px;
       background-color: transparent;
       padding: 0.3em 0;
       position: absolute;
@@ -274,7 +276,6 @@ body {
       position: absolute;
       top: 2%;
       right: 100%;
-      /* To the left of the tooltip */
       margin-top: 0.3em;
       border-width: 0.4em;
       border-style: solid;
@@ -304,7 +305,11 @@ body {
   @media only screen and (max-width: 1330px) {
     body .wrappersidebar {
       grid-template-columns: 100%;
-      grid-template-areas: "header" "menu" "content" "footer"; } }
+      grid-template-areas: "header" "menu" "content" "footer"; }
+      body .wrappersidebar .leftsidebar {
+        display: none; }
+      body .wrappersidebar .rightsidebar {
+        display: none; } }
   @media only screen and (max-width: 1140px) {
     body header {
       background-size: 110% auto; }
