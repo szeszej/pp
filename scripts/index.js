@@ -22,6 +22,10 @@ function checkMultiverseId(cardName) { //funkcja, która sprawdza multiverseid d
   returnedCards.forEach(function(item) {
     if (item.name == cardName) {
       multiverseId = item.multiverse_ids[0];
+    } else if (item.hasOwnProperty("card_faces") == true) {
+      if (item.card_faces[0].name == cardName) {
+        multiverseId = item.multiverse_ids[0];
+      }
     }
   });
   return multiverseId;
@@ -37,6 +41,7 @@ request.onload = function() { //kiedy mamy dane, to robimy rzeczy
   var data = JSON.parse(this.response);
   if (request.status >= 200 && request.status < 400) {
     returnedCards = data.data; //podpisujemy pobrane dane o kartach pod zmienną
+    console.log(returnedCards);
     for (let i = 0; i < cardLinks.length; i++) { //jak już mamy te dane, to:
       getCardImage(cardLinks[i], cardLinks[i].textContent); //tworzymy podgląd kart przy najechaniu na kartę
       cardLinks[i].setAttribute("href", `http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=` + checkMultiverseId(cardLinks[i].textContent));

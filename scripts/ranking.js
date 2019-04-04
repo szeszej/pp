@@ -1,8 +1,3 @@
-//to do:
-// animacja rozwijania??
-// zrefaktoryzować dodawanie listenera żeby odwoływało się do jednej oddzielnej funkcji. stwrzyć funkcję, która zamiast this będzie używała event.target
-// podwójni commanderzy powinni wyświetlać się jako oddzielne linki
-
 const PLAYERS = [
   // Tabela graczy
   {
@@ -28,7 +23,9 @@ const PLAYERS = [
     "name": "Waldemar Piekarz",
     "zydelion": 3,
     "commander": [
-      ["Thrasios, Triton Hero<br>Ikra Shidiqi, the Usurper", 5], //podwójny generał
+      [
+        ["Thrasios, Triton Hero", "Ikra Shidiqi, the Usurper"], 5
+      ], //podwójny generał
       ["Lord Windgrace", 3]
     ]
   },
@@ -61,8 +58,7 @@ const PLAYERS = [
     "name": "Jakub Grela",
     "zydelion": 2,
     "commander": [
-      ["Derevi, Empyrial Tactician", 5],
-      ["Nicol Bolas, the Ravager", 1]
+      ["Derevi, Empyrial Tactician", 6]
     ]
   },
   {
@@ -83,7 +79,9 @@ const PLAYERS = [
     "name": "Michał Kowalczyk",
     "zydelion": 2,
     "commander": [
-      ["Thrasios, Triton Hero<br>Tymna the Weaver", 7]
+      [
+        ["Thrasios, Triton Hero", "Tymna the Weaver"], 7
+      ]
     ]
   },
   {
@@ -95,9 +93,10 @@ const PLAYERS = [
   },
   {
     "name": "Paweł Ostrowski",
-    "zydelion": 1,
+    "zydelion": 2,
     "commander": [
-      ["Jace, Vryn's Prodigy", 3]
+      ["Jace, Vryn's Prodigy", 5],
+      ["Azusa, Lost but Seeking", 2]
     ]
   },
   {
@@ -142,7 +141,12 @@ const CMD_INFO = function(commandersArray, totalWins) {
     winsLineBox.setAttribute("class", "winsline");
     let commanderNameBox = document.createElement("div"); //tworzymy diva z nazwą danego commandera
     commanderNameBox.setAttribute("class", "cmdname");
-    commanderNameBox.innerHTML = `<a href="" class="mtgcard"><p>${item[0]}</p></a>`;
+    if (Array.isArray(item[0]) == true) {
+      commanderNameBox.innerHTML = `<p><a href="" class="mtgcard">${item[0][0]}</a></p>
+      <p><a href="" class="mtgcard">${item[0][1]}</a></p>`;
+    } else {
+      commanderNameBox.innerHTML = `<p><a href="" class="mtgcard">${item[0]}</a></p>`;
+    }
     winsLineBox.appendChild(commanderNameBox);
     let winsNumberBox = document.createElement("div"); //tworzymy diva z ilością winów danego commandera
     winsNumberBox.setAttribute("class", "wins");
@@ -198,9 +202,7 @@ SORTED_PLAYERS.map(function(item, index) {
   rankBox.appendChild(CMD_INFO(playerCommanders(index), totalWin(index))); //dodajemy rozwijaną listę commanderów
   rankBoxes.appendChild(rankBox); //wszystko wsadzamy w ranking
 });
-if (fullRanking != null) {
-  fullRanking.appendChild(rankBoxes); //dodajemy fragment zawierający pełny ranking do własciwego rankingu (performance!)
-};
+fullRanking.appendChild(rankBoxes); //dodajemy fragment zawierający pełny ranking do własciwego rankingu (performance!)
 
 var coll = document.getElementsByClassName("collapsible"); //kod listy rozwijanej
 for (let i = 0; i < coll.length; i++) {

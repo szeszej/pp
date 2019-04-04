@@ -29,6 +29,10 @@
     bottom: 5%;
     right: 5%;
     z-index: 2;
+    background-color: black;
+    border: 1px solid $swclr;
+    color: $swclr;
+    cursor: pointer;
   }
 }
 
@@ -40,7 +44,7 @@
 }
 @keyframes crawl {
   0% {
-    top: 50vh;
+    top: 70vh;
     transform: rotateX(20deg) translateZ(0);
   }
 
@@ -52,7 +56,6 @@
 
 .aftercrawl {
   position: absolute;
-  // animation: show 2s ease-in 0s 1 normal forwards;
   line-height: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -106,19 +109,5 @@
 @media only screen and (max-width: 700px) {
   .star-wars {
     font-size: 300%;
-  }
-
-  .crawl {
-    animation: crawl 35s linear;
-  }
-}
-
-@media only screen and (max-width: 570px) {
-  .star-wars {
-    font-size: 300%;
-  }
-
-  .crawl {
-    animation: crawl 35s linear;
   }
 }
