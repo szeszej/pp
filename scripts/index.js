@@ -10,11 +10,16 @@ function createApiRequestURL() { //funkcja, która tworzy URL zapytania do API z
 
 createApiRequestURL();
 
-function getCardImage(cardLink, cardName) { //funkcja, która tworzy divy z podglądem kart po najechaniu na nie
+function getCardImage(cardLink, cardName) { //funkcja, która tworzy divy z podglądem kart po najechaniu na nie i usuwa je po odjechaniu z nich :)
   let cardPreview = document.createElement("div");
   cardPreview.setAttribute("class", "cardpreview");
   cardPreview.innerHTML = `<img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=` + checkMultiverseId(cardName) + `&type=card">`;
-  cardLink.appendChild(cardPreview);
+  cardLink.addEventListener("mouseenter", function() {
+    cardLink.appendChild(cardPreview);
+  });
+  cardLink.addEventListener("mouseleave", function() {
+    cardLink.removeChild(cardPreview);
+  });
 };
 
 function checkMultiverseId(cardName) { //funkcja, która sprawdza multiverseid danej karty
