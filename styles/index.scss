@@ -22,11 +22,7 @@ body {
     display: grid;
     grid-template-columns: 20% auto 20%;
     grid-template-rows: 10em 5em auto auto;
-    grid-template-areas:
-      "header header header"
-      "menu menu menu"
-      "sideleft content sideright"
-      "footer footer footer";
+    grid-template-areas: "header header header" "menu menu menu" "sideleft content sideright" "footer footer footer";
 
     .leftsidebar {
       grid-area: sideleft;
@@ -40,6 +36,7 @@ body {
       background-origin: border-box;
       z-index: -1;
     }
+
     .rightsidebar {
       grid-area: sideright;
       position: sticky;
@@ -52,9 +49,7 @@ body {
       background-origin: border-box;
       z-index: -1;
     }
-
     /* poniżej tylko dla strony zasad */
-
     .rules {
       width: 90%;
     }
@@ -70,11 +65,8 @@ body {
       margin-top: 0.5em;
       margin-bottom: 0.5em;
     }
-
     /* powyżej tylko dla strony zasad */
-
     /* poniżej tylko dla strony zasad edh*/
-
     .bold {
       font-weight: bold;
       letter-spacing: inherit;
@@ -89,23 +81,18 @@ body {
       columns: 3;
       column-gap: 2em;
     }
-
     /* powyżej tylko dla strony zasad edh */
   }
-
   /* poniżej tylko dla strony głównej */
-
   .wrapperhomepage {
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 10em 5em auto auto;
-    grid-template-areas:
-      "header"
-      "menu"
-      "content"
-      "footer";
-
+    grid-template-areas: "header" "menu" "content" "footer";
     //powyże tylko dla strony głównej
+    main {
+      overflow: hidden;
+    }
   }
 
   header {
@@ -132,6 +119,7 @@ body {
     text-transform: uppercase;
     justify-content: space-around;
     align-items: center;
+
     .menuitem {
       margin: 1em;
       text-align: center;
@@ -148,10 +136,11 @@ body {
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
-    overflow: hidden;
     padding-bottom: 2em;
+
     .subtitle {
       margin: 1em;
+
       h1 {
         text-align: center;
       }
@@ -166,17 +155,17 @@ body {
     flex-direction: column;
     align-items: center;
     margin-bottom: 2em;
+
     .rank {
       display: grid;
-      grid-template-areas:
-        "number name expand"
-        "info info info";
+      grid-template-areas: "number name expand" "info info info";
       grid-template-columns: 3em auto 3em;
       grid-template-rows: 3.5em auto;
       background-color: black;
       margin: 1em;
       width: 90%;
       border: solid $swclr 2px;
+
       .number {
         grid-area: number;
         text-align: center;
@@ -184,18 +173,21 @@ body {
         color: black;
         border: 1px solid black;
       }
+
       .name {
         grid-area: name;
         text-align: left;
         padding-left: 1em;
         display: flex;
         justify-content: space-between;
+
         .zydnum {
           display: flex;
           flex-wrap: wrap;
           width: 9em;
           justify-content: center;
           align-items: center;
+
           img {
             max-height: 3em;
           }
@@ -205,7 +197,7 @@ body {
       .collapsible {
         grid-area: expand;
         background-color: $swclr;
-        border: 0px;
+        border: 0;
         font-size: 25px;
         border: 1px solid black;
         text-align: center;
@@ -232,19 +224,22 @@ body {
         padding-left: 1em;
         display: none;
         flex-direction: column;
+
         .winsline {
           display: flex;
           justify-content: space-between;
           align-items: center;
           box-sizing: border-box;
           font-size: 12px;
+
           .cmdname {
             padding: 0.15em;
           }
+
           .wins {
             text-align: right;
-            padding: 0.15em;
-            padding-right: 1em;
+            padding: 0.15em 1em 0.15em 0.15em;
+
             span {
               letter-spacing: initial;
             }
@@ -252,6 +247,41 @@ body {
         }
       }
     }
+  }
+
+  .mtgcard {
+    position: relative;
+    display: inline-block;
+
+    .cardpreview {
+      display: none;
+      width: 200px;
+      background-color: transparent;
+      padding: 0.3em 0;
+      position: absolute;
+      top: -0.3em;
+      left: 105%;
+      z-index: 1;
+
+      img {
+        clip-path: polygon(0% 5%, /* top left */ 5% 0%, /* top left */ 95% 0%, /* top right */ 100% 5%, /* top right */ 100% 95%, /* bottom right */ 95% 100%, /* bottom right */ 5% 100%, /* bottom left */ 0 95% /* bottom left */);
+      }
+    }
+
+    .cardpreview::after {
+      content: " ";
+      position: absolute;
+      top: 2%;
+      right: 100%;
+      margin-top: 0.3em;
+      border-width: 0.4em;
+      border-style: solid;
+      border-color: transparent yellow transparent transparent;
+    }
+  }
+
+  .mtgcard:hover .cardpreview {
+    display: block;
   }
 
   footer {
@@ -265,42 +295,51 @@ body {
     justify-content: center;
     align-items: center;
     padding-top: 1em;
+
     h2 {
       color: black;
     }
+
     .facebook {
       line-height: 3em;
     }
+
     img {
       display: inline;
       max-height: 1em;
     }
+
     .created {
       font-size: 10px;
     }
   }
-
   @media only screen and (max-width: 1330px) {
     .wrappersidebar {
       grid-template-columns: 100%;
-      grid-template-areas:
-        "header"
-        "menu"
-        "content"
-        "footer";
+      grid-template-areas: "header" "menu" "content" "footer";
+
+      .leftsidebar {
+        display: none;
+      }
+
+      .rightsidebar {
+        display: none;
+      }
     }
   }
-
   @media only screen and (max-width: 1140px) {
     header {
       background-size: 110% auto;
     }
+
     h1 {
       font-size: 20px;
     }
+
     h2 {
       font-size: 16px;
     }
+
     .wrapperhomepage .aftercrawl .quotebox {
       .quote {
         font-size: 40px;
@@ -310,70 +349,86 @@ body {
         font-size: 20px;
       }
     }
+
     .ranking {
       width: 95%;
+
       .rank {
         font-size: 14px;
+
         .winsline {
           font-size: 10px;
         }
       }
     }
+
     .timeplace {
       width: 85%;
     }
+
     .rules {
       font-size: 14px;
     }
+
     footer {
       font-size: 14px;
+
       h2 {
         font-size: 16px;
       }
     }
   }
-
   @media only screen and (max-width: 750px) {
     .wrapperhomepage {
       grid-template-rows: 7.5em 4em auto auto;
     }
+
     .wrappersidebar {
       grid-template-rows: 7.5em 4em auto auto;
     }
+
     nav {
       font-size: 12px;
     }
   }
-
   @media only screen and (max-width: 570px) {
     .wrapperhomepage {
       grid-template-rows: 5em 3em auto auto;
+
       .aftercrawl .quotebox {
         .quote {
           font-size: 20px;
         }
+
         .author {
           font-size: 10px;
         }
       }
     }
+
     .wrappersidebar {
       grid-template-rows: 5em 3em auto auto;
     }
+
     nav {
       font-size: 10px;
     }
+
     h1 {
       font-size: 16px;
     }
+
     h2 {
       font-size: 12px;
     }
+
     .rank {
       font-size: 10px;
+
       .collapsible .expand {
         font-size: 15px;
       }
+
       .winsline {
         font-size: 8px;
       }
@@ -381,18 +436,20 @@ body {
 
     footer {
       font-size: 10px;
+
       h2 {
         font-size: 12px;
       }
     }
+
     .wrappersidebar .banned {
       columns: 2;
     }
+
     .created {
       font-size: 8px;
     }
   }
-
   @media only screen and (max-width: 410px) {
     .ranking .rank {
       grid-template-rows: auto auto;

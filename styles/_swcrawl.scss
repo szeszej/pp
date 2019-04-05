@@ -1,5 +1,4 @@
-//dodać przycisk do ominięcia animacji, poeksperymentować z eventem animationend
-
+//dodać przycisk do ominięcia animacji
 @import "variables";
 
 .fade {
@@ -24,20 +23,31 @@
   line-height: 150%;
   perspective: 400px;
   text-align: justify;
+  width: 100%;
+  .skip {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    z-index: 2;
+    background-color: black;
+    border: 1px solid $swclr;
+    color: $swclr;
+    cursor: pointer;
+  }
 }
 
 .crawl {
   position: relative;
   top: 99999px;
   transform-origin: 50% 100%;
-  animation: crawl 60s linear 0s 1 normal forwards;
+  animation: crawl 45s linear 0s 1 normal forwards;
 }
-
 @keyframes crawl {
   0% {
-    top: 50vh;
+    top: 70vh;
     transform: rotateX(20deg) translateZ(0);
   }
+
   100% {
     top: -6000px;
     transform: rotateX(25deg) translateZ(-2500px);
@@ -46,8 +56,6 @@
 
 .aftercrawl {
   position: absolute;
-  animation: show 2s ease-in 30s 1 normal forwards;
-  width: 80%;
   line-height: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -61,7 +69,7 @@
   .quotebox {
     margin-right: 0.5em;
     text-align: right;
-
+    width: 80%;
     .quote {
       font-size: 60px;
       font-family: "Raleway", sans-serif;
@@ -78,22 +86,28 @@
     min-width: 2em;
   }
 }
-
 @keyframes show {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
 }
 
-@media only screen and (max-width: 570px) {
+@media only screen and (max-width: 1100px) {
   .star-wars {
-    font-size: 300%;
+    font-size: 400%;
   }
 
   .crawl {
-    animation: crawl 90s linear;
+    animation: crawl 40s linear;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  .star-wars {
+    font-size: 300%;
   }
 }

@@ -20,17 +20,27 @@
   letter-spacing: 6px;
   line-height: 150%;
   perspective: 400px;
-  text-align: justify; }
+  text-align: justify;
+  width: 100%; }
+  .star-wars .skip {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    z-index: 2;
+    background-color: black;
+    border: 1px solid #ffe919;
+    color: #ffe919;
+    cursor: pointer; }
 
 .crawl {
   position: relative;
   top: 99999px;
   transform-origin: 50% 100%;
-  animation: crawl 60s linear 0s 1 normal forwards; }
+  animation: crawl 45s linear 0s 1 normal forwards; }
 
 @keyframes crawl {
   0% {
-    top: 50vh;
+    top: 70vh;
     transform: rotateX(20deg) translateZ(0); }
   100% {
     top: -6000px;
@@ -38,8 +48,6 @@
 
 .aftercrawl {
   position: absolute;
-  animation: show 2s ease-in 30s 1 normal forwards;
-  width: 80%;
   line-height: normal;
   font-weight: normal;
   letter-spacing: normal;
@@ -51,7 +59,8 @@
   opacity: 0; }
   .aftercrawl .quotebox {
     margin-right: 0.5em;
-    text-align: right; }
+    text-align: right;
+    width: 80%; }
     .aftercrawl .quotebox .quote {
       font-size: 60px;
       font-family: "Raleway", sans-serif; }
@@ -68,11 +77,15 @@
   100% {
     opacity: 1; } }
 
-@media only screen and (max-width: 570px) {
+@media only screen and (max-width: 1100px) {
   .star-wars {
-    font-size: 300%; }
+    font-size: 400%; }
   .crawl {
-    animation: crawl 90s linear; } }
+    animation: crawl 40s linear; } }
+
+@media only screen and (max-width: 700px) {
+  .star-wars {
+    font-size: 300%; } }
 
 body {
   margin: 0;
@@ -90,7 +103,7 @@ body {
     display: grid;
     grid-template-columns: 20% auto 20%;
     grid-template-rows: 10em 5em auto auto;
-    grid-template-areas: "header header header" "menu menu menu" "sideleft content sideright" "footer footer footer";
+    grid-template-areas: "header header header" "menu menu menu" "sideleft content sideright" "footer footer footer";
     /* poniżej tylko dla strony zasad */
     /* powyżej tylko dla strony zasad */
     /* poniżej tylko dla strony zasad edh*/
@@ -140,7 +153,9 @@ body {
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 10em 5em auto auto;
-    grid-template-areas: "header" "menu" "content" "footer"; }
+    grid-template-areas: "header" "menu" "content" "footer"; }
+    body .wrapperhomepage main {
+      overflow: hidden; }
   body header {
     margin: 0;
     top: 0;
@@ -176,7 +191,6 @@ body {
     flex-direction: column;
     align-items: center;
     box-sizing: border-box;
-    overflow: hidden;
     padding-bottom: 2em; }
     body main .subtitle {
       margin: 1em; }
@@ -192,7 +206,7 @@ body {
     margin-bottom: 2em; }
     body .ranking .rank {
       display: grid;
-      grid-template-areas: "number name expand" "info info info";
+      grid-template-areas: "number name expand" "info info info";
       grid-template-columns: 3em auto 3em;
       grid-template-rows: 3.5em auto;
       background-color: black;
@@ -222,7 +236,7 @@ body {
       body .ranking .rank .collapsible {
         grid-area: expand;
         background-color: #ffe919;
-        border: 0px;
+        border: 0;
         font-size: 25px;
         border: 1px solid black;
         text-align: center;
@@ -253,10 +267,34 @@ body {
             padding: 0.15em; }
           body .ranking .rank .info .winsline .wins {
             text-align: right;
-            padding: 0.15em;
-            padding-right: 1em; }
+            padding: 0.15em 1em 0.15em 0.15em; }
             body .ranking .rank .info .winsline .wins span {
               letter-spacing: initial; }
+  body .mtgcard {
+    position: relative;
+    display: inline-block; }
+    body .mtgcard .cardpreview {
+      display: none;
+      width: 200px;
+      background-color: transparent;
+      padding: 0.3em 0;
+      position: absolute;
+      top: -0.3em;
+      left: 105%;
+      z-index: 1; }
+      body .mtgcard .cardpreview img {
+        clip-path: polygon(0% 5%, 5% 0%, 95% 0%, 100% 5%, 100% 95%, 95% 100%, 5% 100%, 0 95%); }
+    body .mtgcard .cardpreview::after {
+      content: " ";
+      position: absolute;
+      top: 2%;
+      right: 100%;
+      margin-top: 0.3em;
+      border-width: 0.4em;
+      border-style: solid;
+      border-color: transparent yellow transparent transparent; }
+  body .mtgcard:hover .cardpreview {
+    display: block; }
   body footer {
     grid-area: footer;
     color: black;
@@ -280,7 +318,11 @@ body {
   @media only screen and (max-width: 1330px) {
     body .wrappersidebar {
       grid-template-columns: 100%;
-      grid-template-areas: "header" "menu" "content" "footer"; } }
+      grid-template-areas: "header" "menu" "content" "footer"; }
+      body .wrappersidebar .leftsidebar {
+        display: none; }
+      body .wrappersidebar .rightsidebar {
+        display: none; } }
   @media only screen and (max-width: 1140px) {
     body header {
       background-size: 110% auto; }
