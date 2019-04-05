@@ -264,7 +264,7 @@ body {
       z-index: 1;
 
       img {
-        clip-path: polygon(0% 5%, /* top left */ 5% 0%, /* top left */ 95% 0%, /* top right */ 100% 5%, /* top right */ 100% 95%, /* bottom right */ 95% 100%, /* bottom right */ 5% 100%, /* bottom left */ 0 95% /* bottom left */);
+        clip-path: polygon(0% 3%, /* top left */ 3% 0%, /* top left */ 97% 0%, /* top right */ 100% 3%, /* top right */ 100% 97%, /* bottom right */ 97% 100%, /* bottom right */ 3% 100%, /* bottom left */ 0% 97% /* bottom left */);
       }
     }
 

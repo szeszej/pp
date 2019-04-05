@@ -283,7 +283,7 @@ body {
       left: 105%;
       z-index: 1; }
       body .mtgcard .cardpreview img {
-        clip-path: polygon(0% 5%, 5% 0%, 95% 0%, 100% 5%, 100% 95%, 95% 100%, 5% 100%, 0 95%); }
+        clip-path: polygon(0% 3%, 3% 0%, 97% 0%, 100% 3%, 100% 97%, 97% 100%, 3% 100%, 0% 97%); }
     body .mtgcard .cardpreview::after {
       content: " ";
       position: absolute;
