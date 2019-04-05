@@ -24,7 +24,7 @@
   width: 100%; }
   .star-wars .skip {
     position: absolute;
-    bottom: 5%;
+    top: 5%;
     right: 5%;
     z-index: 2;
     background-color: black;
