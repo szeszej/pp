@@ -95,6 +95,7 @@ body {
   /* poniżej jeśli podgląd jest podczepiony do body */
   /* powyżej jeśli podgląd jest podczepiony do body */
   /* poniżej jeśli podgląd jest podczepiony do linku z kartą */
+  /* powyżej jeśli podgląd jest podczepiony do linku z kartą */
   /* poniżej tylko dla strony głównej */ }
   body .cardpreview {
     display: block;
@@ -117,25 +118,8 @@ body {
   body .mtgcard {
     position: relative; }
     body .mtgcard .cardpreview {
-      display: block;
-      width: 200px;
-      background-color: transparent;
-      padding: 0.3em 0;
-      position: absolute;
-      z-index: 1;
       top: -0.3em;
       left: 105%; }
-      body .mtgcard .cardpreview img {
-        clip-path: polygon(0% 3%, 3% 0%, 97% 0%, 100% 3%, 100% 97%, 97% 100%, 3% 100%, 0% 97%); }
-    body .mtgcard .cardpreview::after {
-      content: " ";
-      position: absolute;
-      top: 2%;
-      right: 100%;
-      margin-top: 0.3em;
-      border-width: 0.4em;
-      border-style: solid;
-      border-color: transparent yellow transparent transparent; }
   body img {
     max-width: 100%;
     display: block;

@@ -37,32 +37,11 @@ body {
     position: relative;
 
     .cardpreview {
-      display: block;
-      width: 200px;
-      background-color: transparent;
-      padding: 0.3em 0;
-      position: absolute;
-      z-index: 1;
       top: -0.3em;
       left: 105%;
-
-      img {
-        clip-path: polygon(0% 3%, /* top left */ 3% 0%, /* top left */ 97% 0%, /* top right */ 100% 3%, /* top right */ 100% 97%, /* bottom right */ 97% 100%, /* bottom right */ 3% 100%, /* bottom left */ 0% 97% /* bottom left */);
-      }
-    }
-
-    .cardpreview::after {
-      content: " ";
-      position: absolute;
-      top: 2%;
-      right: 100%;
-      margin-top: 0.3em;
-      border-width: 0.4em;
-      border-style: solid;
-      border-color: transparent yellow transparent transparent;
     }
   }
-
+  /* powyżej jeśli podgląd jest podczepiony do linku z kartą */
   img {
     max-width: 100%;
     display: block;
@@ -333,10 +312,10 @@ body {
     }
   }
   @media only screen and (max-width: 1330px) {
-
     .wrappersidebar {
       grid-template-columns: 100%;
       grid-template-areas: "header" "menu" "content" "footer";
+
       .leftsidebar {
         display: none;
       }
@@ -427,7 +406,6 @@ body {
 
     .wrappersidebar {
       grid-template-rows: 5em 3em auto auto;
-
     }
 
     nav {

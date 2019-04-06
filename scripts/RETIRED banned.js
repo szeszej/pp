@@ -43,11 +43,7 @@ request.onload = function() { //kiedy mamy dane, to robimy rzeczy
   var data = JSON.parse(this.response);
   if (request.status >= 200 && request.status < 400) {
     bannedCards = data.data; //podpisujemy pobrane dane o zbanowanych kartach pod zmienną
-    for (var i = 0; i < bannedCards.length; i++) { //tworzymy listę kart zbanowanych na stronie
-      let bannedCard = document.createElement("li");
-      bannedCard.innerHTML = `<a class="mtgcard" href="">` + bannedCards[i].name + `</a>`
-      bannedCardsList.appendChild(bannedCard);
-    }
+
     var cardLinks = document.getElementsByClassName("mtgcard"); //lista wszystkich kart na stronie
     for (let i = 0; i < cardLinks.length; i++) { //po stworzeniu listy kart, możemy dodać do nich podgląd i linki
       getCardImage(cardLinks[i], cardLinks[i].textContent); //tworzymy podgląd kart
