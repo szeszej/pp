@@ -13,6 +13,7 @@ function createApiRequestURL() { //funkcja, która tworzy URL zapytania do API z
   } else {
     apiRequestUrl = `https://api.scryfall.com/cards/search?q=banned:commander%20legal:vintage`; //jak jesteśmy na stronie kart zbanowanych, to chcemy po prostu pobrać listę kart zbanowanych
   }
+  console.log(apiRequestUrl);
 };
 
 createApiRequestURL();
@@ -68,6 +69,7 @@ request.onload = function() { //kiedy mamy dane, to robimy rzeczy
   var data = JSON.parse(this.response);
   if (request.status >= 200 && request.status < 400) {
     returnedCards = data.data; //podpisujemy pobrane dane o kartach pod zmienną
+    console.log(returnedCards);
     if (bannedCardsList != null) { //jeśli isnieje lista kart zbanowanych, to trzeba do niej dodać karty
       for (var i = 0; i < returnedCards.length; i++) { //tworzymy listę kart zbanowanych na stronie
         let bannedCard = document.createElement("li");

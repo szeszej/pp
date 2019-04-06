@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Michroma|Orbitron|Oswald|Dancing+Script|Raleway");
 @import "swcrawl";
 @import "variables";
+@import "decklists";
 
 body {
   margin: 0;
@@ -62,7 +63,7 @@ body {
       grid-area: sideleft;
       position: sticky;
       top: 0;
-      height: 1440px; //wysokość tła
+      max-height: 1440px; //wysokość tła
       background-image: url("../resources/images/Sith_001.jpg");
       background-position: 30% -50px;
       background-repeat: no-repeat;
@@ -75,7 +76,7 @@ body {
       grid-area: sideright;
       position: sticky;
       top: 0;
-      height: 1440px; //wysokość tła
+      max-height: 1440px; //wysokość tła
       background-image: url("../resources/images/Jedi.jpg");
       background-position: 70% -50px;
       background-repeat: no-repeat;
@@ -326,14 +327,6 @@ body {
     .wrappersidebar {
       grid-template-columns: 100%;
       grid-template-areas: "header" "menu" "content" "footer";
-
-      .leftsidebar {
-        display: none;
-      }
-
-      .rightsidebar {
-        display: none;
-      }
     }
   }
   @media only screen and (max-width: 1140px) {

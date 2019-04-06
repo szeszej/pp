@@ -124,3 +124,12 @@ cardNumbers.map(function(item, index) {
 });
 
 console.log(deck);
+
+var decklistBox = document.getElementById("decklistbox");
+var listOfCards = document.createElement("ul");
+decklistBox.appendChild(listOfCards);
+for (let i = 0; i < deck.length; i++) {
+  let cardInList = document.createElement("li");
+  cardInList.innerHTML = deck[i].quantity + "x " + `<a class="mtgcard" href="">` + deck[i].name + `</a>`;
+  listOfCards.appendChild(cardInList)
+};
