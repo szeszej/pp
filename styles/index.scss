@@ -148,16 +148,27 @@ body {
   nav {
     grid-area: menu;
     background-color: $swclr;
-    display: flex;
     text-transform: uppercase;
-    justify-content: space-around;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-    .menuitem {
-      margin: 1em;
-      text-align: center;
-      color: black;
-      text-decoration: underline;
+    ul {
+      padding-inline-start: 0;
+      margin-block-start: 0;
+      margin-block-end: 0;
+      list-style-type: none;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      .menuitem {
+        display: inline-block;
+        margin: 1em;
+        text-align: center;
+        color: black;
+        text-decoration: underline;
+      }
     }
   }
 
@@ -376,7 +387,7 @@ body {
       }
     }
   }
-  @media only screen and (max-width: 750px) {
+  @media only screen and (max-width: 790px) {
     .wrapperhomepage {
       grid-template-rows: 7.5em 4em auto auto;
     }
