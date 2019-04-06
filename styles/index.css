@@ -92,7 +92,34 @@ body {
   letter-spacing: 0.1em;
   font-family: "Oswald", sans-serif;
   font-size: 18px;
+  /* poniżej jeśli podgląd jest podczepiony do body */
+  /* powyżej jeśli podgląd jest podczepiony do body */
+  /* poniżej jeśli podgląd jest podczepiony do linku z kartą */
+  /* powyżej jeśli podgląd jest podczepiony do linku z kartą */
   /* poniżej tylko dla strony głównej */ }
+  body .cardpreview {
+    display: block;
+    width: 200px;
+    background-color: transparent;
+    padding: 0.3em 0;
+    position: absolute;
+    z-index: 1; }
+    body .cardpreview img {
+      clip-path: polygon(0% 3%, 3% 0%, 97% 0%, 100% 3%, 100% 97%, 97% 100%, 3% 100%, 0% 97%); }
+  body .cardpreview::after {
+    content: " ";
+    position: absolute;
+    top: 2%;
+    right: 100%;
+    margin-top: 0.3em;
+    border-width: 0.4em;
+    border-style: solid;
+    border-color: transparent yellow transparent transparent; }
+  body .mtgcard {
+    position: relative; }
+    body .mtgcard .cardpreview {
+      top: -0.3em;
+      left: 105%; }
   body img {
     max-width: 100%;
     display: block;
@@ -105,9 +132,7 @@ body {
     grid-template-rows: 10em 5em auto auto;
     grid-template-areas: "header header header" "menu menu menu" "sideleft content sideright" "footer footer footer";
     /* poniżej tylko dla strony zasad */
-    /* powyżej tylko dla strony zasad */
-    /* poniżej tylko dla strony zasad edh*/
-    /* powyżej tylko dla strony zasad edh */ }
+    /* powyżej tylko dla strony zasad */ }
     body .wrappersidebar .leftsidebar {
       grid-area: sideleft;
       position: sticky;
@@ -270,31 +295,6 @@ body {
             padding: 0.15em 1em 0.15em 0.15em; }
             body .ranking .rank .info .winsline .wins span {
               letter-spacing: initial; }
-  body .mtgcard {
-    position: relative;
-    display: inline-block; }
-    body .mtgcard .cardpreview {
-      display: none;
-      width: 200px;
-      background-color: transparent;
-      padding: 0.3em 0;
-      position: absolute;
-      top: -0.3em;
-      left: 105%;
-      z-index: 1; }
-      body .mtgcard .cardpreview img {
-        clip-path: polygon(0% 3%, 3% 0%, 97% 0%, 100% 3%, 100% 97%, 97% 100%, 3% 100%, 0% 97%); }
-    body .mtgcard .cardpreview::after {
-      content: " ";
-      position: absolute;
-      top: 2%;
-      right: 100%;
-      margin-top: 0.3em;
-      border-width: 0.4em;
-      border-style: solid;
-      border-color: transparent yellow transparent transparent; }
-  body .mtgcard:hover .cardpreview {
-    display: block; }
   body footer {
     grid-area: footer;
     color: black;

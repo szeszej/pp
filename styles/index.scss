@@ -7,7 +7,41 @@ body {
   letter-spacing: 0.1em;
   font-family: "Oswald", sans-serif;
   font-size: 18px;
+  /* poniżej jeśli podgląd jest podczepiony do body */
+  .cardpreview {
+    display: block;
+    width: 200px;
+    background-color: transparent;
+    padding: 0.3em 0;
+    position: absolute;
+    z-index: 1;
 
+    img {
+      clip-path: polygon(0% 3%, /* top left */ 3% 0%, /* top left */ 97% 0%, /* top right */ 100% 3%, /* top right */ 100% 97%, /* bottom right */ 97% 100%, /* bottom right */ 3% 100%, /* bottom left */ 0% 97% /* bottom left */);
+    }
+  }
+
+  .cardpreview::after {
+    content: " ";
+    position: absolute;
+    top: 2%;
+    right: 100%;
+    margin-top: 0.3em;
+    border-width: 0.4em;
+    border-style: solid;
+    border-color: transparent yellow transparent transparent;
+  }
+  /* powyżej jeśli podgląd jest podczepiony do body */
+  /* poniżej jeśli podgląd jest podczepiony do linku z kartą */
+  .mtgcard {
+    position: relative;
+
+    .cardpreview {
+      top: -0.3em;
+      left: 105%;
+    }
+  }
+  /* powyżej jeśli podgląd jest podczepiony do linku z kartą */
   img {
     max-width: 100%;
     display: block;
@@ -65,8 +99,7 @@ body {
       margin-top: 0.5em;
       margin-bottom: 0.5em;
     }
-    /* powyżej tylko dla strony zasad */
-    /* poniżej tylko dla strony zasad edh*/
+
     .bold {
       font-weight: bold;
       letter-spacing: inherit;
@@ -81,7 +114,7 @@ body {
       columns: 3;
       column-gap: 2em;
     }
-    /* powyżej tylko dla strony zasad edh */
+    /* powyżej tylko dla strony zasad */
   }
   /* poniżej tylko dla strony głównej */
   .wrapperhomepage {
@@ -247,41 +280,6 @@ body {
         }
       }
     }
-  }
-
-  .mtgcard {
-    position: relative;
-    display: inline-block;
-
-    .cardpreview {
-      display: none;
-      width: 200px;
-      background-color: transparent;
-      padding: 0.3em 0;
-      position: absolute;
-      top: -0.3em;
-      left: 105%;
-      z-index: 1;
-
-      img {
-        clip-path: polygon(0% 3%, /* top left */ 3% 0%, /* top left */ 97% 0%, /* top right */ 100% 3%, /* top right */ 100% 97%, /* bottom right */ 97% 100%, /* bottom right */ 3% 100%, /* bottom left */ 0% 97% /* bottom left */);
-      }
-    }
-
-    .cardpreview::after {
-      content: " ";
-      position: absolute;
-      top: 2%;
-      right: 100%;
-      margin-top: 0.3em;
-      border-width: 0.4em;
-      border-style: solid;
-      border-color: transparent yellow transparent transparent;
-    }
-  }
-
-  .mtgcard:hover .cardpreview {
-    display: block;
   }
 
   footer {
