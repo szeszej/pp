@@ -1,5 +1,5 @@
 var cardLinks = document.getElementsByClassName("mtgcard"); //lista wszystkich kart na stronie
-var apiRequestUrl = `https://api.scryfall.com/cards/search?q=`; //początek URLa do zapytania do API
+var apiRequestUrl = [`https://api.scryfall.com/cards/search?q=`, `https://api.scryfall.com/cards/search?q=`]; //początek URLa do zapytania do API
 var returnedCards = []; //tutaj będą przechowywane karty pobrane z API
 var bannedCardsList = document.querySelector(".banned"); //znajdujemy miejsce na stronie do wyświetlenia kart zbanowanych
 var ranking = document.querySelector("#ranklist"); //znajdujemy ranking
@@ -8,18 +8,20 @@ var wrapperSidebar = document.querySelector(".wrappersidebar"); //znajdujemy wra
 function createApiRequestURL() { //funkcja, która tworzy URL zapytania do API z nazwa kart na stronie
   if (bannedCardsList == null) { //jeśli nie jesteśmy na stronie z listą zbanowanych kart, to chcemy pobrać przez API dane kart ze strony
     for (let i = 0; i < cardLinks.length; i++) {
-      apiRequestUrl += `!"` + cardLinks[i].textContent + `" or `;
+      if (apiRequestUrl[0].length < 1024) { //niestety długość requesta jest limitowana, więc jak jest dużo kart, to trzeba dwóch :)
+        apiRequestUrl[0] += `!"` + cardLinks[i].textContent + `"or`;
+      } else {
+        apiRequestUrl[1] += `!"` + cardLinks[i].textContent + `"or`;
+      }
     }
   } else {
-    apiRequestUrl = `https://api.scryfall.com/cards/search?q=banned:commander%20legal:vintage`; //jak jesteśmy na stronie kart zbanowanych, to chcemy po prostu pobrać listę kart zbanowanych
+    apiRequestUrl[0] = `https://api.scryfall.com/cards/search?q=banned:commander%20legal:vintage`; //jak jesteśmy na stronie kart zbanowanych, to chcemy po prostu pobrać listę kart zbanowanych
   }
-  console.log(apiRequestUrl);
 };
 
 createApiRequestURL();
 
 function getCardImage(cardLink, cardName) { //funkcja, która tworzy divy z podglądem kart po najechaniu na nie i usuwa je po odjechaniu z nich :)
-
   let cardPreview = document.createElement("div");
   cardPreview.setAttribute("class", "cardpreview");
   cardPreview.innerHTML = `<img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=` + checkMultiverseId(cardName) + `&type=card">`;
@@ -59,32 +61,36 @@ function checkMultiverseId(cardName) { //funkcja, która sprawdza multiverseid d
   return multiverseId;
 }
 
-let request = new XMLHttpRequest(); //zapytanie do API
-request.open(
-  "GET",
-  apiRequestUrl, //URL wygenerowany wyżej
-  true
-);
-request.onload = function() { //kiedy mamy dane, to robimy rzeczy
-  var data = JSON.parse(this.response);
-  if (request.status >= 200 && request.status < 400) {
-    returnedCards = data.data; //podpisujemy pobrane dane o kartach pod zmienną
-    console.log(returnedCards);
-    if (bannedCardsList != null) { //jeśli isnieje lista kart zbanowanych, to trzeba do niej dodać karty
-      for (var i = 0; i < returnedCards.length; i++) { //tworzymy listę kart zbanowanych na stronie
-        let bannedCard = document.createElement("li");
-        bannedCard.innerHTML = `<a class="mtgcard" href="">` + returnedCards[i].name + `</a>`
-        bannedCardsList.appendChild(bannedCard);
+apiRequestUrl.forEach(function(requestUrl) {
+  if (requestUrl.length > 40) {
+
+    let request = new XMLHttpRequest(); //zapytanie do API
+    request.open(
+      "GET",
+      requestUrl, //URL wygenerowany wyżej
+      true
+    );
+    request.send();
+    request.onload = function() { //kiedy mamy dane, to robimy rzeczy
+      var data = JSON.parse(this.response);
+      if (request.status >= 200 && request.status < 400) {
+        returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
+        if (bannedCardsList != null) { //jeśli isnieje lista kart zbanowanych, to trzeba do niej dodać karty
+          returnedCards.forEach(function (returnedCard) {
+            let bannedCard = document.createElement("li");
+            bannedCard.innerHTML = `<a class="mtgcard" href="">` + returnedCard.name + `</a>`
+            bannedCardsList.appendChild(bannedCard);
+          }); //tworzymy listę kart zbanowanych na stronie
+          cardLinks = document.getElementsByClassName("mtgcard"); //jako że lista kart została dopiero stworzona, trzeba zaktualizować zmienną z listą kart
+        }
+        for (let i = 0; i < cardLinks.length; i++) { //jak już mamy te dane, to:
+          getCardImage(cardLinks[i], cardLinks[i].textContent); //tworzymy podgląd kart przy najechaniu na kartę
+          cardLinks[i].setAttribute("href", `http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=` + checkMultiverseId(cardLinks[i].textContent));
+          cardLinks[i].setAttribute("target", "_blank"); //tworzymy link do gatherera dla każdej karty
+        };
+      } else {
+        console.log("error"); //jak się request nie powiedzie, to zwraca błąd
       }
-      cardLinks = document.getElementsByClassName("mtgcard"); //jako że lista kart została dopiero stworzona, trzeba zaktualizować zmienną z listą kart
-    }
-    for (let i = 0; i < cardLinks.length; i++) { //jak już mamy te dane, to:
-      getCardImage(cardLinks[i], cardLinks[i].textContent); //tworzymy podgląd kart przy najechaniu na kartę
-      cardLinks[i].setAttribute("href", `http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=` + checkMultiverseId(cardLinks[i].textContent));
-      cardLinks[i].setAttribute("target", "_blank"); //tworzymy link do gatherera dla każdej karty
     };
-  } else {
-    console.log("error"); //jak się request nie powiedzie, to zwraca błąd
   }
-};
-request.send();
+});
