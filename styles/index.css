@@ -94,8 +94,7 @@
   align-items: center; }
   .decklists a {
     display: block;
-    margin: 1em;
-    border: solid 1px #ffe919; }
+    margin: 1em; }
     .decklists a .commanderbox {
       width: 24em;
       height: 18em;
@@ -119,8 +118,12 @@
     .decklists a #daretti {
       background-image: url("../resources/images/daretti scrap savant.jpg"); }
 
-#decklistbox ul {
-  list-style-type: none; }
+#decklistbox .deck {
+  list-style-type: none;
+  columns: 4;
+  column-gap: 2em; }
+  #decklistbox .deck ul {
+    list-style-type: none; }
 
 body {
   margin: 0;

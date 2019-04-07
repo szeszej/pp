@@ -9,8 +9,7 @@
   a {
     display: block;
     margin: 1em;
-    border: solid 1px $swclr;
-
+    //  border: solid 1px $swclr;
     .commanderbox {
       width: 24em; //proporcje 4/3
       height: 18em;
@@ -25,8 +24,8 @@
         margin-block-start: 0;
         margin-block-end: 0;
         font-size: 1.5em;
-
       }
+
       .player {
         font-size: 0.5em;
         margin-bottom: 0.5em;
@@ -48,7 +47,13 @@
 }
 
 #decklistbox {
-  ul {
+  .deck {
     list-style-type: none;
+    columns: 4;
+    column-gap: 2em;
+
+    ul {
+      list-style-type: none;
+    }
   }
 }
