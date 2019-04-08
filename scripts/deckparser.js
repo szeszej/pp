@@ -45,6 +45,9 @@ var decklistBox = document.getElementById("decklistbox");
 var listOfCards = document.createElement("ul");
 listOfCards.setAttribute("class", "deck");
 decklistBox.appendChild(listOfCards);
+var loader = document.createElement("div");
+loader.setAttribute("class", "loader");
+listOfCards.appendChild(loader);
 
 let request = new XMLHttpRequest(); //zapytanie do API
 request.open(
@@ -72,6 +75,7 @@ request.onload = function() { //kiedy mamy dane, to robimy rzeczy
           updateDeckData(); //dodajemy pobrane dane do obiektów w decku
           createDeck(); //tworzymy deck na stronie
           addLinksAndPreviews(); //do kart w decku dodajemy linki i obrazki
+          listOfCards.removeChild(loader);
         } else {
           console.log("error"); //jak się request nie powiedzie, to zwraca błąd
         }
@@ -80,6 +84,7 @@ request.onload = function() { //kiedy mamy dane, to robimy rzeczy
       updateDeckData(); //dodajemy pobrane dane do obiektów w decku
       createDeck(); //tworzymy deck na stronie
       addLinksAndPreviews(); //do kart w decku dodajemy linki i obrazki
+      listOfCards.removeChild(loader);
     }
   } else {
     console.log("error"); //jak się request nie powiedzie, to zwraca błąd
