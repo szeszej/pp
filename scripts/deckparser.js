@@ -97,10 +97,7 @@ function updateDeckData() { //funkcja która dodaje właściwości z listy pobra
 };
 
 function createDeck() { //funkcja która tworzy widoczną na stronie talię
-  function constructListsByType(name, list) { //konstruktor, który tworzy listy kart po typie
-    this.name = name;
-    this.list = list;
-  }
+  let filteredCards = [];
   //poniżej regexy potrzebne do filtrowania
   let landRegex = /Land/;
   let creatureRegex = /Creature/;
@@ -110,31 +107,36 @@ function createDeck() { //funkcja która tworzy widoczną na stronie talię
   let instantRegex = /Instant/;
   let sorceryRegex = /Sorcery/;
   //poniżej tworzymy obiekty z listą kart o danym typie i nazwą listy
-  let commander = new constructListsByType("Commander", deck.filter(card => card.commander == true));
-  let lands = new constructListsByType("Lands", deck.filter(card => landRegex.test(card.type) == true));
-  let creatures = new constructListsByType("Creatures", deck.filter(card => creatureRegex.test(card.type) == true && card.commander == false && landRegex.test(card.type) == false));
-  let artifacts = new constructListsByType("Artifacts", deck.filter(card => artifactRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
-  let enchantments = new constructListsByType("Enchantments", deck.filter(card => enchantmentRegex.test(card.type) == true && creatureRegex.test(card.type) == false))
-  let planeswalkers = new constructListsByType("Planeswalkers", deck.filter(card => planeswalkerRegex.test(card.type) == true && card.commander == false));
-  let instants = new constructListsByType("Instants", deck.filter(card => instantRegex.test(card.type) == true));
-  let sorceries = new constructListsByType("Sorceries", deck.filter(card => sorceryRegex.test(card.type) == true));
-  //poniżej tworzymy podlisty kart do wyświetlania na stronie. używam call, ponieważ w przyszłości będę chciał grupować karty po innych właściwościach, np. kolorze
-  createListByProperty.call(commander);
-  createListByProperty.call(lands);
-  createListByProperty.call(creatures);
-  createListByProperty.call(artifacts);
-  createListByProperty.call(enchantments);
-  createListByProperty.call(planeswalkers);
-  createListByProperty.call(instants);
-  createListByProperty.call(sorceries);
+  let commander = new constructListsByProperty("Commander", deck.filter(card => card.commander == true));
+  filteredCards.push(commander);
+  let lands = new constructListsByProperty("Lands", deck.filter(card => landRegex.test(card.type) == true));
+  filteredCards.push(lands);
+  let creatures = new constructListsByProperty("Creatures", deck.filter(card => creatureRegex.test(card.type) == true && card.commander == false && landRegex.test(card.type) == false));
+  filteredCards.push(creatures);
+  let artifacts = new constructListsByProperty("Artifacts", deck.filter(card => artifactRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
+  filteredCards.push(artifacts);
+  let enchantments = new constructListsByProperty("Enchantments", deck.filter(card => enchantmentRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
+  filteredCards.push(enchantments);
+  let planeswalkers = new constructListsByProperty("Planeswalkers", deck.filter(card => planeswalkerRegex.test(card.type) == true && card.commander == false));
+  filteredCards.push(planeswalkers);
+  let instants = new constructListsByProperty("Instants", deck.filter(card => instantRegex.test(card.type) == true));
+  filteredCards.push(instants);
+  let sorceries = new constructListsByProperty("Sorceries", deck.filter(card => sorceryRegex.test(card.type) == true));
+  filteredCards.push(sorceries);
+  filteredCards.forEach(item => createListByProperty.call(item)); //tworzymy podlisty kart do wyświetlania na stronie. używam call, ponieważ w przyszłości będę chciał grupować karty po innych właściwościach, np. kolorze
 };
+
+function constructListsByProperty(name, list) { //konstruktor, który tworzy listy kart po typie
+  this.name = name;
+  this.list = list;
+}
 
 function createListByProperty() { //funkcja, która tworzy podlisty kart do wyświetlania na stronie
   if (this.list.length > 0) { //chcemy dodać podlistę tylko wtedy, kiedy jest niepusta
     let listName = document.createElement("li"); //box na nazwę podlisty
     listName.innerHTML = this.name + ` (` + this.list.reduce((total, item) => total + item.quantity, 0) + `)`; //oprócz nazwy chcę mieć jeszcze info, ile kart zawiera dana podlista
     let listByType = document.createElement("ul"); //właściwa podlista kart
-    this.list.forEach(function (item) { //tworzymy podlistę kart poprzez dodanie ilości danej karty + jej nazwy
+    this.list.forEach(function(item) { //tworzymy podlistę kart poprzez dodanie ilości danej karty + jej nazwy
       let cardInList = document.createElement("li");
       cardInList.innerHTML = item.quantity + "x " + `<a class="mtgcard" href="">` + item.name + `</a>`;
       listByType.appendChild(cardInList)
