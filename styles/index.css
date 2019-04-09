@@ -111,7 +111,8 @@
         font-size: 1.5em; }
       .decklists a .commanderbox .description {
         font-style: italic;
-        font-size: 0.5em; }
+        font-size: 0.5em;
+        text-align: center; }
       .decklists a .commanderbox .player {
         margin-top: 0.5em;
         font-size: 0.5em;
@@ -129,7 +130,7 @@
   column-gap: 2em;
   position: relative;
   min-height: 10em;
-  max-height: 60em;
+  max-height: 80em;
   font-size: 0.75em; }
   #decklistbox .deck .loader {
     position: absolute;

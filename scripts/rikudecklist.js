@@ -1,4 +1,4 @@
-//"baza danych" z decklistą Xantchy
+//"baza danych" z decklistą Riku
 var deckList = `1x Acidic Slime
 1x Body Double
 1x Coiling Oracle
