@@ -27,8 +27,8 @@ body {
     position: absolute;
     top: 2%;
     right: 100%;
-    margin-top: 0.3em;
-    border-width: 0.4em;
+    margin-top: 3px;
+    border-width: 7px;
     border-style: solid;
     border-color: transparent yellow transparent transparent;
   }
@@ -40,6 +40,10 @@ body {
     .cardpreview {
       top: -0.3em;
       left: 105%;
+    }
+    .cardpreview::after {
+      margin-top: 0.3em;
+      border-width: 0.4em;
     }
   }
   /* powyżej jeśli podgląd jest podczepiony do linku z kartą */

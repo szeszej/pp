@@ -1,3 +1,5 @@
+//https://disqus.com/ jako system komentarzy?
+
 matchLines = /.+/g; //regex, który dzieli mi decklistę na linijki
 cardName = /\s.+/; //regex, który znajduje mi nazwę karty
 commanderTest = /CMDR/; //regex, który znajduje mi commandera

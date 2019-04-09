@@ -94,7 +94,8 @@
   align-items: center; }
   .decklists a {
     display: block;
-    margin: 1em; }
+    margin: 1em;
+    text-decoration: none; }
     .decklists a .commanderbox {
       width: 24em;
       height: 18em;
@@ -108,7 +109,11 @@
         margin-block-start: 0;
         margin-block-end: 0;
         font-size: 1.5em; }
+      .decklists a .commanderbox .description {
+        font-style: italic;
+        font-size: 0.5em; }
       .decklists a .commanderbox .player {
+        margin-top: 0.5em;
         font-size: 0.5em;
         margin-bottom: 0.5em; }
     .decklists a #xantcha {
@@ -123,21 +128,24 @@
   columns: 4;
   column-gap: 2em;
   position: relative;
-  min-height: 10em; }
+  min-height: 10em;
+  font-size: 0.75em; }
   #decklistbox .deck .loader {
     position: absolute;
     margin: 0 auto;
     top: 0;
     border: 16px solid #a8a5a3;
-    /* Light grey */
     border-top: 16px solid #ffe919;
-    /* Blue */
+    border-bottom: 16px solid #ffe919;
     border-radius: 50%;
     width: 60px;
     height: 60px;
     animation: spin 2s linear infinite; }
-  #decklistbox .deck ul {
-    list-style-type: none; }
+  #decklistbox .deck li {
+    break-inside: avoid; }
+    #decklistbox .deck li ul {
+      list-style-type: none;
+      margin-block-end: 2em; }
 
 @keyframes spin {
   0% {
@@ -169,8 +177,8 @@ body {
     position: absolute;
     top: 2%;
     right: 100%;
-    margin-top: 0.3em;
-    border-width: 0.4em;
+    margin-top: 3px;
+    border-width: 7px;
     border-style: solid;
     border-color: transparent yellow transparent transparent; }
   body .mtgcard {
@@ -178,6 +186,9 @@ body {
     body .mtgcard .cardpreview {
       top: -0.3em;
       left: 105%; }
+    body .mtgcard .cardpreview::after {
+      margin-top: 0.3em;
+      border-width: 0.4em; }
   body img {
     max-width: 100%;
     display: block;
