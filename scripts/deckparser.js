@@ -32,7 +32,7 @@ cardNumbers.map(function(item, index) { //dodaję po kolei karty do decku
 var apiRequestUrl = [`https://api.scryfall.com/cards/search?q=`, `https://api.scryfall.com/cards/search?q=`]; //początek URLa do zapytania do API
 function createApiRequestURL() { //funkcja, która tworzy URL zapytania do API z listą kart w talii
   deck.forEach(function(item) {
-    if (apiRequestUrl[0].length < 1024) { //niestety długość requesta jest limitowana, więc jak jest dużo kart, to trzeba dwóch :)
+    if (apiRequestUrl[0].length < 1025) { //niestety długość requesta jest limitowana, więc jak jest dużo kart, to trzeba dwóch :)
       apiRequestUrl[0] += `!"` + item.name + `"or`;
     } else {
       apiRequestUrl[1] += `!"` + item.name + `"or`;
@@ -75,18 +75,18 @@ request.onload = function() { //kiedy mamy dane, to robimy rzeczy
         if (request2.status >= 200 && request.status < 400) {
           returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
           updateDeckData(); //dodajemy pobrane dane do obiektów w decku
-          createDeck(); //tworzymy deck na stronie
+          createDeckbyType(); //tworzymy deck na stronie
+          createButtons(); //tworzymy przyciski do grupowania i sortowania
           addLinksAndPreviews(); //do kart w decku dodajemy linki i obrazki
-          listOfCards.removeChild(loader);
         } else {
           console.log("error"); //jak się request nie powiedzie, to zwraca błąd
         }
       };
     } else {
       updateDeckData(); //dodajemy pobrane dane do obiektów w decku
-      createDeck(); //tworzymy deck na stronie
+      createDeckbyType(); //tworzymy deck na stronie
+      createButtons(); //tworzymy przyciski do grupowania i sortowania
       addLinksAndPreviews(); //do kart w decku dodajemy linki i obrazki
-      listOfCards.removeChild(loader);
     }
   } else {
     console.log("error"); //jak się request nie powiedzie, to zwraca błąd
@@ -97,13 +97,18 @@ function updateDeckData() { //funkcja która dodaje właściwości z listy pobra
   deck.forEach(function(card) {
     returnedCards.forEach(function(returnedCard) {
       if (returnedCard.name == card.name) {
-        card.type = returnedCard.type_line; //na razie potrzebujemy tylko typu
+        card.type = returnedCard.type_line; //pobieramy createListByProperty
+        card.cmc = returnedCard.cmc; // pobieramy converted mana cost
+        card.colors = returnedCard.colors; //pobieramy kolory
+        if (card.commander == true) {
+          card.identity = returnedCard.color_identity;
+        }
       }
     })
   })
 };
 
-function createDeck() { //funkcja która tworzy widoczną na stronie talię
+function createDeckbyType() { //funkcja która tworzy widoczną na stronie talię
   let filteredCards = [];
   //poniżej regexy potrzebne do filtrowania
   let landRegex = /Land/;
@@ -130,8 +135,53 @@ function createDeck() { //funkcja która tworzy widoczną na stronie talię
   filteredCards.push(instants);
   let sorceries = new constructListsByProperty("Sorceries", deck.filter(card => sorceryRegex.test(card.type) == true));
   filteredCards.push(sorceries);
+  listOfCards.innerHTML = "";
   filteredCards.forEach(item => createListByProperty.call(item)); //tworzymy podlisty kart do wyświetlania na stronie. używam call, ponieważ w przyszłości będę chciał grupować karty po innych właściwościach, np. kolorze
 };
+
+function createDeckbyCmc() {
+  let filteredCards = [];
+  let commander = new constructListsByProperty("Commander", deck.filter(card => card.commander == true));
+  filteredCards.push(commander);
+  let cmc0 = new constructListsByProperty("CMC = 0", deck.filter(card => card.cmc == 0 && card.commander == false));
+  filteredCards.push(cmc0);
+  let cmc1 = new constructListsByProperty("CMC = 1", deck.filter(card => card.cmc == 1 && card.commander == false));
+  filteredCards.push(cmc1);
+  let cmc2 = new constructListsByProperty("CMC = 2", deck.filter(card => card.cmc == 2 && card.commander == false));
+  filteredCards.push(cmc2);
+  let cmc3 = new constructListsByProperty("CMC = 3", deck.filter(card => card.cmc == 3 && card.commander == false));
+  filteredCards.push(cmc3);
+  let cmc4 = new constructListsByProperty("CMC = 4", deck.filter(card => card.cmc == 4 && card.commander == false));
+  filteredCards.push(cmc4);
+  let cmc5 = new constructListsByProperty("CMC = 5", deck.filter(card => card.cmc == 5 && card.commander == false));
+  filteredCards.push(cmc5);
+  let cmc6More = new constructListsByProperty("CMC = 6+", deck.filter(card => card.cmc > 5 && card.commander == false));
+  filteredCards.push(cmc6More);
+  listOfCards.innerHTML = "";
+  filteredCards.forEach(item => createListByProperty.call(item));
+}
+
+function createDeckbyColor() {
+  let filteredCards = [];
+  let commander = new constructListsByProperty("Commander", deck.filter(card => card.commander == true));
+  filteredCards.push(commander);
+  let colorless = new constructListsByProperty("CMC = 0", deck.filter(card => card.cmc == 0));
+  filteredCards.push(colorless);
+  let white = new constructListsByProperty("CMC = 1", deck.filter(card => card.cmc == 1));
+  filteredCards.push(white);
+  let blue = new constructListsByProperty("CMC = 2", deck.filter(card => card.cmc == 2));
+  filteredCards.push(blue);
+  let black = new constructListsByProperty("CMC = 3", deck.filter(card => card.cmc == 3));
+  filteredCards.push(black);
+  let red = new constructListsByProperty("CMC = 4", deck.filter(card => card.cmc == 4));
+  filteredCards.push(red);
+  let green = new constructListsByProperty("CMC = 5", deck.filter(card => card.cmc == 5));
+  filteredCards.push(green);
+  let multicolor = new constructListsByProperty("CMC = 6+", deck.filter(card => card.cmc > 5));
+  filteredCards.push(multicolor);
+  listOfCards.innerHTML = "";
+  filteredCards.forEach(item => createListByProperty.call(item));
+}
 
 function constructListsByProperty(name, list) { //konstruktor, który tworzy listy kart po typie
   this.name = name;
@@ -152,6 +202,55 @@ function createListByProperty() { //funkcja, która tworzy podlisty kart do wyś
     listOfCards.appendChild(listName); //dodajemy podlistę do jej nazwy
   };
 };
+
+function createButtons () {
+  let buttons = document.createElement("div");
+  buttons.setAttribute("class", "buttons");
+  let dropdownGroup = document.createElement("div");
+  dropdownGroup.setAttribute("class", "dropdown");
+  let dropdownGroupButton = document.createElement("button");
+  dropdownGroupButton.setAttribute("class", "dropdownbutton");
+  dropdownGroupButton.textContent = "Grupuj po...";
+  let dropdownGroupButtonContent = document.createElement("div");
+  dropdownGroupButtonContent.setAttribute("class", "dropdowncontent");
+  let groupByType = document.createElement("p");
+  groupByType.textContent = "Typie";
+  let groupByCmc = document.createElement("p");
+  groupByCmc.textContent = "CMC";
+  let groupByColor = document.createElement("p");
+  groupByColor.textContent = "Kolorze";
+  dropdownGroupButtonContent.appendChild(groupByType);
+  dropdownGroupButtonContent.appendChild(groupByCmc);
+  dropdownGroupButtonContent.appendChild(groupByColor);
+  dropdownGroupButton.appendChild(dropdownGroupButtonContent);
+  dropdownGroup.appendChild(dropdownGroupButton);
+  buttons.appendChild(dropdownGroup);
+
+  let dropdownSort = document.createElement("div");
+  dropdownSort.setAttribute("class", "dropdown");
+  let dropdownSortButton = document.createElement("button");
+  dropdownSortButton.setAttribute("class", "dropdownbutton");
+  dropdownSortButton.textContent = "Sortuj po...";
+  let dropdownSortButtonContent = document.createElement("div");
+  dropdownSortButtonContent.setAttribute("class", "dropdowncontent")
+  let sortByName = document.createElement("p");
+  sortByName.textContent = "Nazwie";
+  let sortByType = document.createElement("p");
+  sortByType.textContent = "Typie";
+  let sortByCmc = document.createElement("p");
+  sortByCmc.textContent = "CMC";
+  dropdownSortButtonContent.appendChild(sortByName);
+  dropdownSortButtonContent.appendChild(sortByType);
+  dropdownSortButtonContent.appendChild(sortByCmc);
+  dropdownSortButton.appendChild(dropdownSortButtonContent);
+  dropdownSort.appendChild(dropdownSortButton);
+  buttons.appendChild(dropdownSort);
+
+  decklistBox.insertBefore(buttons, listOfCards);
+
+  groupByType.addEventListener("click", createDeckbyType);
+  groupByCmc.addEventListener("click", createDeckbyCmc);
+}
 
 function addLinksAndPreviews() { //funkcja, która dodaje linki i podglądy do kart
   let cardLinks = document.getElementsByClassName("mtgcard"); //sprawdzamy listę kart na stronie

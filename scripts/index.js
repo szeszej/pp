@@ -21,38 +21,57 @@ function createApiRequestURL() { //funkcja, która tworzy URL zapytania do API z
 
 createApiRequestURL();
 
-apiRequestUrl.forEach(function(requestUrl, index, requestUrls) {
-  if (requestUrl.length > 40) {
-    let request = new XMLHttpRequest(); //zapytanie do API
-    request.open(
-      "GET",
-      requestUrl, //URL wygenerowany wyżej
-      true
-    );
-    request.send();
-    request.onload = function() { //kiedy mamy dane, to robimy rzeczy
-      var data = JSON.parse(this.response);
-      if (request.status >= 200 && request.status < 400) {
-        returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
-        if (bannedCardsList != null) { //jeśli isnieje lista kart zbanowanych, to trzeba do niej dodać karty
-          returnedCards.forEach(function(returnedCard) {
-            let bannedCard = document.createElement("li");
-            bannedCard.innerHTML = `<a class="mtgcard" href="">` + returnedCard.name + `</a>`
-            bannedCardsList.appendChild(bannedCard);
-          }); //tworzymy listę kart zbanowanych na stronie
-          cardLinks = document.getElementsByClassName("mtgcard"); //jako że lista kart została dopiero stworzona, trzeba zaktualizować zmienną z listą kart
-        };
-        if (index == 0 && requestUrls[1].length == 40) { //jeśli jest 1 request
-          addLinksAndPreviews(); //dodajemy linki i podgląd kart
-        } else if (index == 1) { //jeśli są 2 requesty
-          addLinksAndPreviews(); //dodajemy linki i podgląd kart
+let request = new XMLHttpRequest(); //zapytanie do API
+request.open(
+  "GET",
+  apiRequestUrl[0], //pierwszy URL wygenerowany wyżej
+  true
+);
+request.send();
+request.onload = function() { //kiedy mamy dane, to robimy rzeczy
+  var data = JSON.parse(this.response);
+  if (request.status >= 200 && request.status < 400) {
+    returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
+    if (apiRequestUrl[1].length > 40) { //jeśli trzeba było stworzyć drugi URL, to trzeba zrobić drugie zapytanie z drugim URLem
+      let request2 = new XMLHttpRequest(); // drugie zapytanie do API
+      request2.open(
+        "GET",
+        apiRequestUrl[1], // drugi URL wygenerowany wyżej
+        true
+      );
+      request2.send();
+      request2.onload = function() { //kiedy mamy dane, to robimy rzeczy
+        var data = JSON.parse(this.response);
+        if (request2.status >= 200 && request.status < 400) {
+          returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
+          if (bannedCardsList != null) { //jeśli isnieje lista kart zbanowanych, to trzeba do niej dodać karty
+            returnedCards.forEach(function(returnedCard) {
+              let bannedCard = document.createElement("li");
+              bannedCard.innerHTML = `<a class="mtgcard" href="">` + returnedCard.name + `</a>`
+              bannedCardsList.appendChild(bannedCard);
+            }); //tworzymy listę kart zbanowanych na stronie
+            cardLinks = document.getElementsByClassName("mtgcard"); //jako że lista kart została dopiero stworzona, trzeba zaktualizować zmienną z listą kart
+          };
+            addLinksAndPreviews(); //dodajemy linki i podgląd kart
+        } else {
+          console.log("error"); //jak się request nie powiedzie, to zwraca błąd
         }
-      } else {
-        console.log("error"); //jak się request nie powiedzie, to zwraca błąd
-      }
-    };
+      };
+    } else {
+      if (bannedCardsList != null) { //jeśli isnieje lista kart zbanowanych, to trzeba do niej dodać karty
+        returnedCards.forEach(function(returnedCard) {
+          let bannedCard = document.createElement("li");
+          bannedCard.innerHTML = `<a class="mtgcard" href="">` + returnedCard.name + `</a>`
+          bannedCardsList.appendChild(bannedCard);
+        }); //tworzymy listę kart zbanowanych na stronie
+        cardLinks = document.getElementsByClassName("mtgcard"); //jako że lista kart została dopiero stworzona, trzeba zaktualizować zmienną z listą kart
+      };
+        addLinksAndPreviews(); //dodajemy linki i podgląd kart
+    }
+  } else {
+    console.log("error"); //jak się request nie powiedzie, to zwraca błąd
   }
-});
+};
 
 function addLinksAndPreviews () { //funkcja, która dodaje linki i podglądy do kart
   for (let i = 0; i < cardLinks.length; i++) {
