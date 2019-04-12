@@ -201,8 +201,6 @@ function createDeck(grouping) { //funkcja która tworzy widoczną na stronie tal
     //poniżej tworzymy obiekty z listą kart o danym kolorze i nazwą listy
     let commander = new constructListsByProperty("Commander", deck.filter(card => card.commander == true));
     filteredCards.push(commander);
-    let colorless = new constructListsByProperty("Bezkolorowe", deck.filter(card => card.colors.length == 0 && card.commander == false));
-    filteredCards.push(colorless);
     let white = new constructListsByProperty("Białe", deck.filter(card => card.colors.length == 1 && card.colors[0] == "W" && card.commander == false));
     filteredCards.push(white);
     let blue = new constructListsByProperty("Niebieskie", deck.filter(card => card.colors.length == 1 && card.colors[0] == "U" && card.commander == false));
@@ -215,6 +213,8 @@ function createDeck(grouping) { //funkcja która tworzy widoczną na stronie tal
     filteredCards.push(green);
     let multicolor = new constructListsByProperty("Wielokolorwe", deck.filter(card => card.colors.length > 1 && card.commander == false));
     filteredCards.push(multicolor);
+    let colorless = new constructListsByProperty("Bezkolorowe", deck.filter(card => card.colors.length == 0 && card.commander == false));
+    filteredCards.push(colorless);
     currentGrouping = "color";
   }
   listOfCards.innerHTML = ""; //czyścimy widoczną decklistę
@@ -234,7 +234,11 @@ function createListByProperty() { //funkcja, która tworzy podlisty kart do wyś
     let listByType = document.createElement("ul"); //właściwa podlista kart
     this.list.forEach(function(item) { //tworzymy podlistę kart poprzez dodanie ilości danej karty + jej nazwy
       let cardInList = document.createElement("li");
+      // if (item.commander == true) {
+      //   cardInList.innerHTML = `<a target="_blank" href="http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=` + item.multiverseId + `">` + `<img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=` + item.multiverseId + `&type=card"></a>`;
+      // } else {
       cardInList.innerHTML = item.quantity + "x " + `<a class="mtgcard" href="">` + item.name + `</a>`;
+      // };
       listByType.appendChild(cardInList)
     });
     listName.appendChild(listByType); //dodajemy nazwę podlisty do głównej listy
