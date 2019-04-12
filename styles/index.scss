@@ -22,6 +22,12 @@ body {
     }
   }
 
+  button:focus {
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+  }
+
   .cardpreview::after {
     content: " ";
     position: absolute;
@@ -261,9 +267,6 @@ body {
       }
 
       button:focus {
-        outline-style: none;
-        box-shadow: none;
-        border-color: transparent;
         border: 1px solid black;
       }
 

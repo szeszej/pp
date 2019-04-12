@@ -150,42 +150,44 @@
       list-style-type: none;
       margin-block-end: 2em; }
 
-#decklistbox .buttons {
-  /* The container <div> - needed to position the dropdown content */
-  /* Dropdown Button */
-  /* Dropdown Content (Hidden by Default) */
-  /* Links inside the dropdown */
-  /* Change color of dropdown links on hover */
-  /* Show the dropdown menu on hover */
-  /* Change the background color of the dropdown button when the dropdown content is shown */ }
-  #decklistbox .buttons .dropdown {
-    position: relative;
-    display: inline-block; }
-  #decklistbox .buttons .dropdownbutton {
-    background-color: #4CAF50;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none; }
-  #decklistbox .buttons .dropdowncontent {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    z-index: 1; }
-  #decklistbox .buttons .dropdowncontent p {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    cursor: pointer; }
-  #decklistbox .buttons .dropdowncontent p:hover {
-    background-color: #ddd; }
-  #decklistbox .buttons .dropdown:hover .dropdowncontent {
-    display: block; }
-  #decklistbox .buttons .dropdown:hover .dropdownbutton {
-    background-color: #3e8e41; }
+#decklistbox .buttons .dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 1em;
+  margin-right: 1em; }
+
+#decklistbox .buttons .dropdownbutton {
+  background-color: #ffe919;
+  color: black;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  margin-left: 0.5em;
+  margin-right: 0.5em; }
+
+#decklistbox .buttons .dropdowncontent {
+  display: none;
+  position: absolute;
+  background-color: #ffe919;
+  min-width: 7em;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1; }
+
+#decklistbox .buttons .dropdowncontent p {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer; }
+
+#decklistbox .buttons .dropdowncontent p:hover {
+  background-color: #fff6a2; }
+
+#decklistbox .buttons .dropdown:hover .dropdowncontent {
+  display: block; }
+
+#decklistbox .buttons .dropdown:hover .dropdownbutton {
+  background-color: #7b6f00; }
 
 @keyframes spin {
   0% {
@@ -212,6 +214,10 @@ body {
     z-index: 1; }
     body .cardpreview img {
       clip-path: polygon(0% 3%, 3% 0%, 97% 0%, 100% 3%, 100% 97%, 97% 100%, 3% 100%, 0% 97%); }
+  body button:focus {
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent; }
   body .cardpreview::after {
     content: " ";
     position: absolute;
@@ -390,9 +396,6 @@ body {
         margin: auto;
         font-size: 25px; }
       body .ranking .rank button:focus {
-        outline-style: none;
-        box-shadow: none;
-        border-color: transparent;
         border: 1px solid black; }
       body .ranking .rank .info {
         grid-area: info;

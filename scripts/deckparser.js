@@ -47,9 +47,12 @@ var decklistBox = document.getElementById("decklistbox");
 var listOfCards = document.createElement("ul");
 listOfCards.setAttribute("class", "deck");
 decklistBox.appendChild(listOfCards);
-var loader = document.createElement("div");
+var loader = document.createElement("div"); //obracające się kółko kiedy lista jeszcze się ładuje
 loader.setAttribute("class", "loader");
 listOfCards.appendChild(loader);
+
+var currentGrouping = ""; //tutaj przechowuję informację o obecnym grupowaniu kart
+var currentSort = ""; //tutaj przechowuję informację o obecnym sortowaniu kart
 
 let request = new XMLHttpRequest(); //zapytanie do API
 request.open(
@@ -75,18 +78,16 @@ request.onload = function() { //kiedy mamy dane, to robimy rzeczy
         if (request2.status >= 200 && request.status < 400) {
           returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
           updateDeckData(); //dodajemy pobrane dane do obiektów w decku
-          createDeckbyType(); //tworzymy deck na stronie
+          createDeck("type"); //tworzymy deck na stronie
           createButtons(); //tworzymy przyciski do grupowania i sortowania
-          addLinksAndPreviews(); //do kart w decku dodajemy linki i obrazki
         } else {
           console.log("error"); //jak się request nie powiedzie, to zwraca błąd
         }
       };
     } else {
       updateDeckData(); //dodajemy pobrane dane do obiektów w decku
-      createDeckbyType(); //tworzymy deck na stronie
+      createDeck("type"); //tworzymy deck na stronie
       createButtons(); //tworzymy przyciski do grupowania i sortowania
-      addLinksAndPreviews(); //do kart w decku dodajemy linki i obrazki
     }
   } else {
     console.log("error"); //jak się request nie powiedzie, to zwraca błąd
@@ -99,7 +100,12 @@ function updateDeckData() { //funkcja która dodaje właściwości z listy pobra
       if (returnedCard.name == card.name) {
         card.type = returnedCard.type_line; //pobieramy createListByProperty
         card.cmc = returnedCard.cmc; // pobieramy converted mana cost
-        card.colors = returnedCard.colors; //pobieramy kolory
+        card.multiverseId = returnedCard.multiverse_ids[0]; //pobieramy multiverseid
+        if (returnedCard.hasOwnProperty("card_faces") == true) { //czasami karta ma dwie połówki albo drugą stronę - wtedy chcemy multiverse id pierwszej
+          card.colors = returnedCard.card_faces[0].colors;
+        } else {
+          card.colors = returnedCard.colors; //pobieramy kolory
+        }
         if (card.commander == true) {
           card.identity = returnedCard.color_identity;
         }
@@ -108,80 +114,113 @@ function updateDeckData() { //funkcja która dodaje właściwości z listy pobra
   })
 };
 
-function createDeckbyType() { //funkcja która tworzy widoczną na stronie talię
-  let filteredCards = [];
-  //poniżej regexy potrzebne do filtrowania
-  let landRegex = /Land/;
-  let creatureRegex = /Creature/;
-  let artifactRegex = /Artifact/;
-  let enchantmentRegex = /Enchantment/;
-  let planeswalkerRegex = /Planeswalker/;
-  let instantRegex = /Instant/;
-  let sorceryRegex = /Sorcery/;
-  //poniżej tworzymy obiekty z listą kart o danym typie i nazwą listy
-  let commander = new constructListsByProperty("Commander", deck.filter(card => card.commander == true));
-  filteredCards.push(commander);
-  let lands = new constructListsByProperty("Lands", deck.filter(card => landRegex.test(card.type) == true));
-  filteredCards.push(lands);
-  let creatures = new constructListsByProperty("Creatures", deck.filter(card => creatureRegex.test(card.type) == true && card.commander == false && landRegex.test(card.type) == false));
-  filteredCards.push(creatures);
-  let artifacts = new constructListsByProperty("Artifacts", deck.filter(card => artifactRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
-  filteredCards.push(artifacts);
-  let enchantments = new constructListsByProperty("Enchantments", deck.filter(card => enchantmentRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
-  filteredCards.push(enchantments);
-  let planeswalkers = new constructListsByProperty("Planeswalkers", deck.filter(card => planeswalkerRegex.test(card.type) == true && card.commander == false));
-  filteredCards.push(planeswalkers);
-  let instants = new constructListsByProperty("Instants", deck.filter(card => instantRegex.test(card.type) == true));
-  filteredCards.push(instants);
-  let sorceries = new constructListsByProperty("Sorceries", deck.filter(card => sorceryRegex.test(card.type) == true));
-  filteredCards.push(sorceries);
-  listOfCards.innerHTML = "";
-  filteredCards.forEach(item => createListByProperty.call(item)); //tworzymy podlisty kart do wyświetlania na stronie. używam call, ponieważ w przyszłości będę chciał grupować karty po innych właściwościach, np. kolorze
+function sortDeck(sorting) {
+  if (sorting == "name") { //sortowanie po nazwie
+    deck = deck.sort(function(a, b) {
+      //ignorujemy wielkość liter
+      let nameA = a.name.toUpperCase();
+      let nameB = b.name.toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+    currentSort = "name";
+  } else if (sorting == "cmc") { //sortowanie po cmc
+    deck = deck.sort((a, b) => a.cmc - b.cmc);
+    currentSort = "cmc";
+  } else if (sorting == "type") { //sortowanie po typie
+    deck = deck.sort(function(a, b) {
+      //ignorujemy wielkość liter
+      let typeA = a.type.toUpperCase();
+      let typeB = b.type.toUpperCase();
+      if (typeA < typeB) {
+        return -1;
+      }
+      if (typeA > typeB) {
+        return 1;
+      }
+      return 0;
+    });
+    currentSort = "type";
+  }
 };
 
-function createDeckbyCmc() {
+function createDeck(grouping) { //funkcja która tworzy widoczną na stronie talię
   let filteredCards = [];
-  let commander = new constructListsByProperty("Commander", deck.filter(card => card.commander == true));
-  filteredCards.push(commander);
-  let cmc0 = new constructListsByProperty("CMC = 0", deck.filter(card => card.cmc == 0 && card.commander == false));
-  filteredCards.push(cmc0);
-  let cmc1 = new constructListsByProperty("CMC = 1", deck.filter(card => card.cmc == 1 && card.commander == false));
-  filteredCards.push(cmc1);
-  let cmc2 = new constructListsByProperty("CMC = 2", deck.filter(card => card.cmc == 2 && card.commander == false));
-  filteredCards.push(cmc2);
-  let cmc3 = new constructListsByProperty("CMC = 3", deck.filter(card => card.cmc == 3 && card.commander == false));
-  filteredCards.push(cmc3);
-  let cmc4 = new constructListsByProperty("CMC = 4", deck.filter(card => card.cmc == 4 && card.commander == false));
-  filteredCards.push(cmc4);
-  let cmc5 = new constructListsByProperty("CMC = 5", deck.filter(card => card.cmc == 5 && card.commander == false));
-  filteredCards.push(cmc5);
-  let cmc6More = new constructListsByProperty("CMC = 6+", deck.filter(card => card.cmc > 5 && card.commander == false));
-  filteredCards.push(cmc6More);
-  listOfCards.innerHTML = "";
-  filteredCards.forEach(item => createListByProperty.call(item));
-}
-
-function createDeckbyColor() {
-  let filteredCards = [];
-  let commander = new constructListsByProperty("Commander", deck.filter(card => card.commander == true));
-  filteredCards.push(commander);
-  let colorless = new constructListsByProperty("CMC = 0", deck.filter(card => card.cmc == 0));
-  filteredCards.push(colorless);
-  let white = new constructListsByProperty("CMC = 1", deck.filter(card => card.cmc == 1));
-  filteredCards.push(white);
-  let blue = new constructListsByProperty("CMC = 2", deck.filter(card => card.cmc == 2));
-  filteredCards.push(blue);
-  let black = new constructListsByProperty("CMC = 3", deck.filter(card => card.cmc == 3));
-  filteredCards.push(black);
-  let red = new constructListsByProperty("CMC = 4", deck.filter(card => card.cmc == 4));
-  filteredCards.push(red);
-  let green = new constructListsByProperty("CMC = 5", deck.filter(card => card.cmc == 5));
-  filteredCards.push(green);
-  let multicolor = new constructListsByProperty("CMC = 6+", deck.filter(card => card.cmc > 5));
-  filteredCards.push(multicolor);
-  listOfCards.innerHTML = "";
-  filteredCards.forEach(item => createListByProperty.call(item));
-}
+  if (grouping == "type") {
+    //poniżej regexy potrzebne do filtrowania
+    let landRegex = /Land/;
+    let creatureRegex = /Creature/;
+    let artifactRegex = /Artifact/;
+    let enchantmentRegex = /Enchantment/;
+    let planeswalkerRegex = /Planeswalker/;
+    let instantRegex = /Instant/;
+    let sorceryRegex = /Sorcery/;
+    //poniżej tworzymy obiekty z listą kart o danym typie i nazwą listy
+    let commander = new constructListsByProperty("Commander", deck.filter(card => card.commander == true));
+    filteredCards.push(commander);
+    let lands = new constructListsByProperty("Lands", deck.filter(card => landRegex.test(card.type) == true));
+    filteredCards.push(lands);
+    let creatures = new constructListsByProperty("Creatures", deck.filter(card => creatureRegex.test(card.type) == true && card.commander == false && landRegex.test(card.type) == false));
+    filteredCards.push(creatures);
+    let artifacts = new constructListsByProperty("Artifacts", deck.filter(card => artifactRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
+    filteredCards.push(artifacts);
+    let enchantments = new constructListsByProperty("Enchantments", deck.filter(card => enchantmentRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
+    filteredCards.push(enchantments);
+    let planeswalkers = new constructListsByProperty("Planeswalkers", deck.filter(card => planeswalkerRegex.test(card.type) == true && card.commander == false));
+    filteredCards.push(planeswalkers);
+    let instants = new constructListsByProperty("Instants", deck.filter(card => instantRegex.test(card.type) == true));
+    filteredCards.push(instants);
+    let sorceries = new constructListsByProperty("Sorceries", deck.filter(card => sorceryRegex.test(card.type) == true));
+    filteredCards.push(sorceries);
+    currentGrouping = "type";
+  } else if (grouping == "cmc") {
+    //poniżej tworzymy obiekty z listą kart o danym cmc i nazwą listy
+    let commander = new constructListsByProperty("Commander", deck.filter(card => card.commander == true));
+    filteredCards.push(commander);
+    let cmc0 = new constructListsByProperty("CMC 0", deck.filter(card => card.cmc == 0 && card.commander == false));
+    filteredCards.push(cmc0);
+    let cmc1 = new constructListsByProperty("CMC 1", deck.filter(card => card.cmc == 1 && card.commander == false));
+    filteredCards.push(cmc1);
+    let cmc2 = new constructListsByProperty("CMC 2", deck.filter(card => card.cmc == 2 && card.commander == false));
+    filteredCards.push(cmc2);
+    let cmc3 = new constructListsByProperty("CMC 3", deck.filter(card => card.cmc == 3 && card.commander == false));
+    filteredCards.push(cmc3);
+    let cmc4 = new constructListsByProperty("CMC 4", deck.filter(card => card.cmc == 4 && card.commander == false));
+    filteredCards.push(cmc4);
+    let cmc5 = new constructListsByProperty("CMC 5", deck.filter(card => card.cmc == 5 && card.commander == false));
+    filteredCards.push(cmc5);
+    let cmc6More = new constructListsByProperty("CMC 6+", deck.filter(card => card.cmc > 5 && card.commander == false));
+    filteredCards.push(cmc6More);
+    currentGrouping = "cmc";
+  } else if (grouping == "color") {
+    //poniżej tworzymy obiekty z listą kart o danym kolorze i nazwą listy
+    let commander = new constructListsByProperty("Commander", deck.filter(card => card.commander == true));
+    filteredCards.push(commander);
+    let colorless = new constructListsByProperty("Bezkolorowe", deck.filter(card => card.colors.length == 0 && card.commander == false));
+    filteredCards.push(colorless);
+    let white = new constructListsByProperty("Białe", deck.filter(card => card.colors.length == 1 && card.colors[0] == "W" && card.commander == false));
+    filteredCards.push(white);
+    let blue = new constructListsByProperty("Niebieskie", deck.filter(card => card.colors.length == 1 && card.colors[0] == "U" && card.commander == false));
+    filteredCards.push(blue);
+    let black = new constructListsByProperty("Czarne", deck.filter(card => card.colors.length == 1 && card.colors[0] == "B" && card.commander == false));
+    filteredCards.push(black);
+    let red = new constructListsByProperty("Czerwone", deck.filter(card => card.colors.length == 1 && card.colors[0] == "R" && card.commander == false));
+    filteredCards.push(red);
+    let green = new constructListsByProperty("Zielone", deck.filter(card => card.colors.length == 1 && card.colors[0] == "G" && card.commander == false));
+    filteredCards.push(green);
+    let multicolor = new constructListsByProperty("Wielokolorwe", deck.filter(card => card.colors.length > 1 && card.commander == false));
+    filteredCards.push(multicolor);
+    currentGrouping = "color";
+  }
+  listOfCards.innerHTML = ""; //czyścimy widoczną decklistę
+  filteredCards.forEach(item => createListByProperty.call(item)); //tworzymy podlisty kart do wyświetlania na stronie
+  addLinksAndPreviews(); //do kart w decku dodajemy linki i obrazki
+};
 
 function constructListsByProperty(name, list) { //konstruktor, który tworzy listy kart po typie
   this.name = name;
@@ -203,9 +242,11 @@ function createListByProperty() { //funkcja, która tworzy podlisty kart do wyś
   };
 };
 
-function createButtons () {
+function createButtons() {
+  //div na przyciski
   let buttons = document.createElement("div");
   buttons.setAttribute("class", "buttons");
+  //tworzymy przycisk do grupowania
   let dropdownGroup = document.createElement("div");
   dropdownGroup.setAttribute("class", "dropdown");
   let dropdownGroupButton = document.createElement("button");
@@ -225,7 +266,7 @@ function createButtons () {
   dropdownGroupButton.appendChild(dropdownGroupButtonContent);
   dropdownGroup.appendChild(dropdownGroupButton);
   buttons.appendChild(dropdownGroup);
-
+  //tworzymy przycisk do sortowania
   let dropdownSort = document.createElement("div");
   dropdownSort.setAttribute("class", "dropdown");
   let dropdownSortButton = document.createElement("button");
@@ -245,12 +286,35 @@ function createButtons () {
   dropdownSortButton.appendChild(dropdownSortButtonContent);
   dropdownSort.appendChild(dropdownSortButton);
   buttons.appendChild(dropdownSort);
-
+  //dodajemy przyciski do listy kart
   decklistBox.insertBefore(buttons, listOfCards);
-
-  groupByType.addEventListener("click", createDeckbyType);
-  groupByCmc.addEventListener("click", createDeckbyCmc);
-}
+  //tworzymy eventy do przycisków grupowania
+  groupByType.addEventListener("click", function() {
+    sortDeck(currentSort);
+    createDeck("type");
+  });
+  groupByCmc.addEventListener("click", function() {
+    sortDeck(currentSort);
+    createDeck("cmc")
+  });
+  groupByColor.addEventListener("click", function() {
+    sortDeck(currentSort);
+    createDeck("color")
+  });
+  //tworzymy eventy do przycisków sortowania
+  sortByName.addEventListener("click", function() {
+    sortDeck("name");
+    createDeck(currentGrouping);
+  });
+  sortByCmc.addEventListener("click", function() {
+    sortDeck("cmc");
+    createDeck(currentGrouping);
+  });
+  sortByType.addEventListener("click", function() {
+    sortDeck("type");
+    createDeck(currentGrouping);
+  });
+};
 
 function addLinksAndPreviews() { //funkcja, która dodaje linki i podglądy do kart
   let cardLinks = document.getElementsByClassName("mtgcard"); //sprawdzamy listę kart na stronie
@@ -262,14 +326,9 @@ function addLinksAndPreviews() { //funkcja, która dodaje linki i podglądy do k
 };
 
 function checkMultiverseId(cardName) { //funkcja, która sprawdza multiverseid danej karty
-  let multiverseId = ""
-  returnedCards.forEach(function(item) {
+  deck.forEach(function(item) {
     if (item.name == cardName) {
-      multiverseId = item.multiverse_ids[0];
-    } else if (item.hasOwnProperty("card_faces") == true) { //czasami karta ma dwie połówki albo drugą stronę - wtedy chcemy multiverse id pierwszej
-      if (item.card_faces[0].name == cardName) {
-        multiverseId = item.multiverse_ids[0];
-      }
+      multiverseId = item.multiverseId;
     }
   });
   return multiverseId;
