@@ -136,6 +136,13 @@
     }
   }
 }
+
+.rules {
+  .poem {
+    margin-left: 2em;
+    font-style: italic;
+  }
+}
 @keyframes spin {
   0% {
     transform: rotate(0deg);
