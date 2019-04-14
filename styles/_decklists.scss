@@ -56,6 +56,10 @@
 }
 
 #decklistbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   .deck {
     list-style-type: none;
     columns: 4;
@@ -64,10 +68,10 @@
     min-height: 10em;
     max-height: 80em;
     font-size: 0.75em;
+    max-width: 100%;
 
     .loader {
       position: absolute;
-      margin: 0 auto;
       top: 0;
       border: 16px solid rgb(168, 165, 163);
       border-top: 16px solid $swclr;
@@ -89,6 +93,11 @@
   }
 
   .buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: baseline;
     .dropdown {
       position: relative;
       display: inline-block;
@@ -141,6 +150,9 @@
   .poem {
     margin-left: 2em;
     font-style: italic;
+    line-height: 0.5em;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
   }
 }
 @keyframes spin {
@@ -150,5 +162,42 @@
 
   100% {
     transform: rotate(360deg);
+  }
+}
+
+main {
+  .decklisttitle {
+    background-image: url("../resources/images/xantcha sleeper agent.jpg");
+    width: 20em; //proporcje 4/3
+    height: 15em;
+    background-size: contain;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 1em;
+    h1 {
+      text-align: center;
+    }
+  }
+  #xantcha {
+    background-image: url("../resources/images/xantcha sleeper agent.jpg");
+  }
+  #riku {
+    background-image: url("../resources/images/riku of two reflections.jpg");
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  #decklistbox .deck {
+    columns: 2;
+    max-height: 160em;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #decklistbox .deck {
+    columns: 1;
+    max-height: none;
   }
 }

@@ -125,79 +125,115 @@
     .decklists a #daretti {
       background-image: url("../resources/images/daretti scrap savant.jpg"); }
 
-#decklistbox .deck {
-  list-style-type: none;
-  columns: 4;
-  column-gap: 2em;
-  position: relative;
-  min-height: 10em;
-  max-height: 80em;
-  font-size: 0.75em; }
-  #decklistbox .deck .loader {
-    position: absolute;
-    margin: 0 auto;
-    top: 0;
-    border: 16px solid #a8a5a3;
-    border-top: 16px solid #ffe919;
-    border-bottom: 16px solid #ffe919;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 2s linear infinite; }
-  #decklistbox .deck li {
-    break-inside: avoid; }
-    #decklistbox .deck li ul {
-      list-style-type: none;
-      margin-block-end: 2em; }
-
-#decklistbox .buttons .dropdown {
-  position: relative;
-  display: inline-block;
-  margin-left: 1em;
-  margin-right: 1em; }
-
-#decklistbox .buttons .dropdownbutton {
-  background-color: #ffe919;
-  color: black;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-  margin-left: 0.5em;
-  margin-right: 0.5em; }
-
-#decklistbox .buttons .dropdowncontent {
-  display: none;
-  position: absolute;
-  background-color: #ffe919;
-  min-width: 7em;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  z-index: 1; }
-
-#decklistbox .buttons .dropdowncontent p {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  cursor: pointer; }
-
-#decklistbox .buttons .dropdowncontent p:hover {
-  background-color: #fff6a2; }
-
-#decklistbox .buttons .dropdown:hover .dropdowncontent {
-  display: block; }
-
-#decklistbox .buttons .dropdown:hover .dropdownbutton {
-  background-color: #7b6f00; }
+#decklistbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+  #decklistbox .deck {
+    list-style-type: none;
+    columns: 4;
+    column-gap: 2em;
+    position: relative;
+    min-height: 10em;
+    max-height: 80em;
+    font-size: 0.75em;
+    max-width: 100%; }
+    #decklistbox .deck .loader {
+      position: absolute;
+      top: 0;
+      border: 16px solid #a8a5a3;
+      border-top: 16px solid #ffe919;
+      border-bottom: 16px solid #ffe919;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 2s linear infinite; }
+    #decklistbox .deck li {
+      break-inside: avoid; }
+      #decklistbox .deck li ul {
+        list-style-type: none;
+        margin-block-end: 2em; }
+  #decklistbox .buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: baseline; }
+    #decklistbox .buttons .dropdown {
+      position: relative;
+      display: inline-block;
+      margin-left: 1em;
+      margin-right: 1em; }
+    #decklistbox .buttons .dropdownbutton {
+      background-color: #ffe919;
+      color: black;
+      padding: 16px;
+      font-size: 16px;
+      border: none;
+      margin-left: 0.5em;
+      margin-right: 0.5em; }
+    #decklistbox .buttons .dropdowncontent {
+      display: none;
+      position: absolute;
+      background-color: #ffe919;
+      min-width: 7em;
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+      z-index: 1; }
+    #decklistbox .buttons .dropdowncontent p {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      cursor: pointer; }
+    #decklistbox .buttons .dropdowncontent p:hover {
+      background-color: #fff6a2; }
+    #decklistbox .buttons .dropdown:hover .dropdowncontent {
+      display: block; }
+    #decklistbox .buttons .dropdown:hover .dropdownbutton {
+      background-color: #7b6f00; }
 
 .rules .poem {
   margin-left: 2em;
-  font-style: italic; }
+  font-style: italic;
+  line-height: 0.5em;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em; }
 
 @keyframes spin {
   0% {
     transform: rotate(0deg); }
   100% {
     transform: rotate(360deg); } }
+
+main .decklisttitle {
+  background-image: url("../resources/images/xantcha sleeper agent.jpg");
+  width: 20em;
+  height: 15em;
+  background-size: contain;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 1em; }
+  main .decklisttitle h1 {
+    text-align: center; }
+
+main #xantcha {
+  background-image: url("../resources/images/xantcha sleeper agent.jpg"); }
+
+main #riku {
+  background-image: url("../resources/images/riku of two reflections.jpg"); }
+
+@media only screen and (max-width: 900px) {
+  #decklistbox .deck {
+    columns: 2;
+    max-height: 160em; } }
+
+@media only screen and (max-width: 600px) {
+  #decklistbox .deck {
+    columns: 1;
+    max-height: none; } }
 
 body {
   margin: 0;
