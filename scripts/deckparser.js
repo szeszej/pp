@@ -201,19 +201,19 @@ function createDeck(grouping) { //funkcja która tworzy widoczną na stronie tal
     //poniżej tworzymy obiekty z listą kart o danym kolorze i nazwą listy
     let commander = new constructListsByProperty("Commander", deck.filter(card => card.commander == true));
     filteredCards.push(commander);
-    let white = new constructListsByProperty("Białe", deck.filter(card => card.colors.length == 1 && card.colors[0] == "W" && card.commander == false));
+    let white = new constructListsByProperty("White", deck.filter(card => card.colors.length == 1 && card.colors[0] == "W" && card.commander == false));
     filteredCards.push(white);
-    let blue = new constructListsByProperty("Niebieskie", deck.filter(card => card.colors.length == 1 && card.colors[0] == "U" && card.commander == false));
+    let blue = new constructListsByProperty("Blue", deck.filter(card => card.colors.length == 1 && card.colors[0] == "U" && card.commander == false));
     filteredCards.push(blue);
-    let black = new constructListsByProperty("Czarne", deck.filter(card => card.colors.length == 1 && card.colors[0] == "B" && card.commander == false));
+    let black = new constructListsByProperty("Black", deck.filter(card => card.colors.length == 1 && card.colors[0] == "B" && card.commander == false));
     filteredCards.push(black);
-    let red = new constructListsByProperty("Czerwone", deck.filter(card => card.colors.length == 1 && card.colors[0] == "R" && card.commander == false));
+    let red = new constructListsByProperty("Red", deck.filter(card => card.colors.length == 1 && card.colors[0] == "R" && card.commander == false));
     filteredCards.push(red);
-    let green = new constructListsByProperty("Zielone", deck.filter(card => card.colors.length == 1 && card.colors[0] == "G" && card.commander == false));
+    let green = new constructListsByProperty("Green", deck.filter(card => card.colors.length == 1 && card.colors[0] == "G" && card.commander == false));
     filteredCards.push(green);
-    let multicolor = new constructListsByProperty("Wielokolorwe", deck.filter(card => card.colors.length > 1 && card.commander == false));
+    let multicolor = new constructListsByProperty("Multicolor", deck.filter(card => card.colors.length > 1 && card.commander == false));
     filteredCards.push(multicolor);
-    let colorless = new constructListsByProperty("Bezkolorowe", deck.filter(card => card.colors.length == 0 && card.commander == false));
+    let colorless = new constructListsByProperty("Colorless", deck.filter(card => card.colors.length == 0 && card.commander == false));
     filteredCards.push(colorless);
     currentGrouping = "color";
   }

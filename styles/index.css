@@ -148,7 +148,12 @@
       border-radius: 50%;
       width: 60px;
       height: 60px;
-      animation: spin 2s linear infinite; }
+      animation: spin 2s linear infinite;
+      margin-block-start: 0;
+      margin-block-end: 0;
+      padding-inline-start: 0;
+      right: 0;
+      left: 0; }
     #decklistbox .deck li {
       break-inside: avoid; }
       #decklistbox .deck li ul {
