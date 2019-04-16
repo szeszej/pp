@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Michroma|Orbitron|Oswald|Dancing+Script|Raleway");
 @import "swcrawl";
 @import "variables";
+@import "decklists";
 
 body {
   margin: 0;
@@ -21,13 +22,19 @@ body {
     }
   }
 
+  button:focus {
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+  }
+
   .cardpreview::after {
     content: " ";
     position: absolute;
     top: 2%;
     right: 100%;
-    margin-top: 0.3em;
-    border-width: 0.4em;
+    margin-top: 3px;
+    border-width: 7px;
     border-style: solid;
     border-color: transparent yellow transparent transparent;
   }
@@ -39,6 +46,10 @@ body {
     .cardpreview {
       top: -0.3em;
       left: 105%;
+    }
+    .cardpreview::after {
+      margin-top: 0.3em;
+      border-width: 0.4em;
     }
   }
   /* powyżej jeśli podgląd jest podczepiony do linku z kartą */
@@ -62,7 +73,7 @@ body {
       grid-area: sideleft;
       position: sticky;
       top: 0;
-      height: 1440px; //wysokość tła
+      max-height: 1440px; //wysokość tła
       background-image: url("../resources/images/Sith_001.jpg");
       background-position: 30% -50px;
       background-repeat: no-repeat;
@@ -75,7 +86,7 @@ body {
       grid-area: sideright;
       position: sticky;
       top: 0;
-      height: 1440px; //wysokość tła
+      max-height: 1440px; //wysokość tła
       background-image: url("../resources/images/Jedi.jpg");
       background-position: 70% -50px;
       background-repeat: no-repeat;
@@ -256,9 +267,6 @@ body {
       }
 
       button:focus {
-        outline-style: none;
-        box-shadow: none;
-        border-color: transparent;
         border: 1px solid black;
       }
 
@@ -322,18 +330,10 @@ body {
       font-size: 10px;
     }
   }
-  @media only screen and (max-width: 1330px) {
+  @media only screen and (max-width: 1490px) {
     .wrappersidebar {
       grid-template-columns: 100%;
       grid-template-areas: "header" "menu" "content" "footer";
-
-      .leftsidebar {
-        display: none;
-      }
-
-      .rightsidebar {
-        display: none;
-      }
     }
   }
   @media only screen and (max-width: 1140px) {

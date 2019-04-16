@@ -1,3 +1,4 @@
+//"baza danych" z decklistą Xantchy
 var deckList = `1x Animate Dead
 1x Bedevil
 1x Black Market
@@ -89,38 +90,6 @@ var deckList = `1x Animate Dead
 1x Varchild's War-Riders
 1x War's Toll
 1x Wayfarer's Bauble
-1x Westvale Abbey
+1x Westvale Abbey // Ormendahl, Profane Prince
 1x Wooded Foothills
 1x Xantcha, Sleeper Agent *CMDR*`;
-
-matchLines = /.+/g;
-// cardNumber = /^\d+/;
-cardName = /\s.+/;
-commanderTest = /CMDR/;
-
-var deckLines = deckList.match(matchLines).map(a => a.trim());
-var cardNumbers = deckLines.map(a => parseInt(a));
-var cardNames = deckLines
-  .map(a => a.match(cardName))
-  .flat()
-  .map(a => a.trim());
-
-var deck = [];
-
-cardNumbers.map(function(item, index) {
-  if (commanderTest.test(cardNames[index]) == true) {
-    deck.push({
-      quantity: item,
-      name: cardNames[index].slice(0, -7),
-      commander: true
-    });
-  } else {
-    deck.push({
-      quantity: item,
-      name: cardNames[index],
-      commander: false
-    });
-  }
-});
-
-console.log(deck);
