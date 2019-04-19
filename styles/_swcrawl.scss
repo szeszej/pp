@@ -1,4 +1,3 @@
-//dodać przycisk do ominięcia animacji
 @import "variables";
 
 .fade {
@@ -24,6 +23,7 @@
   perspective: 400px;
   text-align: justify;
   width: 100%;
+
   .skip {
     position: absolute;
     top: 5%;
@@ -55,35 +55,119 @@
 }
 
 .aftercrawl {
+  box-sizing: border-box;
   position: absolute;
   line-height: normal;
   font-weight: normal;
   letter-spacing: normal;
   perspective: none;
   align-self: center;
+  opacity: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  opacity: 0;
+  width: 90%;
+  height: 100%;
 
-  .quotebox {
-    margin-right: 0.5em;
-    text-align: right;
-    width: 80%;
-    .quote {
-      font-size: 60px;
-      font-family: "Raleway", sans-serif;
+  .mySlides {
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    .slidecontent {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      .quotebox {
+        margin-right: 0.5em;
+        text-align: right;
+
+        .quote {
+          font-size: 60px;
+          font-family: "Raleway", sans-serif;
+        }
+
+        .author {
+          font-size: 40px;
+          font-family: "Dancing Script", cursive;
+        }
+      }
+
+      .coelho {
+        min-height: 2.5em;
+        min-width: 2em;
+      }
     }
+  }
+  /* Next & previous buttons */
+  .next,
+  .prev {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    z-index: 2;
+  }
+  /* Position the "next button" to the right */
+  .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+  }
 
-    .author {
-      font-size: 40px;
-      font-family: "Dancing Script", cursive;
+  .prev {
+    left: 0;
+    border-radius: 3px 0 0 3px;
+  }
+  /* On hover, add a black background color with a little bit see-through */
+  .next:hover,
+  .prev:hover {
+    background-color: rgba(0,0,0,0.8);
+  }
+  /* The dots/bullets/indicators */
+  .dots {
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    .dot {
+      cursor: pointer;
+      height: 15px;
+      width: 15px;
+      margin: 0 2px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.6s ease;
     }
   }
 
-  .coelho {
-    min-height: 2.5em;
-    min-width: 2em;
+  .active,
+  .dot:hover {
+    background-color: #717171;
+  }
+  /* Fading animation */
+  .slidefade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+  }
+  @keyframes fade {
+    0% {
+      opacity: 0.4;
+    }
+
+    100% {
+      opacity: 1;
+    }
   }
 }
 @keyframes show {
@@ -95,7 +179,6 @@
     opacity: 1;
   }
 }
-
 @media only screen and (max-width: 1100px) {
   .star-wars {
     font-size: 400%;
@@ -105,7 +188,6 @@
     animation: crawl 40s linear;
   }
 }
-
 @media only screen and (max-width: 700px) {
   .star-wars {
     font-size: 300%;
