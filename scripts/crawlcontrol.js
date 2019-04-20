@@ -27,31 +27,41 @@ skipButton.addEventListener("click", function() { //funkcja, która kończy teks
   afterCrawl.style.animation = "show 2s ease-in 0s 1 normal forwards";
 });
 
-var slideIndex = 1;
+var slideIndex = 1; // zaczynamy od slajdu nr 1
+var automaticSlideChange = setInterval(function() { //zmieniamy slajd automatycznie co 8 sekund
+  slideIndex += 1;
+  showSlides(slideIndex);
+}, 8000);
 showSlides(slideIndex);
 
-// Next/previous controls
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
+function changeSlides(slideChange) { //po kliknięciu na przycisk next/prev zmieniamy slajd na kolejny lub poprzedni
+  showSlides(slideIndex += slideChange);
+};
 
-// Thumbnail image controls
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
+function currentSlide(goToSlide) { //po kliknięciu na kropkę zmieniamy slajd na odpowiedni
+  showSlides(slideIndex = goToSlide);
+};
 
 function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {slideIndex = 1}
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
+  clearInterval(automaticSlideChange); //resetujemy timer zmiany slajdu
+  automaticSlideChange = setInterval(function() { //i ustawiamy go ponownie na 8 sekund
+    slideIndex += 1;
+    showSlides(slideIndex);
+  }, 8000);
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {
+    slideIndex = 1
+  } //jeśli przechodzimy do następnego slajdu, którego nie ma, wracamy do pierwszego
+  if (n < 1) {
+    slideIndex = slides.length
+  } //jeśli cofamy się do slajdu, którego nie ma, idzimy do ostatniego
+  for (let i = 0; i < slides.length; i++) { //ustawiamy wszystkim slajdom brak widoczności
+    slides[i].style.display = "none";
   }
-  for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
+  for (let i = 0; i < dots.length; i++) { //zmieiamy kropki na nieaktywne
+    dots[i].className = dots[i].className.replace(" active", "");
   }
-  slides[slideIndex-1].style.display = "flex";
-  dots[slideIndex-1].className += " active";
-}
+  slides[slideIndex - 1].style.display = "flex"; //tylko jeden slajd ma być widoczny
+  dots[slideIndex - 1].className += " active"; //odpowiednia kropka ma być aktywna
+};
