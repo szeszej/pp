@@ -29,17 +29,29 @@ cardNumbers.map(function(item, index) { //dodaję po kolei karty do decku
   }
 });
 
-var apiRequestUrl = [`https://api.scryfall.com/cards/search?q=`, `https://api.scryfall.com/cards/search?q=`]; //początek URLa do zapytania do API
-function createApiRequestURL() { //funkcja, która tworzy URL zapytania do API z listą kart w talii
-  deck.forEach(function(item) {
+function getExtraCards () {
+  let cardLinks = document.getElementsByClassName("mtgcard"); //lista wszystkich kart na stronie
+  let extraCards = [];
+  for (let i = 0; i < cardLinks.length; i++) {
+    if (deck.filter(x => x.name == cardLinks[i].textContent).length == 0) {
+      extraCards.push({name: cardLinks[i].textContent});
+    }
+  }
+  return extraCards;
+}
+
+function createApiRequestURL(deckForUrl, extraCards) { //funkcja, która tworzy URL zapytania do API z listą kart w talii
+  let apiRequestUrl = [`https://api.scryfall.com/cards/search?q=`, `https://api.scryfall.com/cards/search?q=`]; //początek URLa do zapytania do API
+  allCardsOnPage = deckForUrl.concat(extraCards);
+  allCardsOnPage.forEach(function(item) {
     if (apiRequestUrl[0].length < 1025) { //niestety długość requesta jest limitowana, więc jak jest dużo kart, to trzeba dwóch :)
       apiRequestUrl[0] += `!"` + item.name + `"or`;
     } else {
       apiRequestUrl[1] += `!"` + item.name + `"or`;
     }
   })
+  return apiRequestUrl;
 };
-createApiRequestURL();
 
 var returnedCards = [];
 var wrapperSidebar = document.querySelector(".wrappersidebar"); //znajdujemy wrapper do dodawania podglądu kart
@@ -57,7 +69,7 @@ var currentSort = ""; //tutaj przechowuję informację o obecnym sortowaniu kart
 let request = new XMLHttpRequest(); //zapytanie do API
 request.open(
   "GET",
-  apiRequestUrl[0], //pierwszy URL wygenerowany wyżej
+  createApiRequestURL(deck, getExtraCards())[0], //pierwszy URL wygenerowany wyżej
   true
 );
 request.send();
@@ -65,11 +77,11 @@ request.onload = function() { //kiedy mamy dane, to robimy rzeczy
   var data = JSON.parse(this.response);
   if (request.status >= 200 && request.status < 400) {
     returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
-    if (apiRequestUrl[1].length > 40) { //jeśli trzeba było stworzyć drugi URL, to trzeba zrobić drugie zapytanie z drugim URLem
+    if (createApiRequestURL(deck, getExtraCards())[1].length > 40) { //jeśli trzeba było stworzyć drugi URL, to trzeba zrobić drugie zapytanie z drugim URLem
       let request2 = new XMLHttpRequest(); // drugie zapytanie do API
       request2.open(
         "GET",
-        apiRequestUrl[1], // drugi URL wygenerowany wyżej
+        createApiRequestURL(deck, getExtraCards())[1], // drugi URL wygenerowany wyżej
         true
       );
       request2.send();
@@ -100,7 +112,6 @@ function updateDeckData() { //funkcja która dodaje właściwości z listy pobra
       if (returnedCard.name == card.name) {
         card.type = returnedCard.type_line; //pobieramy createListByProperty
         card.cmc = returnedCard.cmc; // pobieramy converted mana cost
-        card.multiverseId = returnedCard.multiverse_ids[0]; //pobieramy multiverseid
         if (returnedCard.hasOwnProperty("card_faces") == true) { //czasami karta ma dwie połówki albo drugą stronę - wtedy chcemy multiverse id pierwszej
           card.colors = returnedCard.card_faces[0].colors;
         } else {
@@ -330,9 +341,9 @@ function addLinksAndPreviews() { //funkcja, która dodaje linki i podglądy do k
 };
 
 function checkMultiverseId(cardName) { //funkcja, która sprawdza multiverseid danej karty
-  deck.forEach(function(item) {
+  returnedCards.forEach(function(item) {
     if (item.name == cardName) {
-      multiverseId = item.multiverseId;
+      multiverseId = item.multiverse_ids[0];
     }
   });
   return multiverseId;

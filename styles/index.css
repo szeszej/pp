@@ -215,22 +215,6 @@
     max-height: 80em;
     font-size: 0.75em;
     max-width: 100%; }
-    #decklistbox .deck .loader {
-      position: absolute;
-      top: 0;
-      border: 16px solid #a8a5a3;
-      border-top: 16px solid #ffe919;
-      border-bottom: 16px solid #ffe919;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 2s linear infinite;
-      margin-block-start: 0;
-      margin-block-end: 0;
-      padding-inline-start: 0;
-      right: 0;
-      left: 0;
-      margin: 0 auto; }
     #decklistbox .deck li {
       break-inside: avoid; }
       #decklistbox .deck li ul {
@@ -336,6 +320,22 @@ body {
     z-index: 1; }
     body .cardpreview img {
       clip-path: polygon(0% 3%, 3% 0%, 97% 0%, 100% 3%, 100% 97%, 97% 100%, 3% 100%, 0% 97%); }
+  body .loader {
+    position: absolute;
+    top: 0;
+    border: 16px solid #a8a5a3;
+    border-top: 16px solid #ffe919;
+    border-bottom: 16px solid #ffe919;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+    right: 0;
+    left: 0;
+    margin: 0 auto; }
   body button:focus {
     outline-style: none;
     box-shadow: none;
@@ -409,8 +409,10 @@ body {
       max-height: 1em;
       display: inline; }
     body .wrappersidebar .banned {
+      position: relative;
       columns: 3;
-      column-gap: 2em; }
+      column-gap: 2em;
+      min-height: 5em; }
   body .wrapperhomepage {
     display: grid;
     grid-template-columns: 100%;
@@ -580,6 +582,8 @@ body {
         body .ranking .rank .winsline {
           font-size: 10px; }
     body .timeplace {
+      width: 85%; }
+    body .authors {
       width: 85%; }
     body .rules {
       font-size: 14px; }

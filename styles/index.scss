@@ -22,6 +22,24 @@ body {
     }
   }
 
+  .loader {
+    position: absolute;
+    top: 0;
+    border: 16px solid rgb(168, 165, 163);
+    border-top: 16px solid $swclr;
+    border-bottom: 16px solid $swclr;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+  }
+
   button:focus {
     outline-style: none;
     box-shadow: none;
@@ -47,6 +65,7 @@ body {
       top: -0.3em;
       left: 105%;
     }
+
     .cardpreview::after {
       margin-top: 0.3em;
       border-width: 0.4em;
@@ -122,8 +141,10 @@ body {
     }
 
     .banned {
+      position: relative;
       columns: 3;
       column-gap: 2em;
+      min-height: 5em;
     }
     /* powyżej tylko dla strony zasad */
   }
@@ -372,6 +393,10 @@ body {
     }
 
     .timeplace {
+      width: 85%;
+    }
+
+    .authors {
       width: 85%;
     }
 
