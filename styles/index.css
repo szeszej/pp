@@ -611,8 +611,6 @@ body {
       font-size: 10px; }
     body h1 {
       font-size: 16px; }
-    body h2 {
-      font-size: 12px; }
     body .rank {
       font-size: 10px; }
       body .rank .collapsible .expand {
@@ -621,8 +619,6 @@ body {
         font-size: 8px; }
     body footer {
       font-size: 10px; }
-      body footer h2 {
-        font-size: 12px; }
     body .wrappersidebar .banned {
       columns: 2; }
     body .created {

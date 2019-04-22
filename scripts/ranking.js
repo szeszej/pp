@@ -2,11 +2,11 @@ const PLAYERS = [
   // Tabela graczy
   {
     "name": "Bartosz Kłak", //imię
-    "zydelion": 4, //ilość wygranych dni
+    "zydelion": 6, //ilość wygranych dni
     "commander": [ //nazwa generała plus ilość wygranych gier danym generałem
-      ["Riku of Two Reflections", 3],
-      ["Muldrotha, the Gravetide", 5],
-      ["Breya, Etherium Shaper", 3]
+      ["Riku of Two Reflections", 6],
+      ["Muldrotha, the Gravetide", 6],
+      ["Breya, Etherium Shaper", 5]
     ]
   },
   {
@@ -104,6 +104,14 @@ const PLAYERS = [
     "zydelion": 1,
     "commander": [
       ["Atraxa, Praetors' Voice", 3]
+    ]
+  },
+  {
+    "name": "Dawid Czajkowski",
+    "zydelion": 1,
+    "commander": [
+      ["Jhoira of the Ghitu", 1],
+      ["Tasigur, the Golden Fang", 1]
     ]
   }
 ];
