@@ -172,59 +172,59 @@ function createDeck(grouping) { //funkcja która tworzy widoczną na stronie tal
     let instantRegex = /Instant/;
     let sorceryRegex = /Sorcery/;
     //poniżej tworzymy obiekty z listą kart o danym typie i nazwą listy
-    let commander = new constructListsByProperty("Commander", deck.filter(card => card.commander == true));
+    let commander = new ConstructListsByProperty("Commander", deck.filter(card => card.commander == true));
     filteredCards.push(commander);
-    let lands = new constructListsByProperty("Lands", deck.filter(card => landRegex.test(card.type) == true));
+    let lands = new ConstructListsByProperty("Lands", deck.filter(card => landRegex.test(card.type) == true));
     filteredCards.push(lands);
-    let creatures = new constructListsByProperty("Creatures", deck.filter(card => creatureRegex.test(card.type) == true && card.commander == false && landRegex.test(card.type) == false));
+    let creatures = new ConstructListsByProperty("Creatures", deck.filter(card => creatureRegex.test(card.type) == true && card.commander == false && landRegex.test(card.type) == false));
     filteredCards.push(creatures);
-    let artifacts = new constructListsByProperty("Artifacts", deck.filter(card => artifactRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
+    let artifacts = new ConstructListsByProperty("Artifacts", deck.filter(card => artifactRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
     filteredCards.push(artifacts);
-    let enchantments = new constructListsByProperty("Enchantments", deck.filter(card => enchantmentRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
+    let enchantments = new ConstructListsByProperty("Enchantments", deck.filter(card => enchantmentRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
     filteredCards.push(enchantments);
-    let planeswalkers = new constructListsByProperty("Planeswalkers", deck.filter(card => planeswalkerRegex.test(card.type) == true && card.commander == false));
+    let planeswalkers = new ConstructListsByProperty("Planeswalkers", deck.filter(card => planeswalkerRegex.test(card.type) == true && card.commander == false));
     filteredCards.push(planeswalkers);
-    let instants = new constructListsByProperty("Instants", deck.filter(card => instantRegex.test(card.type) == true));
+    let instants = new ConstructListsByProperty("Instants", deck.filter(card => instantRegex.test(card.type) == true));
     filteredCards.push(instants);
-    let sorceries = new constructListsByProperty("Sorceries", deck.filter(card => sorceryRegex.test(card.type) == true));
+    let sorceries = new ConstructListsByProperty("Sorceries", deck.filter(card => sorceryRegex.test(card.type) == true));
     filteredCards.push(sorceries);
     currentGrouping = "type";
   } else if (grouping == "cmc") {
     //poniżej tworzymy obiekty z listą kart o danym cmc i nazwą listy
-    let commander = new constructListsByProperty("Commander", deck.filter(card => card.commander == true));
+    let commander = new ConstructListsByProperty("Commander", deck.filter(card => card.commander == true));
     filteredCards.push(commander);
-    let cmc0 = new constructListsByProperty("CMC 0", deck.filter(card => card.cmc == 0 && card.commander == false));
+    let cmc0 = new ConstructListsByProperty("CMC 0", deck.filter(card => card.cmc == 0 && card.commander == false));
     filteredCards.push(cmc0);
-    let cmc1 = new constructListsByProperty("CMC 1", deck.filter(card => card.cmc == 1 && card.commander == false));
+    let cmc1 = new ConstructListsByProperty("CMC 1", deck.filter(card => card.cmc == 1 && card.commander == false));
     filteredCards.push(cmc1);
-    let cmc2 = new constructListsByProperty("CMC 2", deck.filter(card => card.cmc == 2 && card.commander == false));
+    let cmc2 = new ConstructListsByProperty("CMC 2", deck.filter(card => card.cmc == 2 && card.commander == false));
     filteredCards.push(cmc2);
-    let cmc3 = new constructListsByProperty("CMC 3", deck.filter(card => card.cmc == 3 && card.commander == false));
+    let cmc3 = new ConstructListsByProperty("CMC 3", deck.filter(card => card.cmc == 3 && card.commander == false));
     filteredCards.push(cmc3);
-    let cmc4 = new constructListsByProperty("CMC 4", deck.filter(card => card.cmc == 4 && card.commander == false));
+    let cmc4 = new ConstructListsByProperty("CMC 4", deck.filter(card => card.cmc == 4 && card.commander == false));
     filteredCards.push(cmc4);
-    let cmc5 = new constructListsByProperty("CMC 5", deck.filter(card => card.cmc == 5 && card.commander == false));
+    let cmc5 = new ConstructListsByProperty("CMC 5", deck.filter(card => card.cmc == 5 && card.commander == false));
     filteredCards.push(cmc5);
-    let cmc6More = new constructListsByProperty("CMC 6+", deck.filter(card => card.cmc > 5 && card.commander == false));
+    let cmc6More = new ConstructListsByProperty("CMC 6+", deck.filter(card => card.cmc > 5 && card.commander == false));
     filteredCards.push(cmc6More);
     currentGrouping = "cmc";
   } else if (grouping == "color") {
     //poniżej tworzymy obiekty z listą kart o danym kolorze i nazwą listy
-    let commander = new constructListsByProperty("Commander", deck.filter(card => card.commander == true));
+    let commander = new ConstructListsByProperty("Commander", deck.filter(card => card.commander == true));
     filteredCards.push(commander);
-    let white = new constructListsByProperty("White", deck.filter(card => card.colors.length == 1 && card.colors[0] == "W" && card.commander == false));
+    let white = new ConstructListsByProperty("White", deck.filter(card => card.colors.length == 1 && card.colors[0] == "W" && card.commander == false));
     filteredCards.push(white);
-    let blue = new constructListsByProperty("Blue", deck.filter(card => card.colors.length == 1 && card.colors[0] == "U" && card.commander == false));
+    let blue = new ConstructListsByProperty("Blue", deck.filter(card => card.colors.length == 1 && card.colors[0] == "U" && card.commander == false));
     filteredCards.push(blue);
-    let black = new constructListsByProperty("Black", deck.filter(card => card.colors.length == 1 && card.colors[0] == "B" && card.commander == false));
+    let black = new ConstructListsByProperty("Black", deck.filter(card => card.colors.length == 1 && card.colors[0] == "B" && card.commander == false));
     filteredCards.push(black);
-    let red = new constructListsByProperty("Red", deck.filter(card => card.colors.length == 1 && card.colors[0] == "R" && card.commander == false));
+    let red = new ConstructListsByProperty("Red", deck.filter(card => card.colors.length == 1 && card.colors[0] == "R" && card.commander == false));
     filteredCards.push(red);
-    let green = new constructListsByProperty("Green", deck.filter(card => card.colors.length == 1 && card.colors[0] == "G" && card.commander == false));
+    let green = new ConstructListsByProperty("Green", deck.filter(card => card.colors.length == 1 && card.colors[0] == "G" && card.commander == false));
     filteredCards.push(green);
-    let multicolor = new constructListsByProperty("Multicolor", deck.filter(card => card.colors.length > 1 && card.commander == false));
+    let multicolor = new ConstructListsByProperty("Multicolor", deck.filter(card => card.colors.length > 1 && card.commander == false));
     filteredCards.push(multicolor);
-    let colorless = new constructListsByProperty("Colorless", deck.filter(card => card.colors.length == 0 && card.commander == false));
+    let colorless = new ConstructListsByProperty("Colorless", deck.filter(card => card.colors.length == 0 && card.commander == false));
     filteredCards.push(colorless);
     currentGrouping = "color";
   }
@@ -233,7 +233,7 @@ function createDeck(grouping) { //funkcja która tworzy widoczną na stronie tal
   addLinksAndPreviews(); //do kart w decku dodajemy linki i obrazki
 };
 
-function constructListsByProperty(name, list) { //konstruktor, który tworzy listy kart po typie
+function ConstructListsByProperty(name, list) { //konstruktor, który tworzy listy kart po typie
   this.name = name;
   this.list = list;
 }
