@@ -1,4 +1,5 @@
 //https://disqus.com/ jako system komentarzy?
+//przerobić zgodnie z wytycznymi functional programming
 
 matchLines = /.+/g; //regex, który dzieli mi decklistę na linijki
 cardName = /\s.+/; //regex, który znajduje mi nazwę karty

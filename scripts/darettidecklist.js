@@ -41,7 +41,7 @@ var deckList = `1x Daretti, Scrap Savant *CMDR*
 1x Starstorm
 1x Mycosynth Lattice
 1x Sanctum of Ugin
-1x Aftershock
+1x Ugin, the Ineffable
 1x Myr Retriever
 1x Myr Battlesphere
 1x Sol Ring
@@ -65,7 +65,7 @@ var deckList = `1x Daretti, Scrap Savant *CMDR*
 1x Thespian's Stage
 1x Bosh, Iron Golem
 1x Karn, Silver Golem
-1x Mirrodin's Core
+1x Karn's Bastion
 1x Darksteel Forge
 1x Oblivion Stone
 1x Fire Diamond
@@ -74,7 +74,7 @@ var deckList = `1x Daretti, Scrap Savant *CMDR*
 1x Saheeli's Directive
 1x Blasphemous Act
 1x Ichor Wellspring
-1x Thran Temporal Gateway
+1x Karn, the Great Creator
 1x Homeward Path
 1x Spinerock Knoll
 1x Pia and Kiran Nalaar
