@@ -200,6 +200,8 @@
       background-image: url("../resources/images/riku of two reflections.jpg"); }
     .decklists a #daretti {
       background-image: url("../resources/images/daretti scrap savant.jpg"); }
+    .decklists a #derevi {
+      background-image: url("../resources/images/derevi empyrial tactician.jpg"); }
 
 #decklistbox {
   display: flex;
@@ -290,6 +292,12 @@ main #xantcha {
 
 main #riku {
   background-image: url("../resources/images/riku of two reflections.jpg"); }
+
+main #daretti {
+  background-image: url("../resources/images/daretti scrap savant.jpg"); }
+
+main #derevi {
+  background-image: url("../resources/images/derevi empyrial tactician.jpg"); }
 
 @media only screen and (max-width: 900px) {
   #decklistbox .deck {

@@ -111,16 +111,20 @@ function updateDeckData() { //funkcja która dodaje właściwości z listy pobra
   deck.forEach(function(card) {
     returnedCards.forEach(function(returnedCard) {
       if (returnedCard.name == card.name) {
-        card.type = returnedCard.type_line; //pobieramy createListByProperty
         card.cmc = returnedCard.cmc; // pobieramy converted mana cost
-        if (returnedCard.hasOwnProperty("card_faces") == true) { //czasami karta ma dwie połówki albo drugą stronę - wtedy chcemy multiverse id pierwszej
-          card.colors = returnedCard.card_faces[0].colors;
-        } else {
+        if (returnedCard.hasOwnProperty("colors") == true) {
           card.colors = returnedCard.colors; //pobieramy kolory
-        }
+        } else if (returnedCard.hasOwnProperty("card_faces") == true) { //czasami karta ma dwie połówki albo drugą stronę - wtedy chcemy dane pierwszej
+          card.colors = returnedCard.card_faces[0].colors;
+        };
+        if (returnedCard.hasOwnProperty("card_faces") == true) { //czasami karta ma dwie połówki albo drugą stronę - wtedy chcemy dane pierwszej
+          card.type = returnedCard.card_faces[0].type_line;
+        } else {
+          card.type = returnedCard.type_line; //pobieramy typy
+        };
         if (card.commander == true) {
           card.identity = returnedCard.color_identity;
-        }
+        };
       }
     })
   })
@@ -213,6 +217,8 @@ function createDeck(grouping) { //funkcja która tworzy widoczną na stronie tal
     //poniżej tworzymy obiekty z listą kart o danym kolorze i nazwą listy
     let commander = new ConstructListsByProperty("Commander", deck.filter(card => card.commander == true));
     filteredCards.push(commander);
+    let colorless = new ConstructListsByProperty("Colorless", deck.filter(card => card.colors.length == 0 && card.commander == false));
+    filteredCards.push(colorless);
     let white = new ConstructListsByProperty("White", deck.filter(card => card.colors.length == 1 && card.colors[0] == "W" && card.commander == false));
     filteredCards.push(white);
     let blue = new ConstructListsByProperty("Blue", deck.filter(card => card.colors.length == 1 && card.colors[0] == "U" && card.commander == false));
@@ -225,8 +231,6 @@ function createDeck(grouping) { //funkcja która tworzy widoczną na stronie tal
     filteredCards.push(green);
     let multicolor = new ConstructListsByProperty("Multicolor", deck.filter(card => card.colors.length > 1 && card.commander == false));
     filteredCards.push(multicolor);
-    let colorless = new ConstructListsByProperty("Colorless", deck.filter(card => card.colors.length == 0 && card.commander == false));
-    filteredCards.push(colorless);
     currentGrouping = "color";
   }
   listOfCards.innerHTML = ""; //czyścimy widoczną decklistę
