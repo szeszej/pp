@@ -14,18 +14,12 @@ function parseDecklist(decklist) {
 
   let parsedDeck = []; //tablica obiektów, każdy obiekt to jedna karta
 
-  function Card(quantity, name, commander) {
-    this.quantity = quantity;
-    this.name = name;
-    this.commander = commander;
-  }
-
   if (cardQuantity.length == cardNames.length) {
     cardQuantity.map(function(item, index) { //dodaję po kolei karty do decku
       if (findCommander.test(cardNames[index]) == true) { //sprawdzam czy karta jest oznaczona jako commander i usuwam oznaczenie commandera z nazwy
-        parsedDeck.push(new Card(item, cardNames[index].slice(0, -7), true));
+        parsedDeck.push(new Card(cardNames[index].slice(0, -7), item, true));
       } else { //w pozostałych przypadkach po prostu dodaję kartę z właściwościami ilość i nazwa
-        parsedDeck.push(new Card(item, cardNames[index], false));
+        parsedDeck.push(new Card(cardNames[index], item, false));
       }
     });
   } else {
@@ -34,34 +28,39 @@ function parseDecklist(decklist) {
   return parsedDeck;
 }
 
+function Card(name, quantity, commander) {
+  this.name = name;
+  this.quantity = quantity;
+  this.commander = commander;
+}
+
 parsedDecklist = parseDecklist(unparsedDecklist);
 
-
-function getExtraCards() {
+function getExtraCards(deck) {
   let cardLinks = document.getElementsByClassName("mtgcard"); //lista wszystkich kart na stronie
   let extraCards = [];
   for (let i = 0; i < cardLinks.length; i++) {
     if (deck.filter(x => x.name == cardLinks[i].textContent).length == 0) {
-      extraCards.push({
-        name: cardLinks[i].textContent
-      });
+      extraCards.push(new Card(cardLinks[i].textContent));
     }
   }
   return extraCards;
 }
 
 function createApiRequestURL(deckForUrl, extraCards) { //funkcja, która tworzy URL zapytania do API z listą kart w talii
-  let apiRequestUrl = [`https://api.scryfall.com/cards/search?q=`, `https://api.scryfall.com/cards/search?q=`]; //początek URLa do zapytania do API
+  let apiRequestUrl = [`https://api.scryfall.com/cards/search?q=`]; //początek URLa do zapytania do API
   allCardsOnPage = deckForUrl.concat(extraCards);
-  let urlCount = 0;
+  let urlIndex = 0;
   allCardsOnPage.forEach(function(item) {
-    if (apiRequestUrl[urlCount].length < 1025) { //niestety długość requesta jest limitowana, więc jak jest dużo kart, to trzeba dwóch :)
-      apiRequestUrl[0] += `!"` + item.name + `"or`;
+    if (apiRequestUrl[urlIndex].length < 1025) { //niestety długość requesta jest limitowana, więc jak jest dużo kart, to trzeba dwóch :)
+      apiRequestUrl[urlIndex] += `!"` + item.name + `"or`;
     } else {
-      urlCount += 1;
-      apiRequestUrl[1] += `!"` + item.name + `"or`;
+      apiRequestUrl.push(`https://api.scryfall.com/cards/search?q=`);
+      urlIndex += 1;
+      apiRequestUrl[urlIndex] += `!"` + item.name + `"or`;
     }
   })
+  console.log(apiRequestUrl);
   return apiRequestUrl;
 };
 
@@ -78,49 +77,53 @@ listOfCards.appendChild(loader);
 var currentGrouping = ""; //tutaj przechowuję informację o obecnym grupowaniu kart
 var currentSort = ""; //tutaj przechowuję informację o obecnym sortowaniu kart
 
-function CardData ()
-
-let request = new XMLHttpRequest(); //zapytanie do API
-request.open(
-  "GET",
-  createApiRequestURL(deck, getExtraCards())[0], //pierwszy URL wygenerowany wyżej
-  true
-);
-request.send();
-request.onload = function() { //kiedy mamy dane, to robimy rzeczy
-  var data = JSON.parse(this.response);
-  if (request.status >= 200 && request.status < 400) {
-    returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
-    if (createApiRequestURL(deck, getExtraCards())[1].length > 40) { //jeśli trzeba było stworzyć drugi URL, to trzeba zrobić drugie zapytanie z drugim URLem
-      let request2 = new XMLHttpRequest(); // drugie zapytanie do API
-      request2.open(
-        "GET",
-        createApiRequestURL(deck, getExtraCards())[1], // drugi URL wygenerowany wyżej
-        true
-      );
-      request2.send();
-      request2.onload = function() { //kiedy mamy dane, to robimy rzeczy
-        var data = JSON.parse(this.response);
-        if (request2.status >= 200 && request.status < 400) {
-          returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
-          updateDeckData(); //dodajemy pobrane dane do obiektów w decku
-          createDeck("type"); //tworzymy deck na stronie
-          createButtons(); //tworzymy przyciski do grupowania i sortowania
-        } else {
-          console.log("error"); //jak się request nie powiedzie, to zwraca błąd
-        }
-      };
+function getCardData(deckToUpdate) {
+  let deck = [...deckToUpdate];
+  let apiRequestUrls = createApiRequestURL(deck, getExtraCards(deck));
+  let request = new XMLHttpRequest(); //zapytanie do API
+  request.open(
+    "GET",
+    apiRequestUrls[0], //pierwszy URL wygenerowany wyżej
+    true
+  );
+  request.send();
+  request.onload = function() { //kiedy mamy dane, to robimy rzeczy
+    var data = JSON.parse(this.response);
+    if (request.status >= 200 && request.status < 400) {
+      returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
+      if (apiRequestUrls[1].length > 40) { //jeśli trzeba było stworzyć drugi URL, to trzeba zrobić drugie zapytanie z drugim URLem
+        let request2 = new XMLHttpRequest(); // drugie zapytanie do API
+        request2.open(
+          "GET",
+          apiRequestUrls[1], // drugi URL wygenerowany wyżej
+          true
+        );
+        request2.send();
+        request2.onload = function() { //kiedy mamy dane, to robimy rzeczy
+          var data = JSON.parse(this.response);
+          if (request2.status >= 200 && request.status < 400) {
+            returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
+            updateDeckData(deck); //dodajemy pobrane dane do obiektów w decku
+            createDeck(deck, "type"); //tworzymy deck na stronie
+            createButtons(); //tworzymy przyciski do grupowania i sortowania
+          } else {
+            console.log("error"); //jak się request nie powiedzie, to zwraca błąd
+          }
+        };
+      } else {
+        updateDeckData(deck); //dodajemy pobrane dane do obiektów w decku
+        createDeck(deck, "type"); //tworzymy deck na stronie
+        createButtons(); //tworzymy przyciski do grupowania i sortowania
+      }
     } else {
-      updateDeckData(); //dodajemy pobrane dane do obiektów w decku
-      createDeck("type"); //tworzymy deck na stronie
-      createButtons(); //tworzymy przyciski do grupowania i sortowania
+      console.log("error"); //jak się request nie powiedzie, to zwraca błąd
     }
-  } else {
-    console.log("error"); //jak się request nie powiedzie, to zwraca błąd
-  }
+  };
 };
 
-function updateDeckData() { //funkcja która dodaje właściwości z listy pobranej przez API do kart w decku
+getCardData(parsedDecklist);
+console.log(parsedDecklist);
+function updateDeckData(deck) { //funkcja która dodaje właściwości z listy pobranej przez API do kart w decku
   deck.forEach(function(card) {
     returnedCards.forEach(function(returnedCard) {
       if (returnedCard.name == card.name) {
@@ -178,7 +181,7 @@ function sortDeck(sorting) {
   }
 };
 
-function createDeck(grouping) { //funkcja która tworzy widoczną na stronie talię
+function createDeck(deck, grouping) { //funkcja która tworzy widoczną na stronie talię
   let filteredCards = [];
   if (grouping == "type") {
     //poniżej regexy potrzebne do filtrowania
