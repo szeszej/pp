@@ -1,5 +1,5 @@
 //"baza danych" z decklistą Daretti
-var deckList = `1x Daretti, Scrap Savant *CMDR*
+var unparsedDecklist = `1x Daretti, Scrap Savant *CMDR*
 14x Mountain
 1x Forgotten Cave
 1x Ugin, the Spirit Dragon

@@ -1,5 +1,5 @@
 //"baza danych" z decklistą Derevi
-var deckList = `1x Acidic Slime
+var unparsedDecklist = `1x Acidic Slime
 1x Ainok Survivalist
 1x Avacyn's Pilgrim
 1x Aven Mindcensor

@@ -1,5 +1,5 @@
 //"baza danych" z decklistą Riku
-var deckList = `1x Acidic Slime
+var unparsedDecklist = `1x Acidic Slime
 1x Body Double
 1x Coiling Oracle
 1x Crater Hellion

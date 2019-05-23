@@ -1,5 +1,5 @@
 //"baza danych" z decklistą Xantchy
-var deckList = `1x Animate Dead
+var unparsedDecklist = `1x Animate Dead
 1x Bedevil
 1x Black Market
 1x Blasphemous Act

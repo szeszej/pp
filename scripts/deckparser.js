@@ -1,41 +1,50 @@
 //https://disqus.com/ jako system komentarzy?
-//przerobić zgodnie z wytycznymi functional programming
+//przerobić zgodnie z wytycznymi functional programming/clean code
+function parseDecklist(decklist) {
+  let matchLines = /.+/g; //regex, który dzieli mi decklistę na linijki
+  let cardName = /\s.+/; //regex, który znajduje mi nazwę karty
+  let findCommander = /CMDR/; //regex, który znajduje mi commandera
 
-matchLines = /.+/g; //regex, który dzieli mi decklistę na linijki
-cardName = /\s.+/; //regex, który znajduje mi nazwę karty
-commanderTest = /CMDR/; //regex, który znajduje mi commandera
+  let cardLines = decklist.match(matchLines).map(a => a.trim()); //dzielę decklistę na linijki i każdą linijkę zapisuję jako jeden item w tablicy, dodatkowo usuwam whitespace
+  let cardQuantity = cardLines.map(a => parseInt(a)); //jako że liczba danej karty jest zawsze na początku, mogę w ten sposób wydzielić ilość danej karty
+  let cardNames = cardLines //znajduję same nazwy kart i usuwam whitespace
+    .map(a => a.match(cardName))
+    .flat()
+    .map(a => a.trim());
 
-var deckLines = deckList.match(matchLines).map(a => a.trim()); //dzielę decklistę na linijki i każdą linijkę zapisuję jako jeden item w tablicy, dodatkowo usuwam whitespace
-var cardNumbers = deckLines.map(a => parseInt(a)); //jako że liczba danej karty jest zawsze na początku, mogę w ten sposób wydzielić ilość danej karty
-var cardNames = deckLines //znajduję same nazwy kart i usuwam whitespace
-  .map(a => a.match(cardName))
-  .flat()
-  .map(a => a.trim());
+  let parsedDeck = []; //tablica obiektów, każdy obiekt to jedna karta
 
-var deck = []; //tablica obiektów, każdy obiekt to jedna karta
-
-cardNumbers.map(function(item, index) { //dodaję po kolei karty do decku
-  if (commanderTest.test(cardNames[index]) == true) { //sprawdzam czy karta jest oznaczona jako commander i usuwam oznaczenie commandera z nazwy
-    deck.push({
-      quantity: item,
-      name: cardNames[index].slice(0, -7),
-      commander: true
-    });
-  } else { //w pozostałych przypadkach po prostu dodaję kartę z właściwościami ilość i nazwa
-    deck.push({
-      quantity: item,
-      name: cardNames[index],
-      commander: false
-    });
+  function Card(quantity, name, commander) {
+    this.quantity = quantity;
+    this.name = name;
+    this.commander = commander;
   }
-});
 
-function getExtraCards () {
+  if (cardQuantity.length == cardNames.length) {
+    cardQuantity.map(function(item, index) { //dodaję po kolei karty do decku
+      if (findCommander.test(cardNames[index]) == true) { //sprawdzam czy karta jest oznaczona jako commander i usuwam oznaczenie commandera z nazwy
+        parsedDeck.push(new Card(item, cardNames[index].slice(0, -7), true));
+      } else { //w pozostałych przypadkach po prostu dodaję kartę z właściwościami ilość i nazwa
+        parsedDeck.push(new Card(item, cardNames[index], false));
+      }
+    });
+  } else {
+    console.log("Parsing error");
+  }
+  return parsedDeck;
+}
+
+parsedDecklist = parseDecklist(unparsedDecklist);
+
+
+function getExtraCards() {
   let cardLinks = document.getElementsByClassName("mtgcard"); //lista wszystkich kart na stronie
   let extraCards = [];
   for (let i = 0; i < cardLinks.length; i++) {
     if (deck.filter(x => x.name == cardLinks[i].textContent).length == 0) {
-      extraCards.push({name: cardLinks[i].textContent});
+      extraCards.push({
+        name: cardLinks[i].textContent
+      });
     }
   }
   return extraCards;
@@ -44,10 +53,12 @@ function getExtraCards () {
 function createApiRequestURL(deckForUrl, extraCards) { //funkcja, która tworzy URL zapytania do API z listą kart w talii
   let apiRequestUrl = [`https://api.scryfall.com/cards/search?q=`, `https://api.scryfall.com/cards/search?q=`]; //początek URLa do zapytania do API
   allCardsOnPage = deckForUrl.concat(extraCards);
+  let urlCount = 0;
   allCardsOnPage.forEach(function(item) {
-    if (apiRequestUrl[0].length < 1025) { //niestety długość requesta jest limitowana, więc jak jest dużo kart, to trzeba dwóch :)
+    if (apiRequestUrl[urlCount].length < 1025) { //niestety długość requesta jest limitowana, więc jak jest dużo kart, to trzeba dwóch :)
       apiRequestUrl[0] += `!"` + item.name + `"or`;
     } else {
+      urlCount += 1;
       apiRequestUrl[1] += `!"` + item.name + `"or`;
     }
   })
@@ -66,6 +77,8 @@ listOfCards.appendChild(loader);
 
 var currentGrouping = ""; //tutaj przechowuję informację o obecnym grupowaniu kart
 var currentSort = ""; //tutaj przechowuję informację o obecnym sortowaniu kart
+
+function CardData ()
 
 let request = new XMLHttpRequest(); //zapytanie do API
 request.open(
