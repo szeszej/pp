@@ -211,6 +211,13 @@ main {
     background-image: url("../resources/images/derevi empyrial tactician.jpg");
   }
 }
+
+@media only screen and (max-width: 1140px) {
+  main .decklisttitle .textindecklisttitle h1 {
+    font-size: 32px;
+  }
+}
+
 @media only screen and (max-width: 900px) {
   #decklistbox .deck {
     columns: 2;
