@@ -34,7 +34,7 @@ function Card(name, quantity, commander) {
   this.commander = commander;
 }
 
-parsedDecklist = parseDecklist(unparsedDecklist);
+var parsedDecklist = parseDecklist(unparsedDecklist);
 
 function getExtraCards(deck) {
   let cardLinks = document.getElementsByClassName("mtgcard"); //lista wszystkich kart na stronie
@@ -60,70 +60,95 @@ function createApiRequestURL(deckForUrl, extraCards) { //funkcja, która tworzy 
       apiRequestUrl[urlIndex] += `!"` + item.name + `"or`;
     }
   })
-  console.log(apiRequestUrl);
   return apiRequestUrl;
 };
 
-var returnedCards = [];
-var wrapperSidebar = document.querySelector(".wrappersidebar"); //znajdujemy wrapper do dodawania podglądu kart
 var decklistBox = document.getElementById("decklistbox");
 var listOfCards = document.createElement("ul");
 listOfCards.setAttribute("class", "deck");
 decklistBox.appendChild(listOfCards);
-var loader = document.createElement("div"); //obracające się kółko kiedy lista jeszcze się ładuje
-loader.setAttribute("class", "loader");
-listOfCards.appendChild(loader);
+
+
+function createLoader(boxForDecklist) {
+  let loader = document.createElement("div"); //obracające się kółko kiedy lista jeszcze się ładuje
+  loader.setAttribute("class", "loader");
+  boxForDecklist.appendChild(loader);
+};
+createLoader(listOfCards);
 
 var currentGrouping = ""; //tutaj przechowuję informację o obecnym grupowaniu kart
 var currentSort = ""; //tutaj przechowuję informację o obecnym sortowaniu kart
 
-function getCardData(deckToUpdate) {
-  let deck = [...deckToUpdate];
-  let apiRequestUrls = createApiRequestURL(deck, getExtraCards(deck));
-  let request = new XMLHttpRequest(); //zapytanie do API
-  request.open(
-    "GET",
-    apiRequestUrls[0], //pierwszy URL wygenerowany wyżej
-    true
-  );
-  request.send();
-  request.onload = function() { //kiedy mamy dane, to robimy rzeczy
-    var data = JSON.parse(this.response);
-    if (request.status >= 200 && request.status < 400) {
-      returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
-      if (apiRequestUrls[1].length > 40) { //jeśli trzeba było stworzyć drugi URL, to trzeba zrobić drugie zapytanie z drugim URLem
-        let request2 = new XMLHttpRequest(); // drugie zapytanie do API
-        request2.open(
-          "GET",
-          apiRequestUrls[1], // drugi URL wygenerowany wyżej
-          true
-        );
-        request2.send();
-        request2.onload = function() { //kiedy mamy dane, to robimy rzeczy
-          var data = JSON.parse(this.response);
-          if (request2.status >= 200 && request.status < 400) {
-            returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
-            updateDeckData(deck); //dodajemy pobrane dane do obiektów w decku
-            createDeck(deck, "type"); //tworzymy deck na stronie
-            createButtons(); //tworzymy przyciski do grupowania i sortowania
-          } else {
-            console.log("error"); //jak się request nie powiedzie, to zwraca błąd
-          }
-        };
+// function getCardData(deckToUpdate) {
+//   let deck = [...deckToUpdate];
+//   let apiRequestUrls = createApiRequestURL(deck, getExtraCards(deck));
+//   apiRequest(apiRequestUrls, 0, []);
+// };
+
+// function apiRequest(urls, iteration, cardsReturnedPreviously) {
+//   let returnedCards = [...cardsReturnedPreviously]
+//   let request = new XMLHttpRequest(); //zapytanie do API
+//   request.open(
+//     "GET",
+//     urls[iteration], //pierwszy URL wygenerowany wyżej
+//     true
+//   );
+//   request.send();
+//   request.onload = function() { //kiedy mamy dane, to robimy rzeczy
+//     var data = JSON.parse(this.response);
+//     if (request.status >= 200 && request.status < 400) {
+//       returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
+//       iteration += 1;
+//       if (iteration < urls.length) {
+//         apiRequest(urls, iteration, returnedCards);
+//       } else {
+//         updateDeckData(parsedDecklist, returnedCards);
+//         return returnedCards;
+//       }
+//     } else {
+//       console.log("error"); //jak się request nie powiedzie, to zwraca błąd
+//     }
+//   }
+// };
+
+// getCardData(parsedDecklist);
+
+var additionalCardData = new Promise(function(resolve, reject) {
+  function apiRequest(urls, iteration, cardsReturnedPreviously) {
+    let returnedCards = [...cardsReturnedPreviously]
+    let request = new XMLHttpRequest(); //zapytanie do API
+    request.open(
+      "GET",
+      urls[iteration], //pierwszy URL wygenerowany wyżej
+      true
+    );
+    request.send();
+    request.onload = function() { //kiedy mamy dane, to robimy rzeczy
+      var data = JSON.parse(this.response);
+      if (request.status >= 200 && request.status < 400) {
+        returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
+        iteration += 1;
+        if (iteration < urls.length) {
+          apiRequest(urls, iteration, returnedCards);
+        } else {
+          resolve(returnedCards);
+        }
       } else {
-        updateDeckData(deck); //dodajemy pobrane dane do obiektów w decku
-        createDeck(deck, "type"); //tworzymy deck na stronie
-        createButtons(); //tworzymy przyciski do grupowania i sortowania
+        reject("error"); //jak się request nie powiedzie, to zwraca błąd
       }
-    } else {
-      console.log("error"); //jak się request nie powiedzie, to zwraca błąd
     }
   };
-};
+  let apiRequestUrls = createApiRequestURL(parsedDecklist, getExtraCards(parsedDecklist));
+  apiRequest(apiRequestUrls, 0, []);
+})
 
-getCardData(parsedDecklist);
-console.log(parsedDecklist);
-function updateDeckData(deck) { //funkcja która dodaje właściwości z listy pobranej przez API do kart w decku
+additionalCardData.then(function(cardsFromApi) {
+  var decklistWithAdditionalData = updateDeckData(parsedDecklist, cardsFromApi);
+  console.log(decklistWithAdditionalData);
+});
+
+function updateDeckData(deck, returnedCards) { //funkcja która dodaje właściwości z listy pobranej przez API do kart w decku
+  console.log("hello");
   deck.forEach(function(card) {
     returnedCards.forEach(function(returnedCard) {
       if (returnedCard.name == card.name) {
@@ -144,6 +169,7 @@ function updateDeckData(deck) { //funkcja która dodaje właściwości z listy p
       }
     })
   })
+  return deck;
 };
 
 function sortDeck(sorting) {
@@ -362,6 +388,7 @@ function addLinksAndPreviews() { //funkcja, która dodaje linki i podglądy do k
 };
 
 function checkMultiverseId(cardName) { //funkcja, która sprawdza multiverseid danej karty
+  let multiverseId = "";
   returnedCards.forEach(function(item) {
     if (item.name == cardName) {
       multiverseId = item.multiverse_ids[0];
@@ -371,6 +398,7 @@ function checkMultiverseId(cardName) { //funkcja, która sprawdza multiverseid d
 };
 
 function getCardImage(cardLink, cardName) { //funkcja, która tworzy divy z podglądem kart po najechaniu na nie i usuwa je po odjechaniu z nich :)
+  let wrapperSidebar = document.querySelector(".wrappersidebar"); //znajdujemy wrapper do dodawania podglądu kart
   let cardPreview = document.createElement("div");
   cardPreview.setAttribute("class", "cardpreview");
   cardPreview.innerHTML = `<img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=` + checkMultiverseId(cardName) + `&type=card">`;
