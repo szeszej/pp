@@ -292,8 +292,16 @@ main .decklisttitle {
   align-items: center;
   justify-content: flex-end;
   margin: 1em; }
-  main .decklisttitle h1 {
-    text-align: center; }
+  main .decklisttitle .textindecklisttitle {
+    width: 100%;
+    height: 70%;
+    background: linear-gradient(to bottom, rgba(19, 19, 19, 0) 0%, black 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center; }
+    main .decklisttitle .textindecklisttitle h1 {
+      text-align: center; }
 
 main #xantcha {
   background-image: url("../resources/images/xantcha sleeper agent.jpg"); }
