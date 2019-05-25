@@ -1,117 +1,128 @@
 //https://disqus.com/ jako system komentarzy?
-//przerobić zgodnie z wytycznymi functional programming
+//przerobić zgodnie z wytycznymi functional programming/clean code
+//pozbyć się jakoś globalnych zmiennych currentSort i currentGrouping
 
-matchLines = /.+/g; //regex, który dzieli mi decklistę na linijki
-cardName = /\s.+/; //regex, który znajduje mi nazwę karty
-commanderTest = /CMDR/; //regex, który znajduje mi commandera
+function parseDecklist(decklist) {
+  let matchLines = /.+/g; //regex, który dzieli mi decklistę na linijki
+  let cardName = /\s.+/; //regex, który znajduje mi nazwę karty
+  let cardLines = decklist.match(matchLines).map(a => a.trim()); //dzielę decklistę na linijki i każdą linijkę zapisuję jako jeden item w tablicy, dodatkowo usuwam whitespace
+  let cardQuantities = cardLines.map(a => parseInt(a)); //jako że liczba danej karty jest zawsze na początku, mogę w ten sposób wydzielić ilość danej karty
+  let cardNames = cardLines //znajduję same nazwy kart i usuwam whitespace
+    .map(a => a.match(cardName))
+    .flat()
+    .map(a => a.trim());
 
-var deckLines = deckList.match(matchLines).map(a => a.trim()); //dzielę decklistę na linijki i każdą linijkę zapisuję jako jeden item w tablicy, dodatkowo usuwam whitespace
-var cardNumbers = deckLines.map(a => parseInt(a)); //jako że liczba danej karty jest zawsze na początku, mogę w ten sposób wydzielić ilość danej karty
-var cardNames = deckLines //znajduję same nazwy kart i usuwam whitespace
-  .map(a => a.match(cardName))
-  .flat()
-  .map(a => a.trim());
+  let parsedDeck = mergeQuantityAndName(cardQuantities, cardNames); //tablica obiektów, każdy obiekt to jedna karta
+  return parsedDeck;
+}
 
-var deck = []; //tablica obiektów, każdy obiekt to jedna karta
-
-cardNumbers.map(function(item, index) { //dodaję po kolei karty do decku
-  if (commanderTest.test(cardNames[index]) == true) { //sprawdzam czy karta jest oznaczona jako commander i usuwam oznaczenie commandera z nazwy
-    deck.push({
-      quantity: item,
-      name: cardNames[index].slice(0, -7),
-      commander: true
+function mergeQuantityAndName(quantities, names) {
+  let mergedDeck = [];
+  let findCommander = /CMDR/; //regex, który znajduje mi commandera
+  if (quantities.length == names.length) {
+    quantities.map(function(item, index) { //dodaję po kolei karty do decku
+      if (findCommander.test(names[index]) == true) { //sprawdzam czy karta jest oznaczona jako commander i usuwam oznaczenie commandera z nazwy
+        mergedDeck.push(new Card(names[index].slice(0, -7), item, true));
+      } else { //w pozostałych przypadkach po prostu dodaję kartę z właściwościami ilość i nazwa
+        mergedDeck.push(new Card(names[index], item, false));
+      }
     });
-  } else { //w pozostałych przypadkach po prostu dodaję kartę z właściwościami ilość i nazwa
-    deck.push({
-      quantity: item,
-      name: cardNames[index],
-      commander: false
-    });
+  } else {
+    console.log("Parsing error");
   }
-});
+  return mergedDeck;
+}
 
-function getExtraCards () {
+function Card(name, quantity, commander) {
+  this.name = name;
+  this.quantity = quantity;
+  this.commander = commander;
+}
+Card.prototype.multiverseId = "unavailable";
+
+var parsedDecklist = parseDecklist(unparsedDecklist);
+
+function getExtraCards(deck) {
   let cardLinks = document.getElementsByClassName("mtgcard"); //lista wszystkich kart na stronie
   let extraCards = [];
   for (let i = 0; i < cardLinks.length; i++) {
     if (deck.filter(x => x.name == cardLinks[i].textContent).length == 0) {
-      extraCards.push({name: cardLinks[i].textContent});
+      extraCards.push(new Card(cardLinks[i].textContent));
     }
   }
   return extraCards;
 }
 
 function createApiRequestURL(deckForUrl, extraCards) { //funkcja, która tworzy URL zapytania do API z listą kart w talii
-  let apiRequestUrl = [`https://api.scryfall.com/cards/search?q=`, `https://api.scryfall.com/cards/search?q=`]; //początek URLa do zapytania do API
+  let apiRequestUrl = [`https://api.scryfall.com/cards/search?q=`]; //początek URLa do zapytania do API
   allCardsOnPage = deckForUrl.concat(extraCards);
+  let urlIndex = 0;
   allCardsOnPage.forEach(function(item) {
-    if (apiRequestUrl[0].length < 1025) { //niestety długość requesta jest limitowana, więc jak jest dużo kart, to trzeba dwóch :)
-      apiRequestUrl[0] += `!"` + item.name + `"or`;
+    if (apiRequestUrl[urlIndex].length < 1025) { //niestety długość requesta jest limitowana, więc jak jest dużo kart, to trzeba dwóch :)
+      apiRequestUrl[urlIndex] += `!"` + item.name + `"or`;
     } else {
-      apiRequestUrl[1] += `!"` + item.name + `"or`;
+      apiRequestUrl.push(`https://api.scryfall.com/cards/search?q=`);
+      urlIndex += 1;
+      apiRequestUrl[urlIndex] += `!"` + item.name + `"or`;
     }
   })
   return apiRequestUrl;
 };
 
-var returnedCards = [];
-var wrapperSidebar = document.querySelector(".wrappersidebar"); //znajdujemy wrapper do dodawania podglądu kart
-var decklistBox = document.getElementById("decklistbox");
-var listOfCards = document.createElement("ul");
-listOfCards.setAttribute("class", "deck");
-decklistBox.appendChild(listOfCards);
-var loader = document.createElement("div"); //obracające się kółko kiedy lista jeszcze się ładuje
-loader.setAttribute("class", "loader");
-listOfCards.appendChild(loader);
-
-var currentGrouping = ""; //tutaj przechowuję informację o obecnym grupowaniu kart
-var currentSort = ""; //tutaj przechowuję informację o obecnym sortowaniu kart
-
-let request = new XMLHttpRequest(); //zapytanie do API
-request.open(
-  "GET",
-  createApiRequestURL(deck, getExtraCards())[0], //pierwszy URL wygenerowany wyżej
-  true
-);
-request.send();
-request.onload = function() { //kiedy mamy dane, to robimy rzeczy
-  var data = JSON.parse(this.response);
-  if (request.status >= 200 && request.status < 400) {
-    returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
-    if (createApiRequestURL(deck, getExtraCards())[1].length > 40) { //jeśli trzeba było stworzyć drugi URL, to trzeba zrobić drugie zapytanie z drugim URLem
-      let request2 = new XMLHttpRequest(); // drugie zapytanie do API
-      request2.open(
-        "GET",
-        createApiRequestURL(deck, getExtraCards())[1], // drugi URL wygenerowany wyżej
-        true
-      );
-      request2.send();
-      request2.onload = function() { //kiedy mamy dane, to robimy rzeczy
-        var data = JSON.parse(this.response);
-        if (request2.status >= 200 && request.status < 400) {
-          returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
-          updateDeckData(); //dodajemy pobrane dane do obiektów w decku
-          createDeck("type"); //tworzymy deck na stronie
-          createButtons(); //tworzymy przyciski do grupowania i sortowania
-        } else {
-          console.log("error"); //jak się request nie powiedzie, to zwraca błąd
-        }
-      };
-    } else {
-      updateDeckData(); //dodajemy pobrane dane do obiektów w decku
-      createDeck("type"); //tworzymy deck na stronie
-      createButtons(); //tworzymy przyciski do grupowania i sortowania
-    }
-  } else {
-    console.log("error"); //jak się request nie powiedzie, to zwraca błąd
-  }
+function createLoader() {
+  let listOfCards = document.querySelector(".deck");
+  let loader = document.createElement("div"); //obracające się kółko kiedy lista jeszcze się ładuje
+  loader.setAttribute("class", "loader");
+  listOfCards.appendChild(loader);
 };
+createLoader();
 
-function updateDeckData() { //funkcja która dodaje właściwości z listy pobranej przez API do kart w decku
+var additionalCardData = new Promise(function(resolve, reject) {
+  function apiRequest(urls, iteration, cardsReturnedPreviously) {
+    let returnedCards = [...cardsReturnedPreviously]
+    let request = new XMLHttpRequest(); //zapytanie do API
+    request.open(
+      "GET",
+      urls[iteration], //pierwszy URL wygenerowany wyżej
+      true
+    );
+    request.send();
+    request.onload = function() { //kiedy mamy dane, to robimy rzeczy
+      var data = JSON.parse(this.response);
+      if (request.status >= 200 && request.status < 400) {
+        returnedCards = returnedCards.concat(data.data); //podpisujemy pobrane dane o kartach pod zmienną
+        iteration += 1;
+        if (iteration < urls.length) {
+          apiRequest(urls, iteration, returnedCards);
+        } else {
+          resolve(returnedCards);
+        }
+      } else {
+        reject("error"); //jak się request nie powiedzie, to zwraca błąd
+      }
+    }
+  };
+  let apiRequestUrls = createApiRequestURL(parsedDecklist, getExtraCards(parsedDecklist));
+  apiRequest(apiRequestUrls, 0, []);
+})
+
+additionalCardData.then(function(cardsFromApi) {
+  var decklistWithFullData = updateDeckData(parsedDecklist, cardsFromApi);
+  var extraCardsWithFullData = updateDeckData(getExtraCards(parsedDecklist), cardsFromApi);
+  addLinksAndPreviews(extraCardsWithFullData);
+  createDeck(groupDeck(decklistWithFullData, "type"));
+  createButtons(decklistWithFullData);
+}, function() {
+  createDeck(groupDeck(sortDeck(parsedDecklist, "name"), "ugly"));
+});
+
+function updateDeckData(listOfCards, returnedCards) { //funkcja która dodaje właściwości z listy pobranej przez API do kart w decku
+  deck = [...listOfCards];
   deck.forEach(function(card) {
     returnedCards.forEach(function(returnedCard) {
       if (returnedCard.name == card.name) {
         card.cmc = returnedCard.cmc; // pobieramy converted mana cost
+        card.multiverseId = returnedCard.multiverse_ids[0];
         if (returnedCard.hasOwnProperty("colors") == true) {
           card.colors = returnedCard.colors; //pobieramy kolory
         } else if (returnedCard.hasOwnProperty("card_faces") == true) { //czasami karta ma dwie połówki albo drugą stronę - wtedy chcemy dane pierwszej
@@ -128,120 +139,184 @@ function updateDeckData() { //funkcja która dodaje właściwości z listy pobra
       }
     })
   })
+  return deck;
 };
 
-function sortDeck(sorting) {
+var currentGrouping = ""; //tutaj przechowuję informację o obecnym grupowaniu kart
+var currentSort = ""; //tutaj przechowuję informację o obecnym sortowaniu kart
+
+function sortDeck(listOfCards, sorting) {
+  let deck = [...listOfCards];
   if (sorting == "name") { //sortowanie po nazwie
-    deck = deck.sort(function(a, b) {
-      //ignorujemy wielkość liter
-      let nameA = a.name.toUpperCase();
-      let nameB = b.name.toUpperCase();
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
-      return 0;
-    });
+    deck = sortDeckByName(deck);
     currentSort = "name";
   } else if (sorting == "cmc") { //sortowanie po cmc
-    deck = deck.sort((a, b) => a.cmc - b.cmc);
+    deck = sortDeckByCmc(deck);
     currentSort = "cmc";
   } else if (sorting == "type") { //sortowanie po typie
-    deck = deck.sort(function(a, b) {
-      //ignorujemy wielkość liter
-      let typeA = a.type.toUpperCase();
-      let typeB = b.type.toUpperCase();
-      if (typeA < typeB) {
-        return -1;
-      }
-      if (typeA > typeB) {
-        return 1;
-      }
-      return 0;
-    });
+    deck = sortDeckByType(deck);
     currentSort = "type";
   }
+  return deck;
 };
 
-function createDeck(grouping) { //funkcja która tworzy widoczną na stronie talię
-  let filteredCards = [];
+function sortDeckByName(listOfCards) {
+  let deck = [...listOfCards];
+  deck = deck.sort(function(a, b) {
+    //ignorujemy wielkość liter
+    let nameA = a.name.toUpperCase();
+    let nameB = b.name.toUpperCase();
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    return 0;
+  });
+  return deck;
+}
+
+function sortDeckByCmc(listOfCards) {
+  let deck = [...listOfCards];
+  deck = deck.sort((a, b) => a.cmc - b.cmc);
+  return deck;
+}
+
+function sortDeckByType(listOfCards) {
+  let deck = [...listOfCards];
+  deck = deck.sort(function(a, b) {
+    //ignorujemy wielkość liter
+    let typeA = a.type.toUpperCase();
+    let typeB = b.type.toUpperCase();
+    if (typeA < typeB) {
+      return -1;
+    }
+    if (typeA > typeB) {
+      return 1;
+    }
+    return 0;
+  });
+  return deck;
+}
+
+function groupDeck(deck, grouping) { //funkcja która tworzy widoczną na stronie talię
+  let groupedDeck = [];
   if (grouping == "type") {
-    //poniżej regexy potrzebne do filtrowania
-    let landRegex = /Land/;
-    let creatureRegex = /Creature/;
-    let artifactRegex = /Artifact/;
-    let enchantmentRegex = /Enchantment/;
-    let planeswalkerRegex = /Planeswalker/;
-    let instantRegex = /Instant/;
-    let sorceryRegex = /Sorcery/;
-    //poniżej tworzymy obiekty z listą kart o danym typie i nazwą listy
-    let commander = new ConstructListsByProperty("Commander", deck.filter(card => card.commander == true));
-    filteredCards.push(commander);
-    let lands = new ConstructListsByProperty("Lands", deck.filter(card => landRegex.test(card.type) == true));
-    filteredCards.push(lands);
-    let creatures = new ConstructListsByProperty("Creatures", deck.filter(card => creatureRegex.test(card.type) == true && card.commander == false && landRegex.test(card.type) == false));
-    filteredCards.push(creatures);
-    let artifacts = new ConstructListsByProperty("Artifacts", deck.filter(card => artifactRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
-    filteredCards.push(artifacts);
-    let enchantments = new ConstructListsByProperty("Enchantments", deck.filter(card => enchantmentRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
-    filteredCards.push(enchantments);
-    let planeswalkers = new ConstructListsByProperty("Planeswalkers", deck.filter(card => planeswalkerRegex.test(card.type) == true && card.commander == false));
-    filteredCards.push(planeswalkers);
-    let instants = new ConstructListsByProperty("Instants", deck.filter(card => instantRegex.test(card.type) == true));
-    filteredCards.push(instants);
-    let sorceries = new ConstructListsByProperty("Sorceries", deck.filter(card => sorceryRegex.test(card.type) == true));
-    filteredCards.push(sorceries);
+    groupedDeck = groupDeckByType(deck);
     currentGrouping = "type";
   } else if (grouping == "cmc") {
-    //poniżej tworzymy obiekty z listą kart o danym cmc i nazwą listy
-    let commander = new ConstructListsByProperty("Commander", deck.filter(card => card.commander == true));
-    filteredCards.push(commander);
-    let cmc0 = new ConstructListsByProperty("CMC 0", deck.filter(card => card.cmc == 0 && card.commander == false));
-    filteredCards.push(cmc0);
-    let cmc1 = new ConstructListsByProperty("CMC 1", deck.filter(card => card.cmc == 1 && card.commander == false));
-    filteredCards.push(cmc1);
-    let cmc2 = new ConstructListsByProperty("CMC 2", deck.filter(card => card.cmc == 2 && card.commander == false));
-    filteredCards.push(cmc2);
-    let cmc3 = new ConstructListsByProperty("CMC 3", deck.filter(card => card.cmc == 3 && card.commander == false));
-    filteredCards.push(cmc3);
-    let cmc4 = new ConstructListsByProperty("CMC 4", deck.filter(card => card.cmc == 4 && card.commander == false));
-    filteredCards.push(cmc4);
-    let cmc5 = new ConstructListsByProperty("CMC 5", deck.filter(card => card.cmc == 5 && card.commander == false));
-    filteredCards.push(cmc5);
-    let cmc6More = new ConstructListsByProperty("CMC 6+", deck.filter(card => card.cmc > 5 && card.commander == false));
-    filteredCards.push(cmc6More);
+    groupedDeck = groupDeckByCmc(deck);
     currentGrouping = "cmc";
   } else if (grouping == "color") {
-    //poniżej tworzymy obiekty z listą kart o danym kolorze i nazwą listy
-    let commander = new ConstructListsByProperty("Commander", deck.filter(card => card.commander == true));
-    filteredCards.push(commander);
-    let colorless = new ConstructListsByProperty("Colorless", deck.filter(card => card.colors.length == 0 && card.commander == false));
-    filteredCards.push(colorless);
-    let white = new ConstructListsByProperty("White", deck.filter(card => card.colors.length == 1 && card.colors[0] == "W" && card.commander == false));
-    filteredCards.push(white);
-    let blue = new ConstructListsByProperty("Blue", deck.filter(card => card.colors.length == 1 && card.colors[0] == "U" && card.commander == false));
-    filteredCards.push(blue);
-    let black = new ConstructListsByProperty("Black", deck.filter(card => card.colors.length == 1 && card.colors[0] == "B" && card.commander == false));
-    filteredCards.push(black);
-    let red = new ConstructListsByProperty("Red", deck.filter(card => card.colors.length == 1 && card.colors[0] == "R" && card.commander == false));
-    filteredCards.push(red);
-    let green = new ConstructListsByProperty("Green", deck.filter(card => card.colors.length == 1 && card.colors[0] == "G" && card.commander == false));
-    filteredCards.push(green);
-    let multicolor = new ConstructListsByProperty("Multicolor", deck.filter(card => card.colors.length > 1 && card.commander == false));
-    filteredCards.push(multicolor);
+    groupedDeck = groupDeckByColor(deck);
     currentGrouping = "color";
+  } else if (grouping == "ugly") {
+    groupedDeck = groupDeckIfUgly(deck);
   }
-  listOfCards.innerHTML = ""; //czyścimy widoczną decklistę
-  filteredCards.forEach(item => createListByProperty.call(item)); //tworzymy podlisty kart do wyświetlania na stronie
-  addLinksAndPreviews(); //do kart w decku dodajemy linki i obrazki
+  return groupedDeck;
 };
 
-function ConstructListsByProperty(name, list) { //konstruktor, który tworzy listy kart po typie
+function groupDeckByType(listOfCards) {
+  let deck = [...listOfCards];
+  let groupedCards = [];
+  //poniżej regexy potrzebne do filtrowania
+  let landRegex = /Land/;
+  let creatureRegex = /Creature/;
+  let artifactRegex = /Artifact/;
+  let enchantmentRegex = /Enchantment/;
+  let planeswalkerRegex = /Planeswalker/;
+  let instantRegex = /Instant/;
+  let sorceryRegex = /Sorcery/;
+  //poniżej tworzymy obiekty z listą kart o danym typie i nazwą listy
+  let commander = new ListByProperty("Commander", deck.filter(card => card.commander == true));
+  groupedCards.push(commander);
+  let lands = new ListByProperty("Lands", deck.filter(card => landRegex.test(card.type) == true));
+  groupedCards.push(lands);
+  let creatures = new ListByProperty("Creatures", deck.filter(card => creatureRegex.test(card.type) == true && card.commander == false && landRegex.test(card.type) == false));
+  groupedCards.push(creatures);
+  let artifacts = new ListByProperty("Artifacts", deck.filter(card => artifactRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
+  groupedCards.push(artifacts);
+  let enchantments = new ListByProperty("Enchantments", deck.filter(card => enchantmentRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
+  groupedCards.push(enchantments);
+  let planeswalkers = new ListByProperty("Planeswalkers", deck.filter(card => planeswalkerRegex.test(card.type) == true && card.commander == false));
+  groupedCards.push(planeswalkers);
+  let instants = new ListByProperty("Instants", deck.filter(card => instantRegex.test(card.type) == true));
+  groupedCards.push(instants);
+  let sorceries = new ListByProperty("Sorceries", deck.filter(card => sorceryRegex.test(card.type) == true));
+  groupedCards.push(sorceries);
+  return groupedCards;
+};
+
+function groupDeckByCmc(listOfCards) {
+  let deck = [...listOfCards];
+  let groupedCards = [];
+  //poniżej tworzymy obiekty z listą kart o danym cmc i nazwą listy
+  let commander = new ListByProperty("Commander", deck.filter(card => card.commander == true));
+  groupedCards.push(commander);
+  let cmc0 = new ListByProperty("CMC 0", deck.filter(card => card.cmc == 0 && card.commander == false));
+  groupedCards.push(cmc0);
+  let cmc1 = new ListByProperty("CMC 1", deck.filter(card => card.cmc == 1 && card.commander == false));
+  groupedCards.push(cmc1);
+  let cmc2 = new ListByProperty("CMC 2", deck.filter(card => card.cmc == 2 && card.commander == false));
+  groupedCards.push(cmc2);
+  let cmc3 = new ListByProperty("CMC 3", deck.filter(card => card.cmc == 3 && card.commander == false));
+  groupedCards.push(cmc3);
+  let cmc4 = new ListByProperty("CMC 4", deck.filter(card => card.cmc == 4 && card.commander == false));
+  groupedCards.push(cmc4);
+  let cmc5 = new ListByProperty("CMC 5", deck.filter(card => card.cmc == 5 && card.commander == false));
+  groupedCards.push(cmc5);
+  let cmc6More = new ListByProperty("CMC 6+", deck.filter(card => card.cmc > 5 && card.commander == false));
+  groupedCards.push(cmc6More);
+  return groupedCards;
+};
+
+function groupDeckByColor(listOfCards) {
+  let deck = [...listOfCards];
+  let groupedCards = [];
+  //poniżej tworzymy obiekty z listą kart o danym kolorze i nazwą listy
+  let commander = new ListByProperty("Commander", deck.filter(card => card.commander == true));
+  groupedCards.push(commander);
+  let colorless = new ListByProperty("Colorless", deck.filter(card => card.colors.length == 0 && card.commander == false));
+  groupedCards.push(colorless);
+  let white = new ListByProperty("White", deck.filter(card => card.colors.length == 1 && card.colors[0] == "W" && card.commander == false));
+  groupedCards.push(white);
+  let blue = new ListByProperty("Blue", deck.filter(card => card.colors.length == 1 && card.colors[0] == "U" && card.commander == false));
+  groupedCards.push(blue);
+  let black = new ListByProperty("Black", deck.filter(card => card.colors.length == 1 && card.colors[0] == "B" && card.commander == false));
+  groupedCards.push(black);
+  let red = new ListByProperty("Red", deck.filter(card => card.colors.length == 1 && card.colors[0] == "R" && card.commander == false));
+  groupedCards.push(red);
+  let green = new ListByProperty("Green", deck.filter(card => card.colors.length == 1 && card.colors[0] == "G" && card.commander == false));
+  groupedCards.push(green);
+  let multicolor = new ListByProperty("Multicolor", deck.filter(card => card.colors.length > 1 && card.commander == false));
+  groupedCards.push(multicolor);
+  return groupedCards;
+};
+
+function groupDeckIfUgly(listOfCards) {
+  let deck = [...listOfCards];
+  let groupedCards = [];
+  let commander = new ListByProperty("Commander", deck.filter(card => card.commander == true));
+  groupedCards.push(commander);
+  let notCommander = new ListByProperty("Karty", deck.filter(card => card.commander == false));
+  groupedCards.push(notCommander);
+  return groupedCards;
+}
+
+function createDeck(listOfCards) {
+  let deck = [...listOfCards];
+  let deckOnPage = document.querySelector(".deck");
+  deckOnPage.innerHTML = ""; //czyścimy widoczną decklistę
+  deck.forEach(item => createListByProperty.call(item)); //tworzymy podlisty kart do wyświetlania na stronie
+  let deckForLinksAndPreviews = deck.reduce((total, item) => total.concat(item.list), []);
+  addLinksAndPreviews(deckForLinksAndPreviews); //do kart w decku dodajemy linki i obrazki
+};
+
+function ListByProperty(name, list) { //konstruktor, który tworzy listy kart po typie
   this.name = name;
   this.list = list;
-}
+};
 
 function createListByProperty() { //funkcja, która tworzy podlisty kart do wyświetlania na stronie
   if (this.list.length > 0) { //chcemy dodać podlistę tylko wtedy, kiedy jest niepusta
@@ -250,19 +325,16 @@ function createListByProperty() { //funkcja, która tworzy podlisty kart do wyś
     let listByType = document.createElement("ul"); //właściwa podlista kart
     this.list.forEach(function(item) { //tworzymy podlistę kart poprzez dodanie ilości danej karty + jej nazwy
       let cardInList = document.createElement("li");
-      // if (item.commander == true) {
-      //   cardInList.innerHTML = `<a target="_blank" href="http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=` + item.multiverseId + `">` + `<img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=` + item.multiverseId + `&type=card"></a>`;
-      // } else {
       cardInList.innerHTML = item.quantity + "x " + `<a class="mtgcard" href="">` + item.name + `</a>`;
-      // };
       listByType.appendChild(cardInList)
     });
     listName.appendChild(listByType); //dodajemy nazwę podlisty do głównej listy
+    let listOfCards = document.querySelector(".deck");
     listOfCards.appendChild(listName); //dodajemy podlistę do jej nazwy
   };
 };
 
-function createButtons() {
+function createButtons(deck) {
   //div na przyciski
   let buttons = document.createElement("div");
   buttons.setAttribute("class", "buttons");
@@ -307,66 +379,87 @@ function createButtons() {
   dropdownSort.appendChild(dropdownSortButton);
   buttons.appendChild(dropdownSort);
   //dodajemy przyciski do listy kart
+  let listOfCards = document.querySelector(".deck");
+  let decklistBox = document.getElementById("decklistbox");
   decklistBox.insertBefore(buttons, listOfCards);
   //tworzymy eventy do przycisków grupowania
   groupByType.addEventListener("click", function() {
-    sortDeck(currentSort);
-    createDeck("type");
+    createDeck(groupDeck(sortDeck(deck, currentSort), "type"));
   });
   groupByCmc.addEventListener("click", function() {
-    sortDeck(currentSort);
-    createDeck("cmc")
+    createDeck(groupDeck(sortDeck(deck, currentSort), "cmc"));
   });
   groupByColor.addEventListener("click", function() {
-    sortDeck(currentSort);
-    createDeck("color")
+    createDeck(groupDeck(sortDeck(deck, currentSort), "color"));
   });
   //tworzymy eventy do przycisków sortowania
   sortByName.addEventListener("click", function() {
-    sortDeck("name");
-    createDeck(currentGrouping);
+    createDeck(groupDeck(sortDeck(deck, "name"), currentGrouping));
+    //checkGrouping(deck);
   });
   sortByCmc.addEventListener("click", function() {
-    sortDeck("cmc");
-    createDeck(currentGrouping);
+    createDeck(groupDeck(sortDeck(deck, "cmc"), currentGrouping));
   });
   sortByType.addEventListener("click", function() {
-    sortDeck("type");
-    createDeck(currentGrouping);
+    createDeck(groupDeck(sortDeck(deck, "type"), currentGrouping));
   });
 };
 
-function addLinksAndPreviews() { //funkcja, która dodaje linki i podglądy do kart
+function addLinksAndPreviews(listOfCards) { //funkcja, która dodaje linki i podglądy do kart
   let cardLinks = document.getElementsByClassName("mtgcard"); //sprawdzamy listę kart na stronie
   for (let i = 0; i < cardLinks.length; i++) {
-    getCardImage(cardLinks[i], cardLinks[i].textContent); //tworzymy podgląd kart przy najechaniu na kartę
-    cardLinks[i].setAttribute("href", `http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=` + checkMultiverseId(cardLinks[i].textContent));
-    cardLinks[i].setAttribute("target", "_blank"); //tworzymy link do gatherera dla każdej karty
+    if (listOfCards.filter(x => x.name == cardLinks[i].textContent).length > 0 && cardLinks[i].getAttribute("href") == "") {
+      getCardImage(cardLinks[i], cardLinks[i].textContent, listOfCards); //tworzymy podgląd kart przy najechaniu na kartę
+      let multiverseId = checkMultiverseId(cardLinks[i].textContent, listOfCards);
+      if (multiverseId != "unavailable") {
+        cardLinks[i].setAttribute("href", `http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=` + multiverseId);
+        cardLinks[i].setAttribute("target", "_blank"); //tworzymy link do gatherera dla każdej karty
+      } else {
+        cardLinks[i].setAttribute("href", `https://gatherer.wizards.com/Pages/Search/Default.aspx?name=[` + cardLinks[i].textContent + `]`);
+        cardLinks[i].setAttribute("target", "_blank"); //tworzymy link do gatherera dla każdej karty
+      }
+    }
   };
 };
 
-function checkMultiverseId(cardName) { //funkcja, która sprawdza multiverseid danej karty
-  returnedCards.forEach(function(item) {
+function checkMultiverseId(cardName, listOfCards) { //funkcja, która sprawdza multiverseid danej karty
+  let multiverseId = "";
+  listOfCards.forEach(function(item) {
     if (item.name == cardName) {
-      multiverseId = item.multiverse_ids[0];
+      multiverseId = item.multiverseId;
     }
   });
   return multiverseId;
 };
 
-function getCardImage(cardLink, cardName) { //funkcja, która tworzy divy z podglądem kart po najechaniu na nie i usuwa je po odjechaniu z nich :)
+function getCardImage(cardLink, cardName, listOfCards) { //funkcja, która tworzy divy z podglądem kart po najechaniu na nie i usuwa je po odjechaniu z nich :)
+  let wrapperSidebar = document.querySelector(".wrappersidebar"); //znajdujemy wrapper do dodawania podglądu kart
   let cardPreview = document.createElement("div");
+  let multiverseId = checkMultiverseId(cardName, listOfCards);
   cardPreview.setAttribute("class", "cardpreview");
-  cardPreview.innerHTML = `<img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=` + checkMultiverseId(cardName) + `&type=card">`;
+  if (multiverseId != "unavailable") {
+    cardPreview.innerHTML = `<img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=` + multiverseId + `&type=card">`;
+  } else {
+    cardPreview.innerHTML = `<p>Podgląd chwilowo niedostępny. Spróbuj odświeżyć stronę.</p>`;
+    cardPreview.style.border = "1px solid $swclr";
+  }
   cardLink.addEventListener("mouseenter", function() {
     let cardLocation = cardLink.getBoundingClientRect(); //sprawdzamy koordynaty relatywne do viewportu
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop; //sprawdzamy przesunięcie viewportu w dół
     let scrollLeft = window.pageXOffset || document.documentElement.scrollLeft; //sprawdzamy przesunięcie viewportu w lewo
     cardPreview.style.left = cardLocation.width + cardLocation.left + scrollLeft + 7 + "px"; //pozycjonujemy podgląd od lewej
     cardPreview.style.top = cardLocation.top + scrollTop - 3 + "px"; //pozycjonujemy podgląd od góry
+    if (multiverseId == "unavailable") {
+      cardPreview.style.border = "1px solid #ffe919";
+    }
     wrapperSidebar.appendChild(cardPreview);
   });
   cardLink.addEventListener("mouseleave", function() {
     wrapperSidebar.removeChild(cardPreview);
   });
 };
+
+// function checkGrouping() {
+//   let deckOnPage = document.querySelector(".deck");
+//
+// }

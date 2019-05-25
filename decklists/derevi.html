@@ -28,10 +28,14 @@
     </div>
     <main>
       <div class="decklisttitle" id="derevi">
-        <h1>Derevi, Empyrial Tactician</h1>
+        <div class="textindecklisttitle">
+          <h1>Derevi, Empyrial Tactician</h1>
+        </div>
       </div>
       <h2>Spis talii:</h2>
       <section id="decklistbox">
+        <ul class="deck">
+        </ul>
       </section>
       <hr>
       <h2>Opis:</h2>
@@ -47,7 +51,8 @@
           <li>Nie tutoruję po rzeczy inne niż landy.</li>
           <li>Gram uczciwie, tzn. nie gram combo (zabijam uczciwym kombatem jak klasyczna aggro-kontrola).</li>
           <li>Nie forsuję sztuczek z generałem (tzn. poświęcadeł/staxów i opieraniu decku na tysiąckrotnym wrzuceniu generała - tu raczej chodzi tylko o odtapowywanie własnej many, żeby mieć możliwość stosowania różnych odpowiedzi).</li>
-          <li>Karty mają być jak najbardziej wszechstronne - nie chodzi o to, żeby robiły pojedynczo jakieś potężne efekty, bardziej chodzi mi o ich przydatność w każdej sytuacji (zarówno gdy jestem w przewadze jak i w defensywie). Dotyczy to zarówno
+          <li>Karty mają być jak najbardziej wszechstronne - nie chodzi o to, żeby robiły pojedynczo jakieś potężne efekty, bardziej chodzi mi o ich przydatność w każdej sytuacji (zarówno gdy jestem w przewadze jak i w defensywie). Dotyczy to
+            zarówno
             kreatur, removalu i kontr (co raczej oczywiste), ale również np. mana rampy czy landów (stąd tak duża ilość cycling landów, które przy stosunkowo niskim CMC decku w mid/late mogą być wracane na rękę i wyrzucane).</li>
           <li>Gram nieoptymalnymi kartami - głównie dlatego, że lubię niektóre niekonwencjonalne rozwiązania (nudząc się przy tym sztampowymi powerkartami) + staram się unikać tzw. „samograjów” w commanderze (tzn. kart które można wkładać do decków
             niemal automatycznie).</li>
@@ -70,10 +75,11 @@
           <li><a class="mtgcard" href="">Cephalid Coliseum</a> - zamienia nasze nie-cyclelandy w cyclelandy (wyrzucamy zbędne landy z ręki w zamian za dobre karty) </li>
           <li><a class="mtgcard" href="">Gavony Township</a> - z armią małych chłopaków w deczku, to jest w zasadzie finiszerem</li>
           <li><a class="mtgcard" href="">Ghost Quarter</a></li>
-          <li><a class="mtgcard" href="">Tectonic edge</a></li>
+          <li><a class="mtgcard" href="">Tectonic Edge</a></li>
           <li><a class="mtgcard" href="">Memorial to Unity</a> - przy 34 kritach prawie zawsze trafimy w jakiegoś stworka</li>
           <li><a class="mtgcard" href="">Alchemist's Refuge</a> - świetny land, który moim zdaniem nie jest aż tak dobry w tym decku, jak wszyscy myślą</li>
-          <li><a class="mtgcard" href="">Scavenger Grounds</a> - gravehate wskakujący z crop rotation. Nie tak fajny jak <a class="mtgcard" href="">Bojuka Bog</a>, ale kosi wszystkie groby + pozwala mi pozbywać się bezużytecznych cycledesertów z pola
+          <li><a class="mtgcard" href="">Scavenger Grounds</a> - gravehate wskakujący z crop rotation. Nie tak fajny jak <a class="mtgcard" href="">Bojuka Bog</a>, ale kosi wszystkie groby + pozwala mi pozbywać się bezużytecznych cycledesertów z
+            pola
             gry.</li>
         </ul>
         <p>Cyclelandy:</p>
@@ -104,11 +110,10 @@
         <h3>Rampa/fixing: (9)</h3>
         <p>1 CMC:</p>
         <ul>
-          <li><a class="mtgcard" href="">Avacyn's Pilgrim</a> - lubimy rampkę na chłopakach, bo triggerują <a class="mtgcard" href="">Mentor of the Meek</a> / <a class="mtgcard" href="">Bygone Bishop</a> i zakładają <a class="mtgcard"
-              href="">Skullclamp</a> i w ogóle świetni goście.</li>
+          <li><a class="mtgcard" href="">Avacyn's Pilgrim</a> - lubimy rampkę na chłopakach, bo triggerują <a class="mtgcard" href="">Mentor of the Meek</a> / <a class="mtgcard" href="">Bygone Bishop</a> i zakładają <a class="mtgcard" href="">Skullclamp</a>
+            i w ogóle świetni goście.</li>
           <li><a class="mtgcard" href="">Llanowar Elves</a></li>
-          <li><a class="mtgcard" href="">Crop Rotation</a> - często używany do wyszukiwania karoo landa (<a class="mtgcard" href="">Selesnya Sanctuary</a> / <a class="mtgcard" href="">Simic Growth Chamber</a> / <a class="mtgcard" href="">Azorius
-              Chancery</a>), którego drawback jest niwelowany za pomocą umiejętności Kury (odtapowanie landa).</li>
+          <li><a class="mtgcard" href="">Crop Rotation</a> - często używany do wyszukiwania karoo landa (<a class="mtgcard" href="">Selesnya Sanctuary</a> / <a class="mtgcard" href="">Simic Growth Chamber</a> / <a class="mtgcard" href="">Azorius Chancery</a>), którego drawback jest niwelowany za pomocą umiejętności Kury (odtapowanie landa).</li>
         </ul>
         <p>2 CMC:</p>
         <ul>
@@ -122,7 +127,8 @@
           <li><a class="mtgcard" href="">Cultivate</a></li>
           <li><a class="mtgcard" href="">Spring // Mind</a> - zamiennik kodama's reach, dający w mid/late dociąg kart</li>
         </ul>
-        <p>Rampki/fixingu jest 9 - czy ilość jest wystarczająca? Jeżeli rampa oscyluje w okolicach 10ciu to jest okej - tutaj pewnie fajnie byłoby gdzieś upchnąć np. <a class="mtgcard" href="">Solemn Simulacrum</a>, ale w zasadzie rampa za 4 many nie
+        <p>Rampki/fixingu jest 9 - czy ilość jest wystarczająca? Jeżeli rampa oscyluje w okolicach 10ciu to jest okej - tutaj pewnie fajnie byłoby gdzieś upchnąć np. <a class="mtgcard" href="">Solemn Simulacrum</a>, ale w zasadzie rampa za 4 many
+          nie
           jest po prostu potrzebna.</p>
         <h3>Kontry: (14)</h3>
         <p>CMC 2:</p>
@@ -144,7 +150,7 @@
           <li><a class="mtgcard" href="">Mystic Snake</a></li>
           <li><a class="mtgcard" href="">Venser, Shaper Savant</a></li>
           <li><a class="mtgcard" href="">Stunt Double</a> - jedna z najbardziej uniwersalnych niebieskich kart w Commanderze</li>
-          <li><a class="mtgcard" href="">Commit / Memory</a> - również bardzo uniwersalna karta, robiąca w zasadzie wszystko co potrzebne + będąca swoistym gravehatem/drawem po wylądowaniu w grobie.</li>
+          <li><a class="mtgcard" href="">Commit // Memory</a> - również bardzo uniwersalna karta, robiąca w zasadzie wszystko co potrzebne + będąca swoistym gravehatem/drawem po wylądowaniu w grobie.</li>
           <li><a class="mtgcard" href="">Rewind</a></li>
           <li><a class="mtgcard" href="">Summary Dismissal</a></li>
         </ul>
@@ -165,7 +171,8 @@
         <ul>
           <li><a class="mtgcard" href="">Ainok Survivalist</a> - kolejny morfik z fajnym efektem.</li>
           <li><a class="mtgcard" href="">Knight of Autumn</a> - wszystkie tryby mają znaczenie.</li>
-          <li><a class="mtgcard" href="">Mangara of Corondor</a> - removal we wszystko z małą synergią z generałem (możemy użyć Mangary i w odpowiedzi na jej umiejętność wrzucić Derevi, która odtapuje Mangarę i użyje umiejki drugi raz - ściągnie więc
+          <li><a class="mtgcard" href="">Mangara of Corondor</a> - removal we wszystko z małą synergią z generałem (możemy użyć Mangary i w odpowiedzi na jej umiejętność wrzucić Derevi, która odtapuje Mangarę i użyje umiejki drugi raz - ściągnie
+            więc
             dwie rzeczy naraz).</li>
           <li><a class="mtgcard" href="">Manglehorn</a></li>
           <li><a class="mtgcard" href="">Reclamation Sage</a></li>

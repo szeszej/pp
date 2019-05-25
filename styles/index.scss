@@ -56,6 +56,13 @@ body {
     border-style: solid;
     border-color: transparent yellow transparent transparent;
   }
+
+  .cardpreview {
+    color: $swclr;
+    font-size: 24px;
+    background-color: black;
+    text-align: center;
+  }
   /* powyżej jeśli podgląd jest podczepiony do body */
   /* poniżej jeśli podgląd jest podczepiony do linku z kartą */
   .mtgcard {
@@ -466,7 +473,7 @@ body {
 
     footer {
       font-size: 10px;
-      
+
     }
 
     .wrappersidebar .banned {

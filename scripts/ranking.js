@@ -2,11 +2,11 @@ const PLAYERS = [
   // Tabela graczy
   {
     "name": "Bartosz Kłak", //imię
-    "zydelion": 6, //ilość wygranych dni
+    "zydelion": 7, //ilość wygranych dni
     "commander": [ //nazwa generała plus ilość wygranych gier danym generałem
-      ["Riku of Two Reflections", 6],
-      ["Muldrotha, the Gravetide", 6],
-      ["Breya, Etherium Shaper", 5]
+      ["Riku of Two Reflections", 8],
+      ["Muldrotha, the Gravetide", 7],
+      ["Breya, Etherium Shaper", 6]
     ]
   },
   {
@@ -93,17 +93,29 @@ const PLAYERS = [
   },
   {
     "name": "Paweł Ostrowski",
-    "zydelion": 2,
+    "zydelion": 6,
     "commander": [
-      ["Jace, Vryn's Prodigy", 5],
-      ["Azusa, Lost but Seeking", 2]
+      ["Jace, Vryn's Prodigy", 6],
+      ["Azusa, Lost but Seeking", 8],
+      ["Breya, Etherium Shaper", 1],
+      ["The Gitrog Monster", 1],
+      [
+        ["Silas Renn, Seeker Adept", "Akiri, Line-Slinger"],
+        2
+      ]
     ]
   },
   {
     "name": "Bartosz Jurczyk",
-    "zydelion": 1,
+    "zydelion": 3,
     "commander": [
-      ["Atraxa, Praetors' Voice", 3]
+      ["Atraxa, Praetors' Voice", 5],
+      [
+        ["Silas Renn, Seeker Adept", "Akiri, Line-Slinger"],
+        1
+      ],
+      ["Jace, Vryn's Prodigy", 1],
+      ["Grenzo, Dungeon Warden", 5]
     ]
   },
   {
@@ -112,6 +124,18 @@ const PLAYERS = [
     "commander": [
       ["Jhoira of the Ghitu", 1],
       ["Tasigur, the Golden Fang", 1]
+    ]
+  }, {
+    "name": "Bartosz Dekański",
+    "zydelion": 1,
+    "commander": [
+      ["Niv-Mizzet, Parun", 3]
+    ]
+  }, {
+    "name": "Jakub Szyszko",
+    "zydelion": 1,
+    "commander": [
+      ["Slimefoot, the Stowaway", 2]
     ]
   }
 ];
