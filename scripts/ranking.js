@@ -1,8 +1,4 @@
-//zrefaktoryzować
-//posortować generałów po ilości zwycięstw
-//miejsca graczy na liście przerobić na .reduce()
-
-const PLAYERS = [
+const players = [
   // Tabela graczy
   {
     "name": "Bartosz Kłak", //imię
@@ -144,7 +140,44 @@ const PLAYERS = [
   }
 ];
 
-const SORTED_PLAYERS = PLAYERS.sort((a, b) => b.zydelion - a.zydelion); //sortujemy graczy po ilości wygranych zydelionów
+var sortedPlayers = sortPlayers(players); //sortujemy graczy po ilości wygranych zydelionów i commanderów po ilości wygranych gier
+
+function sortPlayers(unsortedPlayers) {
+  let playersToSort = [...unsortedPlayers];
+  playersToSort.sort((a, b) => b.zydelion - a.zydelion);
+  playersToSort.forEach(function(item) {
+    item.commander.sort((a, b) => b[1] - a[1])
+  })
+  return playersToSort;
+}
+
+function rankPlayers (playersToRank) {
+  let unrankedPlayers = [...playersToRank];
+  let rankedPlayers = [];
+  unrankedPlayers.reduce(function (prev, item, index) {
+    if (index == 1) {
+      prev.rank = 1; //pierwszy na liście ma zawsze 1 miejsce
+      rankedPlayers.push(prev);
+      if (item.zydelion == prev.zydelion) {
+        item.rank = prev.rank; //jak kolejny ma tyle samo zydelionów, to ma być ta sama liczba
+        rankedPlayers.push(item);
+      } else if (item.zydelion < prev.zydelion) {
+        item.rank = prev.rank + 1; //jak kolejny ma mniej zydelionów, to zwiększamy miejsce
+        rankedPlayers.push(item)
+      }
+    } else if (item.zydelion == prev.zydelion) {
+      item.rank = prev.rank; //jak kolejny ma tyle samo zydelionów, to ma być ta sama liczba
+      rankedPlayers.push(item);
+    } else if (item.zydelion < prev.zydelion) {
+      item.rank = prev.rank + 1; //jak kolejny ma mniej zydelionów, to zwiększamy miejsce
+      rankedPlayers.push(item);
+    }
+    return item;
+  })
+  return rankedPlayers;
+}
+
+var rankedPlayers = rankPlayers(sortedPlayers);
 
 function inflection(num) {
   //funckja która odmienia mi słówka "wygrana"
@@ -157,18 +190,14 @@ function inflection(num) {
   }
 }
 
-function playerCommanders(playerNumber) {
-  return SORTED_PLAYERS[playerNumber].commander;
-} // funkcja która zwraca samą podtablicę commanderów danego gracza
+var winsPerCommander = commandersArray => commandersArray.map(a => a[1]); //funkcja, która wycina mi same ilości wygranych każdego commandera
 
-const COMMANDER_WINS = commandersArray => commandersArray.map(a => a[1]); //funkcja, która wycina mi same ilości wygranych każdego commandera
-
-function totalWin(playerNumber) {
-  let sumOfWins = COMMANDER_WINS(playerCommanders(playerNumber));
+function totalWin(playerNumber, players) {
+  let sumOfWins = winsPerCommander(players[playerNumber].commander);
   return sumOfWins.reduce((a, b) => a + b, 0); // funkcja, która podaje mi łączną liczbę wygranych meczy danego gracza
 }
 
-const CMD_INFO = function(commandersArray, totalWins) {
+function createCommanderInfo(commandersArray, totalWins) {
   //funkcja, która tworzy linijki w liście rozwijanej commanderów
   let commanderBox = document.createElement("div"); //tworzymy diva z listą rozwijaną commnaderów
   commanderBox.setAttribute("class", "info");
@@ -186,63 +215,50 @@ const CMD_INFO = function(commandersArray, totalWins) {
     winsLineBox.appendChild(commanderNameBox);
     let winsNumberBox = document.createElement("div"); //tworzymy diva z ilością winów danego commandera
     winsNumberBox.setAttribute("class", "wins");
-    winsNumberBox.innerHTML = `<p>${item[1]} ${inflection(item[1])} <span>(${Math.round(item[1] / totalWins * 100)}%)</span></p>`;
+    winsNumberBox.innerHTML = `<p>${item[1]} ${inflection(item[1])} <span>(${(Math.round(item[1] / totalWins * 1000) / 10)}%)</span></p>`;
     winsLineBox.appendChild(winsNumberBox);
     commanderBox.appendChild(winsLineBox);
   });
   return commanderBox;
 };
 
-let zydImg = `<img src="./resources/images/Krzesełko.png" alt="zydelion">`; //kod obrazka
-const ZYD_IMG = zydNum =>
+const zydImg = `<img src="./resources/images/Krzesełko.png" alt="zydelion">`; //kod obrazka
+var createZydelionImages = zydNum =>
   zydNum <= 3 ? zydImg.repeat(zydNum) : `<p>` + zydNum + `x</p>` + zydImg; //funkcja która liczy, ile ma być obrazków - jak mało to tyle obrazków, jak dużo to liczba i obrazek
 
-const TIE = function() {
-  // jeśli gracze mają tyle samo zydelionów, to chcemy żeby mieli to samo miejsce w rankingu
-  let rankCounter = 1;
-  let rankIfTie = [];
-  SORTED_PLAYERS.forEach(function(item, index, arr) {
-    if (index === 0) {
-      rankIfTie.push(1); //pierwszy na liście ma zawsze 1 miejsce
-    } else if (item.zydelion == arr[index - 1].zydelion) {
-      rankIfTie.push(rankCounter); //jak kolejny ma tyle samo zydelionów, to ma być ta sama liczba
-    } else if (item.zydelion < arr[index - 1].zydelion) {
-      rankCounter++; //jak kolejny ma mniej zydelionów, to zwiększamy miejsce
-      rankIfTie.push(rankCounter);
-    }
+function createRanking(players) {
+  let playersForRanking = [...players];
+  let fullRanking = document.getElementById("ranklist"); //właściwy ranking
+  let rankBoxes = document.createDocumentFragment(); //fragment do złożenia pełnego rankingu w całość
+  playersForRanking.map(function(item, index) {
+    let rankBox = document.createElement("div"); //konfigurujemy pojedynczy div rankingu
+    rankBox.setAttribute("class", "rank");
+    let numberBox = document.createElement("div"); //dodajemy div z numerem miejsca
+    numberBox.setAttribute("class", "number");
+    numberBox.innerHTML = `<p>${item.rank}</p>`;
+    rankBox.appendChild(numberBox);
+    let nameBox = document.createElement("div"); //dodajemy div z imieniem gracza
+    nameBox.setAttribute("class", "name");
+    nameBox.innerHTML = `<div><p>${playersForRanking[index].name}</p></div>`;
+    let zydelionBox = document.createElement("div"); //do diva z imieniem dodajemy div z obrazkami zydeliona
+    zydelionBox.setAttribute("class", "zydnum");
+    zydelionBox.innerHTML = `${createZydelionImages(playersForRanking[index].zydelion)}`;
+    nameBox.appendChild(zydelionBox);
+    rankBox.appendChild(nameBox);
+    let expandBox = document.createElement("button"); //dodajemy przycisk do rozwijania listy rozwijanej commanderów
+    expandBox.setAttribute("class", "collapsible");
+    expandBox.innerHTML = '<p class="expand">▼</p>';
+    rankBox.appendChild(expandBox);
+    rankBox.appendChild(createCommanderInfo(players[index].commander, totalWin(index, playersForRanking))); //dodajemy rozwijaną listę commanderów
+    rankBoxes.appendChild(rankBox); //wszystko wsadzamy w ranking
   });
-  return rankIfTie;
-};
+  fullRanking.appendChild(rankBoxes); //dodajemy fragment zawierający pełny ranking do własciwego rankingu (performance!)
+}
+createRanking(rankedPlayers);
 
-var fullRanking = document.getElementById("ranklist"); //właściwy ranking
-var rankBoxes = document.createDocumentFragment(); //fragment do złożenia pełnego rankingu w całość
-SORTED_PLAYERS.map(function(item, index) {
-  let rankBox = document.createElement("div"); //konfigurujemy pojedynczy div rankingu
-  rankBox.setAttribute("class", "rank");
-  let numberBox = document.createElement("div"); //dodajemy div z numerem miejsca
-  numberBox.setAttribute("class", "number");
-  numberBox.innerHTML = `<p>${TIE()[index]}</p>`;
-  rankBox.appendChild(numberBox);
-  let nameBox = document.createElement("div"); //dodajemy div z imieniem gracza
-  nameBox.setAttribute("class", "name");
-  nameBox.innerHTML = `<div><p>${SORTED_PLAYERS[index].name}</p></div>`;
-  let zydelionBox = document.createElement("div"); //do diva z imieniem dodajemy div z obrazkami zydeliona
-  zydelionBox.setAttribute("class", "zydnum");
-  zydelionBox.innerHTML = `${ZYD_IMG(SORTED_PLAYERS[index].zydelion)}`;
-  nameBox.appendChild(zydelionBox);
-  rankBox.appendChild(nameBox);
-  let expandBox = document.createElement("button"); //dodajemy przycisk do rozwijania listy rozwijanej commanderów
-  expandBox.setAttribute("class", "collapsible");
-  expandBox.innerHTML = '<p class="expand">▼</p>';
-  rankBox.appendChild(expandBox);
-  rankBox.appendChild(CMD_INFO(playerCommanders(index), totalWin(index))); //dodajemy rozwijaną listę commanderów
-  rankBoxes.appendChild(rankBox); //wszystko wsadzamy w ranking
-});
-fullRanking.appendChild(rankBoxes); //dodajemy fragment zawierający pełny ranking do własciwego rankingu (performance!)
-
-var coll = document.getElementsByClassName("collapsible"); //kod listy rozwijanej
-for (let i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
+var collapsible = document.getElementsByClassName("collapsible"); //kod listy rozwijanej
+for (let i = 0; i < collapsible.length; i++) {
+  collapsible[i].addEventListener("click", function() {
     let activeCollapsible = document.querySelector(".active");
     if (activeCollapsible !== null && activeCollapsible != this) { //resetujemy już rozwiniętą listę (żeby tylko 1 była rozwinięta na raz)
       activeCollapsible.nextElementSibling.style.display = "none";
