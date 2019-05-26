@@ -441,7 +441,7 @@ function getCardImage(cardLink, cardName, listOfCards) { //funkcja, która tworz
     cardPreview.innerHTML = `<img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=` + multiverseId + `&type=card">`;
   } else {
     cardPreview.innerHTML = `<p>Podgląd chwilowo niedostępny. Spróbuj odświeżyć stronę.</p>`;
-    cardPreview.style.border = "1px solid $swclr";
+    cardPreview.style.border = "1px solid #ffe919";
   }
   cardLink.addEventListener("mouseenter", function() {
     let cardLocation = cardLink.getBoundingClientRect(); //sprawdzamy koordynaty relatywne do viewportu
@@ -449,9 +449,6 @@ function getCardImage(cardLink, cardName, listOfCards) { //funkcja, która tworz
     let scrollLeft = window.pageXOffset || document.documentElement.scrollLeft; //sprawdzamy przesunięcie viewportu w lewo
     cardPreview.style.left = cardLocation.width + cardLocation.left + scrollLeft + 7 + "px"; //pozycjonujemy podgląd od lewej
     cardPreview.style.top = cardLocation.top + scrollTop - 3 + "px"; //pozycjonujemy podgląd od góry
-    if (multiverseId == "unavailable") {
-      cardPreview.style.border = "1px solid #ffe919";
-    }
     wrapperSidebar.appendChild(cardPreview);
   });
   cardLink.addEventListener("mouseleave", function() {
