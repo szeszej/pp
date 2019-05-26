@@ -1,3 +1,7 @@
+//zrefaktoryzować
+//posortować generałów po ilości zwycięstw
+//miejsca graczy na liście przerobić na .reduce()
+
 const PLAYERS = [
   // Tabela graczy
   {

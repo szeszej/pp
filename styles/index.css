@@ -387,9 +387,6 @@ body {
     body .mtgcard .cardpreview {
       top: -0.3em;
       left: 105%; }
-    body .mtgcard .cardpreview::after {
-      margin-top: 0.3em;
-      border-width: 0.4em; }
   body img {
     max-width: 100%;
     display: block;
