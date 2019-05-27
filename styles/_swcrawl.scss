@@ -84,11 +84,22 @@
     align-items: center;
     justify-content: center;
 
+    .zydelionmaster {
+      text-align: center;
+      font-size: 48px;
+      font-family: "Raleway", sans-serif;
+    }
+
     .slidecontent {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
+
+
+      .logoonslide {
+        max-height: 480px;
+      }
 
       .quotebox {
         margin-right: 0.5em;

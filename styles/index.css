@@ -11,7 +11,7 @@
   display: flex;
   justify-content: center;
   position: relative;
-  color: #ffe919;
+  color: #fee12b;
   height: 60vh;
   min-height: 3.5em;
   font-family: "Pathway Gothic One", sans-serif;
@@ -28,8 +28,8 @@
     right: 5%;
     z-index: 2;
     background-color: black;
-    border: 1px solid #ffe919;
-    color: #ffe919;
+    border: 1px solid #fee12b;
+    color: #fee12b;
     cursor: pointer; }
 
 .crawl {
@@ -70,11 +70,17 @@
     display: none;
     align-items: center;
     justify-content: center; }
+    .aftercrawl .mySlides .zydelionmaster {
+      text-align: center;
+      font-size: 48px;
+      font-family: "Raleway", sans-serif; }
     .aftercrawl .mySlides .slidecontent {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center; }
+      .aftercrawl .mySlides .slidecontent .logoonslide {
+        max-height: 480px; }
       .aftercrawl .mySlides .slidecontent .quotebox {
         margin-right: 0.5em;
         text-align: right; }
@@ -242,7 +248,7 @@
       margin-left: 1em;
       margin-right: 1em; }
     #decklistbox .buttons .dropdownbutton {
-      background-color: #ffe919;
+      background-color: #fee12b;
       color: black;
       padding: 16px;
       font-size: 16px;
@@ -252,7 +258,7 @@
     #decklistbox .buttons .dropdowncontent {
       display: none;
       position: absolute;
-      background-color: #ffe919;
+      background-color: #fee12b;
       min-width: 7em;
       box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
       z-index: 1; }
@@ -352,8 +358,8 @@ body {
     position: absolute;
     top: 0;
     border: 16px solid #a8a5a3;
-    border-top: 16px solid #ffe919;
-    border-bottom: 16px solid #ffe919;
+    border-top: 16px solid #fee12b;
+    border-bottom: 16px solid #fee12b;
     border-radius: 50%;
     width: 60px;
     height: 60px;
@@ -378,7 +384,7 @@ body {
     border-style: solid;
     border-color: transparent yellow transparent transparent; }
   body .cardpreview {
-    color: #ffe919;
+    color: #fee12b;
     font-size: 24px;
     background-color: black;
     text-align: center; }
@@ -425,7 +431,7 @@ body {
     body .wrappersidebar .rules {
       width: 90%; }
     body .wrappersidebar hr {
-      border-color: #ffe919;
+      border-color: #fee12b;
       width: 90%;
       margin-bottom: 1em;
       margin-top: 1em; }
@@ -457,17 +463,27 @@ body {
     grid-area: header;
     display: flex;
     flex-direction: row;
-    background-image: url("../resources/images/Banner 3.jpg");
-    background-position: center;
-    background-size: contain;
-    background-color: black;
-    background-repeat: no-repeat;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
+    background-color: black;
     box-sizing: border-box; }
+    body header .logo {
+      box-sizing: border-box;
+      margin: 0.5em;
+      width: 15%; }
+      body header .logo img {
+        margin: auto;
+        max-height: 8em; }
+    body header .banner {
+      background-image: url("../resources/images/Banner 3.jpg");
+      background-position: center;
+      background-size: contain;
+      background-repeat: no-repeat;
+      width: 80%;
+      height: 100%; }
   body nav {
     grid-area: menu;
-    background-color: #ffe919;
+    background-color: #fee12b;
     text-transform: uppercase;
     display: flex;
     flex-direction: column;
@@ -489,7 +505,7 @@ body {
   body main {
     grid-area: content;
     background-color: black;
-    color: #ffe919;
+    color: #fee12b;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -515,11 +531,11 @@ body {
       background-color: black;
       margin: 1em;
       width: 90%;
-      border: solid #ffe919 2px; }
+      border: solid #fee12b 2px; }
       body .ranking .rank .number {
         grid-area: number;
         text-align: center;
-        background-color: #ffe919;
+        background-color: #fee12b;
         color: black;
         border: 1px solid black; }
       body .ranking .rank .name {
@@ -538,7 +554,7 @@ body {
             max-height: 3em; }
       body .ranking .rank .collapsible {
         grid-area: expand;
-        background-color: #ffe919;
+        background-color: #fee12b;
         border: 0;
         font-size: 25px;
         border: 1px solid black;
@@ -553,7 +569,7 @@ body {
         border: 1px solid black; }
       body .ranking .rank .info {
         grid-area: info;
-        border: solid #ffe919 1px;
+        border: solid #fee12b 1px;
         padding-left: 1em;
         display: none;
         flex-direction: column; }
@@ -573,7 +589,7 @@ body {
   body footer {
     grid-area: footer;
     color: black;
-    background-color: #ffe919;
+    background-color: #fee12b;
     text-align: center;
     box-sizing: border-box;
     display: flex;
@@ -622,6 +638,8 @@ body {
       body footer h2 {
         font-size: 16px; } }
   @media only screen and (max-width: 790px) {
+    body header .logo img {
+      max-height: 6em; }
     body .wrapperhomepage {
       grid-template-rows: 7.5em 4em auto auto; }
     body .wrappersidebar {
@@ -629,6 +647,8 @@ body {
     body nav {
       font-size: 12px; } }
   @media only screen and (max-width: 570px) {
+    body header .logo img {
+      max-height: 4em; }
     body .wrapperhomepage {
       grid-template-rows: 5em 3em auto auto; }
       body .wrapperhomepage .aftercrawl .quotebox .quote {
