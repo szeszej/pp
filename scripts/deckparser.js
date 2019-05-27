@@ -54,18 +54,21 @@ function getExtraCards(deck) {
 }
 
 function createApiRequestURL(deckForUrl, extraCards) { //funkcja, która tworzy URL zapytania do API z listą kart w talii
-  let apiRequestUrl = [`https://api.scryfall.com/cards/search?q=`]; //początek URLa do zapytania do API
+  let apiRequestUrl = [`https://api.scryfall.com/cards/search?q=game:paper (`]; //początek URLa do zapytania do API
   allCardsOnPage = deckForUrl.concat(extraCards);
   let urlIndex = 0;
   allCardsOnPage.forEach(function(item) {
-    if (apiRequestUrl[urlIndex].length < 1025) { //niestety długość requesta jest limitowana, więc jak jest dużo kart, to trzeba dwóch :)
+    if (apiRequestUrl[urlIndex].length < 1000) { //niestety długość requesta jest limitowana, więc jak jest dużo kart, to trzeba dwóch :)
       apiRequestUrl[urlIndex] += `!"` + item.name + `"or`;
     } else {
-      apiRequestUrl.push(`https://api.scryfall.com/cards/search?q=`);
+      apiRequestUrl[urlIndex] += ")";
+      apiRequestUrl.push(`https://api.scryfall.com/cards/search?q=game:paper (`);
       urlIndex += 1;
       apiRequestUrl[urlIndex] += `!"` + item.name + `"or`;
     }
   })
+  apiRequestUrl[apiRequestUrl.length - 1] += ")";
+  console.log(apiRequestUrl);
   return apiRequestUrl;
 };
 
@@ -95,6 +98,7 @@ var additionalCardData = new Promise(function(resolve, reject) {
         if (iteration < urls.length) {
           apiRequest(urls, iteration, returnedCards);
         } else {
+          console.log(returnedCards);
           resolve(returnedCards);
         }
       } else {
@@ -121,8 +125,10 @@ function updateDeckData(listOfCards, returnedCards) { //funkcja która dodaje w�
   deck.forEach(function(card) {
     returnedCards.forEach(function(returnedCard) {
       if (returnedCard.name == card.name) {
+        if (Number.isInteger(returnedCard.multiverse_ids[0]) && returnedCard.hasOwnProperty("multiverse_ids")) {
+          card.multiverseId = returnedCard.multiverse_ids[0];
+        }
         card.cmc = returnedCard.cmc; // pobieramy converted mana cost
-        card.multiverseId = returnedCard.multiverse_ids[0];
         if (returnedCard.hasOwnProperty("colors") == true) {
           card.colors = returnedCard.colors; //pobieramy kolory
         } else if (returnedCard.hasOwnProperty("card_faces") == true) { //czasami karta ma dwie połówki albo drugą stronę - wtedy chcemy dane pierwszej

@@ -108,12 +108,8 @@ function checkMultiverseId(cardName, cardsFromApi) { //funkcja, która sprawdza 
   let returnedCards = [...cardsFromApi];
   let multiverseId = ""
   returnedCards.forEach(function(item) {
-    if (item.name == cardName) {
+    if (item.name == cardName && Number.isInteger(item.multiverse_ids[0]) && item.hasOwnProperty("multiverse_ids")) {
       multiverseId = item.multiverse_ids[0];
-    } else if (item.hasOwnProperty("card_faces") == true) { //czasami karta ma dwie połówki albo drugą stronę - wtedy chcemy multiverse id pierwszej
-      if (item.card_faces[0].name == cardName) {
-        multiverseId = item.multiverse_ids[0];
-      }
     }
   });
   return multiverseId;
