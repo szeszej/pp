@@ -1,6 +1,7 @@
 //https://disqus.com/ jako system komentarzy?
 //przerobić zgodnie z wytycznymi functional programming/clean code
 //pozbyć się jakoś globalnych zmiennych currentSort i currentGrouping
+//zrobić tak, żeby transformujące się karty pobierały dane także dla obu stron i wyświetlały albo dwa obrazki albo jeden zależnie od tego, która strona karty jest dodana
 
 function parseDecklist(decklist) {
   let matchLines = /.+/g; //regex, który dzieli mi decklistę na linijki
