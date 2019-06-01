@@ -15,6 +15,7 @@ var animationWatch = function() {
     fade.style.display = "none";
     skipButton.style.display = "none";
     afterCrawl.style.animation = "show 2s ease-in 0s 1 normal forwards";
+    showSlides(1);
   });
 
   setInterval(function() { //funkcja która sprawdza co pewien czas, gdzie znajduje się (oś y) osatni paragraf w tekście przewijanym
@@ -24,6 +25,7 @@ var animationWatch = function() {
       fade.style.display = "none";
       skipButton.style.display = "none";
       clearInterval(animationWatch);
+      showSlides(1);
     }
   }, 500);
 
@@ -35,7 +37,6 @@ var automaticSlideChange = setInterval(function() { //zmieniamy slajd automatycz
   slideIndex += 1;
   showSlides(slideIndex);
 }, 8000);
-showSlides(slideIndex);
 
 function changeSlides(slideChange) { //po kliknięciu na przycisk next/prev zmieniamy slajd na kolejny lub poprzedni
   showSlides(slideIndex += slideChange);
