@@ -95,10 +95,15 @@
       flex-direction: row;
       align-items: center;
       justify-content: center;
+      box-sizing: border-box;
 
+      .logobox {
+        position: relative;
 
-      .logoonslide {
-        max-height: 480px;
+        .logoonslide {
+          max-height: 6em;
+          display: inline-block;
+        }
       }
 
       .quotebox {

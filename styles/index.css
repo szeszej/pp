@@ -78,9 +78,13 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: center; }
-      .aftercrawl .mySlides .slidecontent .logoonslide {
-        max-height: 480px; }
+      justify-content: center;
+      box-sizing: border-box; }
+      .aftercrawl .mySlides .slidecontent .logobox {
+        position: relative; }
+        .aftercrawl .mySlides .slidecontent .logobox .logoonslide {
+          max-height: 6em;
+          display: inline-block; }
       .aftercrawl .mySlides .slidecontent .quotebox {
         margin-right: 0.5em;
         text-align: right; }
