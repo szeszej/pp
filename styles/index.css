@@ -607,6 +607,18 @@ body {
       max-height: 1em; }
     body footer .created {
       font-size: 10px; }
+    body footer .timeplace {
+      width: 80%; }
+      body footer .timeplace .cities {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        box-sizing: border-box;
+        flex-wrap: wrap; }
+        body footer .timeplace .cities .city {
+          margin-left: 1.5em;
+          margin-right: 1.5em; }
   @media only screen and (max-width: 1490px) {
     body .wrappersidebar {
       grid-template-columns: 100%;

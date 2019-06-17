@@ -7,7 +7,7 @@ var unparsedDecklist = `1x Daretti, Scrap Savant *CMDR*
 1x Sculpting Steel
 1x Field of Ruin
 1x Wurmcoil Engine
-1x Dualcaster Mage
+1x Tectonic Reformation
 1x Solemn Simulacrum
 1x All Is Dust
 1x Karn Liberated
@@ -55,12 +55,12 @@ var unparsedDecklist = `1x Daretti, Scrap Savant *CMDR*
 1x Cranial Archive
 1x Quicksmith Genius
 1x Buried Ruin
-1x Arcane Lighthouse
+1x Blast Zone
 1x Hangarback Walker
 1x Mycosynth Wellspring
 1x Wayfarer's Bauble
 1x Crucible of Worlds
-1x Contagion Engine
+1x Goblin Engineer
 1x Chaos Warp
 1x Thespian's Stage
 1x Bosh, Iron Golem
