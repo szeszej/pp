@@ -69,7 +69,6 @@ function createApiRequestURL(deckForUrl, extraCards) { //funkcja, która tworzy 
     }
   })
   apiRequestUrl[apiRequestUrl.length - 1] += ")";
-  console.log(apiRequestUrl);
   return apiRequestUrl;
 };
 
@@ -99,7 +98,6 @@ var additionalCardData = new Promise(function(resolve, reject) {
         if (iteration < urls.length) {
           apiRequest(urls, iteration, returnedCards);
         } else {
-          console.log(returnedCards);
           resolve(returnedCards);
         }
       } else {
