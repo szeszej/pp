@@ -113,7 +113,7 @@
     .dropdownbutton {
       background-color: $swclr;
       color: black;
-      padding: 16px;
+      padding: 1em;
       font-size: 16px;
       border: none;
       margin-left: 0.5em;
@@ -131,7 +131,7 @@
 
     .dropdowncontent p {
       color: black;
-      padding: 12px 16px;
+      padding: 0.75em 1em;
       text-decoration: none;
       display: block;
       cursor: pointer;
@@ -216,12 +216,18 @@ main {
   main .decklisttitle .textindecklisttitle h1 {
     font-size: 32px;
   }
+  #decklistbox .buttons .dropdownbutton {
+    font-size: 14px;
+  }
 }
 
 @media only screen and (max-width: 900px) {
   #decklistbox .deck {
     columns: 2;
     max-height: 160em;
+  }
+  #decklistbox .buttons .dropdownbutton {
+    font-size: 12px;
   }
 }
 @media only screen and (max-width: 600px) {

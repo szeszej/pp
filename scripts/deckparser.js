@@ -240,7 +240,7 @@ function groupDeckByType(listOfCards) {
   groupedCards.push(lands);
   let creatures = new ListByProperty("Creatures", deck.filter(card => creatureRegex.test(card.type) == true && card.commander == false && landRegex.test(card.type) == false));
   groupedCards.push(creatures);
-  let artifacts = new ListByProperty("Artifacts", deck.filter(card => artifactRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
+  let artifacts = new ListByProperty("Artifacts", deck.filter(card => artifactRegex.test(card.type) == true && creatureRegex.test(card.type) == false && landRegex.test(card.type) == false));
   groupedCards.push(artifacts);
   let enchantments = new ListByProperty("Enchantments", deck.filter(card => enchantmentRegex.test(card.type) == true && creatureRegex.test(card.type) == false));
   groupedCards.push(enchantments);
@@ -447,6 +447,7 @@ function getCardImage(cardLink, cardName, listOfCards) { //funkcja, która tworz
   } else {
     cardPreview.innerHTML = `<p>Podgląd chwilowo niedostępny. Spróbuj odświeżyć stronę.</p>`;
     cardPreview.style.border = "1px solid #ffe919";
+    cardPreview.style.backgroundColor = "black";
   }
   cardLink.addEventListener("mouseenter", function() {
     let cardLocation = cardLink.getBoundingClientRect(); //sprawdzamy koordynaty relatywne do viewportu

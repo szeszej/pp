@@ -108,6 +108,21 @@
         margin-right: 0.5em;
         text-align: right;
 
+        .tshirt {
+          font-size: 24px;
+          font-family: "Raleway", sans-serif;
+          text-align: center;
+
+          img {
+            display: inline;
+            max-height: 1em;
+          }
+        }
+
+        #tshirttitle {
+          font-size: 1.5em;
+        }
+
         .quote {
           font-size: 60px;
           font-family: "Raleway", sans-serif;
@@ -120,6 +135,12 @@
       }
 
       .coelho {
+        min-height: 2.5em;
+        min-width: 2em;
+      }
+
+      .tshirtimg {
+        max-height: 400px;
         min-height: 2.5em;
         min-width: 2em;
       }
@@ -219,6 +240,15 @@
   .aftercrawl .mySlides .slidecontent .quotebox .author {
     font-size: 28px;
   }
+
+  .aftercrawl .mySlides .slidecontent .quotebox .tshirt {
+    font-size: 20px;
+  }
+
+  .aftercrawl .mySlides .zydelionmaster {
+    font-size: 32px;
+  }
+
 }
 @media only screen and (max-width: 700px) {
   .star-wars {
@@ -231,5 +261,13 @@
 
   .aftercrawl .mySlides .slidecontent .quotebox .author {
     font-size: 20px;
+  }
+
+  .aftercrawl .mySlides .slidecontent .quotebox .tshirt {
+    font-size: 16px;
+  }
+
+  .aftercrawl .mySlides .zydelionmaster {
+    font-size: 24px;
   }
 }

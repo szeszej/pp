@@ -127,6 +127,7 @@ function getCardImage(cardLink, cardName, cardsFromApi) { //funkcja, która twor
   } else {
     cardPreview.innerHTML = `<p>Podgląd chwilowo niedostępny. Spróbuj odświeżyć stronę.</p>`;
     cardPreview.style.border = "1px solid #ffe919";
+    cardPreview.style.backgroundColor = "black";
   }
   if (ranking != null) { //w rankingu karty mają display: none, więc getBoundingClientRect() nie działa, ale na szczęście nie są w liście, więc możemy podpiąć podgląd bezpośrednio pod kartę
     cardLink.addEventListener("mouseenter", function() {

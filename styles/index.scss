@@ -60,7 +60,7 @@ body {
   .cardpreview {
     color: $swclr;
     font-size: 24px;
-    background-color: black;
+    background-color: transparent;
     text-align: center;
   }
   /* powyżej jeśli podgląd jest podczepiony do body */
@@ -118,6 +118,7 @@ body {
     /* poniżej tylko dla strony zasad */
     .rules {
       width: 90%;
+      text-align: justify;
     }
 
     hr {
