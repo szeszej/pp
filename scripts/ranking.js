@@ -110,11 +110,11 @@ const players = [
       [
         [
           ["Silas Renn, Seeker Adept"],
-          ["Akiri, Line-Slinger"],
-          2
-        ]
+          ["Akiri, Line-Slinger"]
+        ], 2
       ]
     ]
+
   },
   {
     "name": "Bartosz Jurczyk",
