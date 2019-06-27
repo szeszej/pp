@@ -122,8 +122,10 @@ const players = [
     "commander": [
       ["Atraxa, Praetors' Voice", 5],
       [
-        ["Silas Renn, Seeker Adept"],
-        ["Akiri, Line-Slinger"],
+        [
+          ["Silas Renn, Seeker Adept"],
+          ["Akiri, Line-Slinger"]
+        ],
         1
       ],
       ["Jace, Vryn's Prodigy // Jace, Telepath Unbound", 1],
