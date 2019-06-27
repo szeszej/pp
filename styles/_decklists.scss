@@ -155,9 +155,11 @@
   .poem {
     margin-left: 2em;
     font-style: italic;
-    line-height: 0.5em;
     margin-top: 1.5em;
-    margin-bottom: 1.5em;
+    margin-bottom: 2.5em;
+    p {
+      margin-bottom: -1em;
+    }
   }
 }
 @keyframes spin {
