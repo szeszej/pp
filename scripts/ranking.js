@@ -24,7 +24,10 @@ const players = [
     "zydelion": 4,
     "commander": [
       [
-        ["Thrasios, Triton Hero // Ikra Shidiqi, the Usurper"], 5
+        [
+          ["Thrasios, Triton Hero"],
+          ["Ikra Shidiqi, the Usurper"]
+        ], 5
       ], //podwójny generał
       ["Lord Windgrace", 3],
       ["Inalla, Archmage Ritualist", 3],
@@ -57,9 +60,10 @@ const players = [
   },
   {
     "name": "Jakub Grela",
-    "zydelion": 2,
+    "zydelion": 3,
     "commander": [
-      ["Derevi, Empyrial Tactician", 6]
+      ["Derevi, Empyrial Tactician", 6],
+      ["Raff Capashen, Ship's Mage", 2]
     ]
   },
   {
@@ -81,7 +85,10 @@ const players = [
     "zydelion": 3,
     "commander": [
       [
-        ["Thrasios, Triton Hero // Tymna the Weaver"], 10
+        [
+          ["Thrasios, Triton Hero"],
+          ["Tymna the Weaver"]
+        ], 10
       ]
     ]
   },
@@ -101,8 +108,11 @@ const players = [
       ["Breya, Etherium Shaper", 2],
       ["The Gitrog Monster", 1],
       [
-        ["Silas Renn, Seeker Adept // Akiri, Line-Slinger"],
-        2
+        [
+          ["Silas Renn, Seeker Adept"],
+          ["Akiri, Line-Slinger"],
+          2
+        ]
       ]
     ]
   },
@@ -112,7 +122,8 @@ const players = [
     "commander": [
       ["Atraxa, Praetors' Voice", 5],
       [
-        ["Silas Renn, Seeker Adept // Akiri, Line-Slinger"],
+        ["Silas Renn, Seeker Adept"],
+        ["Akiri, Line-Slinger"],
         1
       ],
       ["Jace, Vryn's Prodigy // Jace, Telepath Unbound", 1],
@@ -126,13 +137,15 @@ const players = [
       ["Jhoira of the Ghitu", 1],
       ["Tasigur, the Golden Fang", 1]
     ]
-  }, {
+  },
+  {
     "name": "Bartosz Dekański",
     "zydelion": 1,
     "commander": [
       ["Niv-Mizzet, Parun", 3]
     ]
-  }, {
+  },
+  {
     "name": "Jakub Szyszko",
     "zydelion": 1,
     "commander": [
