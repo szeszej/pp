@@ -1,5 +1,8 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Michroma|Orbitron|Oswald|Dancing+Script|Raleway");
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,500,800,900&display=swap&subset=latin-ext');
+
+
 .fade {
   position: relative;
   width: 100%;
@@ -74,6 +77,8 @@
       text-align: center;
       font-size: 48px;
       font-family: "Raleway", sans-serif; }
+      .zydelionmaster .theAwardGoesTo {
+        color: #fff; }
     .aftercrawl .mySlides .slidecontent {
       display: flex;
       flex-direction: row;
@@ -88,15 +93,38 @@
         .aftercrawl .mySlides .slidecontent .quotebox .tshirt {
           font-size: 24px;
           font-family: "Raleway", sans-serif;
-          text-align: center; }
+          text-align: center;
+
+      }
           .aftercrawl .mySlides .slidecontent .quotebox .tshirt img {
             display: inline;
             max-height: 1em; }
-        .aftercrawl .mySlides .slidecontent .quotebox #tshirttitle {
-          font-size: 1.5em; }
+
+        /* zmiany do slajdera - czysty css!!! */
+        .star-wars .tshirt {
+            color: #fff;
+        }
+        #tshirttitle {
+          font-size: 2em;
+      color: #fee12b; }
+        #tshirttitle span {
+        font-weight: 900;
+
+          }
+        .tshirt a {
+          font-weight: 600;
+          font-size: 1.25em;
+          text-decoration: none;
+          color: #fee12b;
+        }
+        /* --------- */
+
+
         .aftercrawl .mySlides .slidecontent .quotebox .quote {
           font-size: 60px;
-          font-family: "Raleway", sans-serif; }
+          font-family: "Raleway", sans-serif;
+          color: #fff;
+       }
         .aftercrawl .mySlides .slidecontent .quotebox .author {
           font-size: 40px;
           font-family: "Dancing Script", cursive; }
