@@ -86,8 +86,12 @@
 
     .zydelionmaster {
       text-align: center;
-      font-size: 48px;
+      font-size: 40px;
       font-family: "Raleway", sans-serif;
+
+      .theAwardGoesTo {
+        color: #fff;
+      }
     }
 
     .slidecontent {
@@ -98,9 +102,8 @@
       box-sizing: border-box;
 
       .logobox {
-
         .logoonslide {
-        max-height: 480px;
+          max-height: 480px;
         }
       }
 
@@ -112,20 +115,34 @@
           font-size: 24px;
           font-family: "Raleway", sans-serif;
           text-align: center;
+          color: #fff;
 
           img {
             display: inline;
             max-height: 1em;
           }
+
+          a {
+            font-weight: 600;
+            font-size: 1.25em;
+            text-decoration: none;
+            color: #fee12b;
+          }
         }
 
         #tshirttitle {
-          font-size: 1.5em;
+          font-size: 2em;
+          color: #fee12b;
+
+          span {
+            font-weight: 900;
+          }
         }
 
         .quote {
           font-size: 60px;
           font-family: "Raleway", sans-serif;
+          color: #fff;
         }
 
         .author {
@@ -247,9 +264,8 @@
   }
 
   .aftercrawl .mySlides .zydelionmaster {
-    font-size: 32px;
+    font-size: 24px;
   }
-
 }
 @media only screen and (max-width: 700px) {
   .star-wars {
@@ -269,6 +285,6 @@
   }
 
   .aftercrawl .mySlides .zydelionmaster {
-    font-size: 24px;
+    font-size: 16px;
   }
 }
