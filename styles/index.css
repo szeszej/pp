@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url("https://fonts.googleapis.com/css?family=Michroma|Orbitron|Oswald|Dancing+Script|Raleway");
+@import url("https://fonts.googleapis.com/css?family=Michroma|Orbitron|Oswald|Dancing+Script|Raleway:400,500,800,900&display=swap&subset=latin-ext");
 .fade {
   position: relative;
   width: 100%;
@@ -72,8 +72,10 @@
     justify-content: center; }
     .aftercrawl .mySlides .zydelionmaster {
       text-align: center;
-      font-size: 48px;
+      font-size: 40px;
       font-family: "Raleway", sans-serif; }
+      .aftercrawl .mySlides .zydelionmaster .theAwardGoesTo {
+        color: #fff; }
     .aftercrawl .mySlides .slidecontent {
       display: flex;
       flex-direction: row;
@@ -88,15 +90,25 @@
         .aftercrawl .mySlides .slidecontent .quotebox .tshirt {
           font-size: 24px;
           font-family: "Raleway", sans-serif;
-          text-align: center; }
+          text-align: center;
+          color: #fff; }
           .aftercrawl .mySlides .slidecontent .quotebox .tshirt img {
             display: inline;
             max-height: 1em; }
+          .aftercrawl .mySlides .slidecontent .quotebox .tshirt a {
+            font-weight: 600;
+            font-size: 1.25em;
+            text-decoration: none;
+            color: #fee12b; }
         .aftercrawl .mySlides .slidecontent .quotebox #tshirttitle {
-          font-size: 1.5em; }
+          font-size: 2em;
+          color: #fee12b; }
+          .aftercrawl .mySlides .slidecontent .quotebox #tshirttitle span {
+            font-weight: 900; }
         .aftercrawl .mySlides .slidecontent .quotebox .quote {
           font-size: 60px;
-          font-family: "Raleway", sans-serif; }
+          font-family: "Raleway", sans-serif;
+          color: #fff; }
         .aftercrawl .mySlides .slidecontent .quotebox .author {
           font-size: 40px;
           font-family: "Dancing Script", cursive; }
@@ -176,7 +188,7 @@
   .aftercrawl .mySlides .slidecontent .quotebox .tshirt {
     font-size: 20px; }
   .aftercrawl .mySlides .zydelionmaster {
-    font-size: 32px; } }
+    font-size: 24px; } }
 
 @media only screen and (max-width: 700px) {
   .star-wars {
@@ -188,7 +200,7 @@
   .aftercrawl .mySlides .slidecontent .quotebox .tshirt {
     font-size: 16px; }
   .aftercrawl .mySlides .zydelionmaster {
-    font-size: 24px; } }
+    font-size: 16px; } }
 
 .comments {
   width: 90%; }
