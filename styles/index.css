@@ -190,6 +190,9 @@
   .aftercrawl .mySlides .zydelionmaster {
     font-size: 24px; } }
 
+.comments {
+  width: 90%; }
+
 .decklists {
   display: flex;
   flex-wrap: wrap;
