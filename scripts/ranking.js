@@ -225,7 +225,7 @@ function inflection(num) {
   } else if (num > 1 && num <= 4) {
     return ` wygrane mecze `;
   } else {
-    return ` wygranych meczy `;
+    return ` wygranych meczów `;
   }
 }
 
