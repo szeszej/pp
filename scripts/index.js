@@ -2,6 +2,8 @@
 //https://api.scryfall.com/cards/search?q=restricted:duel - zbanowani commanderzy
 //https://api.scryfall.com/cards/search?q=banned:duel%20legal:vintage - zbanowane karty
 
+//ulepszyć preview w rankingu tak jak w nierankingowych stronach
+
 function createApiRequestURL() { //funkcja, która tworzy URL zapytania do API z listą kart w talii
   let apiRequestUrl = [`https://api.scryfall.com/cards/search?q=`]; //początek URLa do zapytania do API
   let bannedCardsList = document.querySelector(".banned");
