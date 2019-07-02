@@ -136,6 +136,18 @@ function getCardImage(cardLink, cardName, cardsFromApi) { //funkcja, która twor
     cardLink.addEventListener("mouseleave", function() {
       cardLink.removeChild(cardPreview);
     });
+    cardLink.addEventListener("touchstart", function() {
+      event.preventDefault();
+      window.oncontextmenu = function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+      };
+      cardLink.appendChild(cardPreview);
+    });
+    cardLink.addEventListener("touchend", function() {
+      cardLink.removeChild(cardPreview);
+    });
   } else { //poza rankingiem działa getBoundingClientRect(), więc możemy po prostu przypiąć podgląd karty do wrappera
     cardLink.addEventListener("mouseenter", function() {
       let cardLocation = cardLink.getBoundingClientRect(); //sprawdzamy koordynaty relatywne do viewportu
@@ -147,6 +159,23 @@ function getCardImage(cardLink, cardName, cardsFromApi) { //funkcja, która twor
     });
     cardLink.addEventListener("mouseleave", function() {
       wrapperSidebar.removeChild(cardPreview);
+    });
+    cardLink.addEventListener("touchstart", function() {
+      event.preventDefault();
+      window.oncontextmenu = function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        return false;
+      };
+      let cardLocation = cardLink.getBoundingClientRect(); //sprawdzamy koordynaty relatywne do viewportu
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop; //sprawdzamy przesunięcie viewportu w dół
+      let scrollLeft = window.pageXOffset || document.documentElement.scrollLeft; //sprawdzamy przesunięcie viewportu w lewo
+      cardPreview.style.left = cardLocation.width + cardLocation.left + scrollLeft + 7 + "px"; //pozycjonujemy podgląd od lewej
+      cardPreview.style.top = cardLocation.top + scrollTop - 3 + "px"; //pozycjonujemy podgląd od góry
+      wrapperSidebar.appendChild(cardPreview);
+    });
+    cardLink.addEventListener("touchend", function() {
+      cardLink.removeChild(cardPreview);
     });
   }
 };
