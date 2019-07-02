@@ -63,6 +63,16 @@ body {
     background-color: transparent;
     text-align: center;
   }
+
+  .cardpreviewbottom::after {
+    content: " ";
+    position: absolute;
+    left: 20%;
+    top: -10px;
+    border-width: 7px;
+    border-style: solid;
+    border-color: transparent transparent yellow transparent;
+  }
   /* powyżej jeśli podgląd jest podczepiony do body */
   /* poniżej jeśli podgląd jest podczepiony do linku z kartą */
   .mtgcard {
@@ -72,6 +82,8 @@ body {
       top: -0.3em;
       left: 105%;
     }
+
+
   }
   /* powyżej jeśli podgląd jest podczepiony do linku z kartą */
   img {
@@ -89,6 +101,8 @@ body {
     grid-template-columns: 20% auto 20%;
     grid-template-rows: 10em 5em auto auto;
     grid-template-areas: "header header header" "menu menu menu" "sideleft content sideright" "footer footer footer";
+    overflow: hidden;
+    position: relative;
 
     .leftsidebar {
       grid-area: sideleft;
@@ -267,6 +281,9 @@ body {
         background-color: $swclr;
         color: black;
         border: 1px solid black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
       .name {
@@ -284,7 +301,7 @@ body {
           align-items: center;
 
           img {
-            max-height: 3em;
+            max-height: 2.5em;
           }
         }
       }

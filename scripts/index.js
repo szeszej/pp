@@ -156,6 +156,18 @@ function getCardImage(cardLink, cardName, cardsFromApi) { //funkcja, która twor
       cardPreview.style.left = cardLocation.width + cardLocation.left + scrollLeft + 7 + "px"; //pozycjonujemy podgląd od lewej
       cardPreview.style.top = cardLocation.top + scrollTop - 3 + "px"; //pozycjonujemy podgląd od góry
       wrapperSidebar.appendChild(cardPreview);
+      let cardPreviewLocation = cardPreview.getBoundingClientRect();
+      let windowWidth = window.innerWidth;
+      if (cardPreviewLocation.x + cardPreviewLocation.width > windowWidth) {
+        cardPreview.classList.add("cardpreviewbottom");
+        cardPreview.style.left = cardLocation.left + scrollLeft + "px";
+        cardPreview.style.top = cardLocation.top + cardLocation.height + scrollTop + "px";
+        cardPreviewLocation = cardPreview.getBoundingClientRect();
+        if (cardPreviewLocation.x + cardPreviewLocation.width > windowWidth) {
+          let indentLeft = windowWidth - cardPreviewLocation.x - cardPreviewLocation.width - 15
+          cardPreview.style.left = cardLocation.left + scrollLeft + indentLeft + "px";
+        }
+      }
     });
     cardLink.addEventListener("mouseleave", function() {
       wrapperSidebar.removeChild(cardPreview);
@@ -173,6 +185,18 @@ function getCardImage(cardLink, cardName, cardsFromApi) { //funkcja, która twor
       cardPreview.style.left = cardLocation.width + cardLocation.left + scrollLeft + 7 + "px"; //pozycjonujemy podgląd od lewej
       cardPreview.style.top = cardLocation.top + scrollTop - 3 + "px"; //pozycjonujemy podgląd od góry
       wrapperSidebar.appendChild(cardPreview);
+      let cardPreviewLocation = cardPreview.getBoundingClientRect();
+      let windowWidth = window.innerWidth;
+      if (cardPreviewLocation.x + cardPreviewLocation.width > windowWidth) {
+        cardPreview.classList.add("cardpreviewbottom");
+        cardPreview.style.left = cardLocation.left + scrollLeft + "px";
+        cardPreview.style.top = cardLocation.top + cardLocation.height + scrollTop + "px";
+        cardPreviewLocation = cardPreview.getBoundingClientRect();
+        if (cardPreviewLocation.x + cardPreviewLocation.width > windowWidth) {
+          let indentLeft = windowWidth - cardPreviewLocation.x - cardPreviewLocation.width - 15
+          cardPreview.style.left = cardLocation.left + scrollLeft + indentLeft + "px";
+        }
+      }
     });
     cardLink.addEventListener("touchend", function() {
       wrapperSidebar.removeChild(cardPreview);
