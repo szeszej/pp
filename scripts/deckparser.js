@@ -475,7 +475,7 @@ function getCardImage(cardLink, cardName, listOfCards) { //funkcja, która tworz
     wrapperSidebar.appendChild(cardPreview);
   });
   cardLink.addEventListener("touchend", function() {
-    cardLink.removeChild(cardPreview);
+    wrapperSidebar.removeChild(cardPreview);
   });
 };
 

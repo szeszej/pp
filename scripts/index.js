@@ -175,7 +175,7 @@ function getCardImage(cardLink, cardName, cardsFromApi) { //funkcja, która twor
       wrapperSidebar.appendChild(cardPreview);
     });
     cardLink.addEventListener("touchend", function() {
-      cardLink.removeChild(cardPreview);
+      wrapperSidebar.removeChild(cardPreview);
     });
   }
 };
