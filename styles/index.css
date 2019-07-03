@@ -119,7 +119,8 @@
         max-height: 400px;
         min-height: 2.5em;
         min-width: 2em;
-        border-radius: 15%; }
+        border-radius: 15%;
+        background-color: transparent; }
   .aftercrawl .next,
   .aftercrawl .prev {
     cursor: pointer;
@@ -455,8 +456,6 @@ body {
     grid-template-columns: 20% auto 20%;
     grid-template-rows: 10em 5em auto auto;
     grid-template-areas: "header header header" "menu menu menu" "sideleft content sideright" "footer footer footer";
-    overflow: hidden;
-    position: relative;
     /* poniżej tylko dla strony zasad */
     /* powyżej tylko dla strony zasad */ }
     body .wrappersidebar .leftsidebar {

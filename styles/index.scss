@@ -101,8 +101,6 @@ body {
     grid-template-columns: 20% auto 20%;
     grid-template-rows: 10em 5em auto auto;
     grid-template-areas: "header header header" "menu menu menu" "sideleft content sideright" "footer footer footer";
-    overflow: hidden;
-    position: relative;
 
     .leftsidebar {
       grid-area: sideleft;
