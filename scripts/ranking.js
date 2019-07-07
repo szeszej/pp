@@ -101,12 +101,13 @@ const players = [
   },
   {
     "name": "Paweł Ostrowski",
-    "zydelion": 9,
+    "zydelion": 10,
     "commander": [
-      ["Jace, Vryn's Prodigy // Jace, Telepath Unbound", 8],
-      ["Azusa, Lost but Seeking", 14],
+      ["Jace, Vryn's Prodigy // Jace, Telepath Unbound", 9],
+      ["Azusa, Lost but Seeking", 15],
       ["Breya, Etherium Shaper", 2],
       ["The Gitrog Monster", 1],
+      ["Alesha, Who Smiles at Death", 1],
       [
         [
           ["Silas Renn, Seeker Adept"],
@@ -164,17 +165,25 @@ const players = [
   },
   {
     "name": "Krzysztof Ciesielka",
-    "zydelion": 1,
+    "zydelion": 2,
     "commander": [
-      ["Daretti, Scrap Savant", 2]
+      ["Daretti, Scrap Savant", 5]
     ]
   },
   {
     "name": "Rafał Krygier",
-    "zydelion": 1,
+    "zydelion": 2,
     "commander": [
       ["Prossh, Skyraider of Kher", 3],
-      ["Maelstrom Wanderer", 2]
+      ["Maelstrom Wanderer", 3],
+      ["Narset, Enlightened Master", 1]
+    ]
+  },
+  {
+    "name": "Karol Esko",
+    "zydelion": 1,
+    "commander": [
+      ["Aminatou, the Fateshifter", 2]
     ]
   }
 ];
