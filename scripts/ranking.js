@@ -21,7 +21,7 @@ const players = [
   },
   {
     "name": "Waldemar Piekarz",
-    "zydelion": 4,
+    "zydelion": 5,
     "commander": [
       [
         [
@@ -31,6 +31,7 @@ const players = [
       ], //podwójny generał
       ["Lord Windgrace", 3],
       ["Inalla, Archmage Ritualist", 3],
+      ["Ayula, Queen Among Bears", 3]
     ]
   },
   {
@@ -75,9 +76,10 @@ const players = [
   },
   {
     "name": "Jarosław Mroziński",
-    "zydelion": 1,
+    "zydelion": 2,
     "commander": [
-      ["Brago, King Eternal", 2]
+      ["Brago, King Eternal", 2],
+      ["Urza, Lord High Artificer", 3]
     ]
   },
   {
@@ -115,6 +117,7 @@ const players = [
         ], 2
       ]
     ]
+
 
   },
   {
@@ -165,9 +168,10 @@ const players = [
   },
   {
     "name": "Krzysztof Ciesielka",
-    "zydelion": 2,
+    "zydelion": 3,
     "commander": [
-      ["Daretti, Scrap Savant", 5]
+      ["Daretti, Scrap Savant", 5],
+      ["The Ur-Dragon", 1]
     ]
   },
   {
