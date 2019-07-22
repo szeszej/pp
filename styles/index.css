@@ -255,6 +255,8 @@
       background-image: url("../resources/images/daretti scrap savant.jpg"); }
     .decklists a #derevi {
       background-image: url("../resources/images/derevi empyrial tactician.jpg"); }
+    .decklists a #azusa {
+      background-image: url("../resources/images/azusa lost but seeking.jpg"); }
 
 #decklistbox {
   display: flex;
@@ -360,6 +362,9 @@ main #daretti {
 
 main #derevi {
   background-image: url("../resources/images/derevi empyrial tactician.jpg"); }
+
+main #azusa {
+  background-image: url("../resources/images/azusa lost but seeking.jpg"); }
 
 @media only screen and (max-width: 1140px) {
   main .decklisttitle .textindecklisttitle h1 {

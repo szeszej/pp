@@ -76,7 +76,7 @@ const players = [
   },
   {
     "name": "Jarosław Mroziński",
-    "zydelion": 2,
+    "zydelion": 3,
     "commander": [
       ["Brago, King Eternal", 2],
       ["Urza, Lord High Artificer", 3]
@@ -117,8 +117,6 @@ const players = [
         ], 2
       ]
     ]
-
-
   },
   {
     "name": "Bartosz Jurczyk",
