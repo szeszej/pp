@@ -1,428 +1,27 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Michroma|Orbitron|Oswald|Dancing+Script|Raleway:400,500,800,900&display=swap&subset=latin-ext");
-.fade {
-  position: relative;
-  width: 100%;
-  min-height: 3em;
-  background-image: linear-gradient(0deg, transparent, black 75%);
-  z-index: 1; }
-
-.star-wars {
-  display: flex;
-  justify-content: center;
-  position: relative;
-  color: #fee12b;
-  height: 60vh;
-  min-height: 3.5em;
-  font-family: "Pathway Gothic One", sans-serif;
-  font-size: 500%;
-  font-weight: 600;
-  letter-spacing: 6px;
-  line-height: 150%;
-  perspective: 400px;
-  text-align: justify;
-  width: 100%; }
-  .star-wars .skip {
-    position: absolute;
-    top: 5%;
-    right: 5%;
-    z-index: 2;
-    background-color: black;
-    border: 1px solid #fee12b;
-    color: #fee12b;
-    cursor: pointer; }
-
-.crawl {
-  position: relative;
-  top: 99999px;
-  transform-origin: 50% 100%;
-  animation: crawl 45s linear 0s 1 normal forwards; }
-  .crawl .episode {
-    text-align: center; }
-  .crawl h1 {
-    font-size: 150%;
-    text-align: center; }
-
-@keyframes crawl {
-  0% {
-    top: 70vh;
-    transform: rotateX(20deg) translateZ(0); }
-  100% {
-    top: -6000px;
-    transform: rotateX(25deg) translateZ(-2500px); } }
-
-.aftercrawl {
-  box-sizing: border-box;
-  position: absolute;
-  line-height: normal;
-  font-weight: normal;
-  letter-spacing: normal;
-  perspective: none;
-  align-self: center;
-  opacity: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 90%;
-  height: 100%; }
-  .aftercrawl .mySlides {
-    display: none;
-    align-items: center;
-    justify-content: center; }
-    .aftercrawl .mySlides .zydelionmaster {
-      text-align: center;
-      font-size: 40px;
-      font-family: "Raleway", sans-serif; }
-      .aftercrawl .mySlides .zydelionmaster .theAwardGoesTo {
-        color: #fff; }
-    .aftercrawl .mySlides .slidecontent {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      box-sizing: border-box; }
-      .aftercrawl .mySlides .slidecontent .logobox .logoonslide {
-        max-height: 480px; }
-      .aftercrawl .mySlides .slidecontent .quotebox {
-        margin-right: 0.5em;
-        text-align: right; }
-        .aftercrawl .mySlides .slidecontent .quotebox .tshirt {
-          font-size: 24px;
-          font-family: "Raleway", sans-serif;
-          text-align: center;
-          color: #fff; }
-          .aftercrawl .mySlides .slidecontent .quotebox .tshirt img {
-            display: inline;
-            max-height: 1em; }
-          .aftercrawl .mySlides .slidecontent .quotebox .tshirt a {
-            font-weight: 600;
-            font-size: 1.25em;
-            text-decoration: none;
-            color: #fee12b; }
-        .aftercrawl .mySlides .slidecontent .quotebox #tshirttitle {
-          font-size: 2em;
-          color: #fee12b; }
-          .aftercrawl .mySlides .slidecontent .quotebox #tshirttitle span {
-            font-weight: 900; }
-        .aftercrawl .mySlides .slidecontent .quotebox .quote {
-          font-size: 60px;
-          font-family: "Raleway", sans-serif;
-          color: #fff; }
-        .aftercrawl .mySlides .slidecontent .quotebox .author {
-          font-size: 40px;
-          font-family: "Dancing Script", cursive; }
-      .aftercrawl .mySlides .slidecontent .coelho {
-        min-height: 2.5em;
-        min-width: 2em; }
-      .aftercrawl .mySlides .slidecontent .tshirtimg {
-        max-height: 400px;
-        min-height: 2.5em;
-        min-width: 2em;
-        border-radius: 15%;
-        background-color: transparent; }
-  .aftercrawl .next,
-  .aftercrawl .prev {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    margin-top: -22px;
-    padding: 16px;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 3px;
-    user-select: none;
-    z-index: 2; }
-  .aftercrawl .next {
-    right: 0;
-    border-radius: 3px; }
-  .aftercrawl .prev {
-    left: 0;
-    border-radius: 3px; }
-  .aftercrawl .next:hover,
-  .aftercrawl .prev:hover {
-    background-color: #717171; }
-  .aftercrawl .dots {
-    text-align: center;
-    position: absolute;
-    bottom: 0; }
-    .aftercrawl .dots .dot {
-      cursor: pointer;
-      height: 15px;
-      width: 15px;
-      margin: 0 2px;
-      background-color: #bbb;
-      border-radius: 50%;
-      display: inline-block;
-      transition: background-color 0.6s ease; }
-    .aftercrawl .dots .active,
-    .aftercrawl .dots .dot:hover {
-      background-color: #717171; }
-  .aftercrawl .slidefade {
-    animation-name: fade;
-    animation-duration: 1.5s; }
-
-@keyframes fade {
-  0% {
-    opacity: 0.4; }
-  100% {
-    opacity: 1; } }
-
-@keyframes show {
-  0% {
-    opacity: 0; }
-  100% {
-    opacity: 1; } }
-
-@media only screen and (max-width: 1100px) {
-  .star-wars {
-    font-size: 400%; }
-  .crawl {
-    animation: crawl 40s linear; }
-  .aftercrawl .mySlides .slidecontent .quotebox .quote {
-    font-size: 42px; }
-  .aftercrawl .mySlides .slidecontent .quotebox .author {
-    font-size: 28px; }
-  .aftercrawl .mySlides .slidecontent .quotebox .tshirt {
-    font-size: 20px; }
-  .aftercrawl .mySlides .zydelionmaster {
-    font-size: 24px; } }
-
-@media only screen and (max-width: 700px) {
-  .star-wars {
-    font-size: 300%; }
-  .aftercrawl .mySlides .slidecontent .quotebox .quote {
-    font-size: 30px; }
-  .aftercrawl .mySlides .slidecontent .quotebox .author {
-    font-size: 20px; }
-  .aftercrawl .mySlides .slidecontent .quotebox .tshirt {
-    font-size: 16px; }
-  .aftercrawl .mySlides .zydelionmaster {
-    font-size: 16px; } }
-
-.comments {
-  width: 90%; }
-
-.decklists {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: center;
-  box-sizing: border-box; }
-  .decklists a {
-    display: block;
-    margin: 1em;
-    text-decoration: none; }
-    .decklists a .commanderbox {
-      width: 24em;
-      height: 18em;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-      background-repeat: no-repeat;
-      background-size: contain; }
-      .decklists a .commanderbox .textincommanderbox {
-        width: 100%;
-        height: 70%;
-        background: linear-gradient(to bottom, rgba(19, 19, 19, 0) 0%, black 100%);
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        align-items: center; }
-      .decklists a .commanderbox p {
-        margin-block-start: 0;
-        margin-block-end: 0;
-        font-size: 1.5em; }
-      .decklists a .commanderbox .description {
-        font-style: italic;
-        font-size: 0.5em;
-        text-align: center;
-        margin-top: 1em;
-        max-width: 80%; }
-      .decklists a .commanderbox .player {
-        margin-top: 1em;
-        font-size: 0.5em;
-        margin-bottom: 0.5em; }
-    .decklists a #xantcha {
-      background-image: url("../resources/images/xantcha sleeper agent.jpg"); }
-    .decklists a #riku {
-      background-image: url("../resources/images/riku of two reflections.jpg"); }
-    .decklists a #daretti {
-      background-image: url("../resources/images/daretti scrap savant.jpg"); }
-    .decklists a #derevi {
-      background-image: url("../resources/images/derevi empyrial tactician.jpg"); }
-    .decklists a #azusa {
-      background-image: url("../resources/images/azusa lost but seeking.jpg"); }
-
-#decklistbox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; }
-  #decklistbox .deck {
-    list-style-type: none;
-    columns: 4;
-    column-gap: 2em;
-    position: relative;
-    min-height: 10em;
-    max-height: 80em;
-    font-size: 0.75em;
-    max-width: 100%; }
-    #decklistbox .deck li {
-      break-inside: avoid; }
-      #decklistbox .deck li ul {
-        list-style-type: none;
-        margin-block-end: 2em; }
-  #decklistbox .buttons {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    align-self: baseline; }
-    #decklistbox .buttons .dropdown {
-      position: relative;
-      display: inline-block;
-      margin-left: 1em;
-      margin-right: 1em; }
-    #decklistbox .buttons .dropdownbutton {
-      background-color: #fee12b;
-      color: black;
-      padding: 1em;
-      font-size: 16px;
-      border: none;
-      margin-left: 0.5em;
-      margin-right: 0.5em; }
-    #decklistbox .buttons .dropdowncontent {
-      display: none;
-      position: absolute;
-      background-color: #fee12b;
-      min-width: 7em;
-      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-      z-index: 1; }
-    #decklistbox .buttons .dropdowncontent p {
-      color: black;
-      padding: 0.75em 1em;
-      text-decoration: none;
-      display: block;
-      cursor: pointer; }
-    #decklistbox .buttons .dropdowncontent p:hover {
-      background-color: #fff6a2; }
-    #decklistbox .buttons .dropdown:hover .dropdowncontent {
-      display: block; }
-    #decklistbox .buttons .dropdown:hover .dropdownbutton {
-      background-color: #7b6f00; }
-
-.rules .poem {
-  margin-left: 2em;
-  font-style: italic;
-  margin-top: 1.5em;
-  margin-bottom: 2.5em; }
-  .rules .poem p {
-    margin-bottom: -1em; }
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg); }
-  100% {
-    transform: rotate(360deg); } }
-
-main .decklisttitle {
-  background-image: url("../resources/images/xantcha sleeper agent.jpg");
-  width: 20em;
-  height: 15em;
-  background-size: contain;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  margin: 1em; }
-  main .decklisttitle .textindecklisttitle {
-    width: 100%;
-    height: 70%;
-    background: linear-gradient(to bottom, rgba(19, 19, 19, 0) 0%, black 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center; }
-    main .decklisttitle .textindecklisttitle h1 {
-      text-align: center; }
-
-main #xantcha {
-  background-image: url("../resources/images/xantcha sleeper agent.jpg"); }
-
-main #riku {
-  background-image: url("../resources/images/riku of two reflections.jpg"); }
-
-main #daretti {
-  background-image: url("../resources/images/daretti scrap savant.jpg"); }
-
-main #derevi {
-  background-image: url("../resources/images/derevi empyrial tactician.jpg"); }
-
-main #azusa {
-  background-image: url("../resources/images/azusa lost but seeking.jpg"); }
-
-@media only screen and (max-width: 1140px) {
-  main .decklisttitle .textindecklisttitle h1 {
-    font-size: 32px; }
-  #decklistbox .buttons .dropdownbutton {
-    font-size: 14px; } }
-
-@media only screen and (max-width: 900px) {
-  #decklistbox .deck {
-    columns: 2;
-    max-height: 160em; }
-  #decklistbox .buttons .dropdownbutton {
-    font-size: 12px; } }
-
-@media only screen and (max-width: 600px) {
-  #decklistbox .deck {
-    columns: 1;
-    max-height: none; } }
-
 body {
   margin: 0;
   letter-spacing: 0.1em;
   font-family: "Oswald", sans-serif;
-  font-size: 18px;
-  /* poniżej jeśli podgląd jest podczepiony do body */
-  /* powyżej jeśli podgląd jest podczepiony do body */
-  /* poniżej jeśli podgląd jest podczepiony do linku z kartą */
-  /* powyżej jeśli podgląd jest podczepiony do linku z kartą */
-  /* poniżej tylko dla strony głównej */ }
+  font-size: 18px; }
+  body button:focus {
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent; }
+  body .mtgcard {
+    position: relative; }
   body .cardpreview {
     display: block;
     width: 200px;
     background-color: transparent;
     padding: 0.3em 0;
     position: absolute;
-    z-index: 1; }
+    z-index: 1;
+    top: -0.3em;
+    left: 105%; }
     body .cardpreview img {
       clip-path: polygon(0% 3%, 3% 0%, 97% 0%, 100% 3%, 100% 97%, 97% 100%, 3% 100%, 0% 97%); }
-  body .loader {
-    position: absolute;
-    top: 0;
-    border: 16px solid #a8a5a3;
-    border-top: 16px solid #fee12b;
-    border-bottom: 16px solid #fee12b;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 2s linear infinite;
-    margin-block-start: 0;
-    margin-block-end: 0;
-    padding-inline-start: 0;
-    right: 0;
-    left: 0;
-    margin: 0 auto; }
-  body button:focus {
-    outline-style: none;
-    box-shadow: none;
-    border-color: transparent; }
   body .cardpreview::after {
     content: " ";
     position: absolute;
@@ -431,25 +30,7 @@ body {
     margin-top: 3px;
     border-width: 7px;
     border-style: solid;
-    border-color: transparent yellow transparent transparent; }
-  body .cardpreview {
-    color: #fee12b;
-    font-size: 24px;
-    background-color: transparent;
-    text-align: center; }
-  body .cardpreviewbottom::after {
-    content: " ";
-    position: absolute;
-    left: 20%;
-    top: -10px;
-    border-width: 7px;
-    border-style: solid;
-    border-color: transparent transparent yellow transparent; }
-  body .mtgcard {
-    position: relative; }
-    body .mtgcard .cardpreview {
-      top: -0.3em;
-      left: 105%; }
+    border-color: transparent white transparent transparent; }
   body img {
     max-width: 100%;
     display: block;
@@ -459,61 +40,26 @@ body {
   body .wrappersidebar {
     display: grid;
     grid-template-columns: 20% auto 20%;
-    grid-template-rows: 10em 5em auto auto;
-    grid-template-areas: "header header header" "menu menu menu" "sideleft content sideright" "footer footer footer";
-    /* poniżej tylko dla strony zasad */
-    /* powyżej tylko dla strony zasad */ }
+    grid-template-rows: 10em auto auto;
+    grid-template-areas: "header header header" "sideleft content sideright" "footer footer footer";
+    /* poniżej tylko dla strony zasad */ }
     body .wrappersidebar .leftsidebar {
       grid-area: sideleft;
-      position: sticky;
-      top: 0;
-      max-height: 1440px;
-      background-image: url("../resources/images/Sith_001.jpg");
-      background-position: 30% -50px;
-      background-repeat: no-repeat;
-      background-color: black;
-      background-origin: border-box;
+      background-color: #F65200;
       z-index: -1; }
     body .wrappersidebar .rightsidebar {
       grid-area: sideright;
-      position: sticky;
-      top: 0;
-      max-height: 1440px;
-      background-image: url("../resources/images/Jedi.jpg");
-      background-position: 70% -50px;
-      background-repeat: no-repeat;
-      background-color: black;
-      background-origin: border-box;
+      background-color: #F65200;
       z-index: -1; }
     body .wrappersidebar .rules {
       width: 90%;
       text-align: justify; }
-    body .wrappersidebar hr {
-      border-color: #fee12b;
-      width: 90%;
-      margin-bottom: 1em;
-      margin-top: 1em; }
     body .wrappersidebar li {
       margin-top: 0.5em;
       margin-bottom: 0.5em; }
-    body .wrappersidebar .bold {
-      font-weight: bold;
-      letter-spacing: inherit; }
     body .wrappersidebar .imgintxt {
       max-height: 1em;
       display: inline; }
-    body .wrappersidebar .banned {
-      position: relative;
-      columns: 3;
-      column-gap: 2em;
-      min-height: 5em; }
-  body .wrapperhomepage {
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 10em 5em auto auto;
-    grid-template-areas: "header" "menu" "content" "footer"; }
-    body .wrapperhomepage main {
-      overflow: hidden; }
   body header {
     margin: 0;
     top: 0;
@@ -523,7 +69,7 @@ body {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    background-color: black;
+    background-color: white;
     box-sizing: border-box; }
     body header .logo {
       box-sizing: border-box;
@@ -533,37 +79,16 @@ body {
         margin: auto;
         max-height: 8em; }
     body header .banner {
-      background-image: url("../resources/images/Banner 3.jpg");
+      background-image: url("../resources/images/Banner 3.png");
       background-position: center;
       background-size: contain;
       background-repeat: no-repeat;
       width: 80%;
       height: 100%; }
-  body nav {
-    grid-area: menu;
-    background-color: #fee12b;
-    text-transform: uppercase;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; }
-    body nav ul {
-      padding-inline-start: 0;
-      margin-block-start: 0;
-      margin-block-end: 0;
-      list-style-type: none;
-      display: flex;
-      justify-content: space-around;
-      align-items: center; }
-      body nav ul .menuitem {
-        display: inline-block;
-        margin: 1em;
-        text-align: center;
-        color: black;
-        text-decoration: underline; }
   body main {
     grid-area: content;
-    background-color: black;
-    color: #fee12b;
+    background-color: #F65200;
+    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -574,7 +99,7 @@ body {
       body main .subtitle h1 {
         text-align: center; }
   body .ranking {
-    background-color: black;
+    background-color: #F65200;
     height: 90%;
     width: 90%;
     display: flex;
@@ -586,16 +111,16 @@ body {
       grid-template-areas: "number name expand" "info info info";
       grid-template-columns: 3em auto 3em;
       grid-template-rows: 3.5em auto;
-      background-color: black;
+      background-color: #F65200;
       margin: 1em;
       width: 90%;
-      border: solid #fee12b 2px; }
+      border: solid white 2px; }
       body .ranking .rank .number {
         grid-area: number;
         text-align: center;
-        background-color: #fee12b;
+        background-color: white;
         color: black;
-        border: 1px solid black;
+        border: 1px solid #F65200;
         display: flex;
         justify-content: center;
         align-items: center; }
@@ -615,10 +140,10 @@ body {
             max-height: 2.5em; }
       body .ranking .rank .collapsible {
         grid-area: expand;
-        background-color: #fee12b;
+        background-color: white;
         border: 0;
         font-size: 25px;
-        border: 1px solid black;
+        border: 1px solid #F65200;
         text-align: center;
         cursor: pointer; }
       body .ranking .rank .expand {
@@ -627,10 +152,10 @@ body {
         margin: auto;
         font-size: 25px; }
       body .ranking .rank button:focus {
-        border: 1px solid black; }
+        border: 1px solid #F65200; }
       body .ranking .rank .info {
         grid-area: info;
-        border: solid #fee12b 1px;
+        border: solid white 1px;
         padding-left: 1em;
         display: none;
         flex-direction: column; }
@@ -649,8 +174,8 @@ body {
               letter-spacing: initial; }
   body footer {
     grid-area: footer;
-    color: black;
-    background-color: #fee12b;
+    color: #F65200;
+    background-color: white;
     text-align: center;
     box-sizing: border-box;
     display: flex;
@@ -659,12 +184,7 @@ body {
     align-items: center;
     padding-top: 1em; }
     body footer h2 {
-      color: black; }
-    body footer .facebook {
-      line-height: 3em; }
-    body footer img {
-      display: inline;
-      max-height: 1em; }
+      color: #F65200; }
     body footer .created {
       font-size: 10px; }
     body footer .timeplace {

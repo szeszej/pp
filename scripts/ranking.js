@@ -1,191 +1,39 @@
 const players = [
   // Tabela graczy
   {
-    "name": "Bartosz Kłak", //imię
-    "zydelion": 7, //ilość wygranych dni
+    "name": "Magdalena Sośnierz", //imię
+    "zydelion": 10, //ilość wygranych dni
     "commander": [ //nazwa generała plus ilość wygranych gier danym generałem
-      ["Riku of Two Reflections", 8],
-      ["Muldrotha, the Gravetide", 7],
-      ["Breya, Etherium Shaper", 6]
+      ["Ticket To Ride", 1],
+      ["Catan", 2],
     ]
   },
   {
-    "name": "Mateusz Kobielski",
+    "name": "Placeholder",
     "zydelion": 3,
     "commander": [
-      ["Cromat", 4],
-      ["Rafiq of the Many", 1],
-      ["The Locust God", 1],
-      ["Atraxa, Praetors' Voice", 1]
+      ["Game of Thrones", 3],
     ]
   },
   {
-    "name": "Waldemar Piekarz",
-    "zydelion": 5,
-    "commander": [
-      [
-        [
-          ["Thrasios, Triton Hero"],
-          ["Ikra Shidiqi, the Usurper"]
-        ], 5
-      ], //podwójny generał
-      ["Lord Windgrace", 3],
-      ["Inalla, Archmage Ritualist", 3],
-      ["Ayula, Queen Among Bears", 3]
-    ]
-  },
-  {
-    "name": "Krzysztof Brygała",
-    "zydelion": 3,
-    "commander": [
-      ["The Gitrog Monster", 1],
-      ["Rashmi, Eternities Crafter", 3],
-      ["Inalla, Archmage Ritualist", 2]
-    ]
-  },
-  {
-    "name": "Sebastian Piłat",
-    "zydelion": 2,
-    "commander": [
-      ["Jeleva, Nephalia's Scourge", 6]
-    ]
-  },
-  {
-    "name": "Eryk Małecki",
-    "zydelion": 3,
-    "commander": [
-      ["Grand Arbiter Augustin IV", 1],
-      ["Anafenza, the Foremost", 3],
-      ["Gaddock Teeg", 3]
-    ]
-  },
-  {
-    "name": "Jakub Grela",
-    "zydelion": 3,
-    "commander": [
-      ["Derevi, Empyrial Tactician", 6],
-      ["Raff Capashen, Ship's Mage", 2]
-    ]
-  },
-  {
-    "name": "Krzysztof Guz",
+    "name": "Placeholder",
     "zydelion": 1,
     "commander": [
-      ["Karlov of the Ghost Council", 3]
+      ["Ticket To Ride", 1],
     ]
   },
   {
-    "name": "Jarosław Mroziński",
-    "zydelion": 3,
-    "commander": [
-      ["Brago, King Eternal", 2],
-      ["Urza, Lord High Artificer", 3]
-    ]
-  },
-  {
-    "name": "Michał Kowalczyk",
-    "zydelion": 3,
-    "commander": [
-      [
-        [
-          ["Thrasios, Triton Hero"],
-          ["Tymna the Weaver"]
-        ], 10
-      ]
-    ]
-  },
-  {
-    "name": "Dominik Kuszneruk",
+    "name": "Placeholder",
     "zydelion": 1,
     "commander": [
-      ["Mikaeus, the Unhallowed", 4]
+      ["Ticket To Ride", 1],
     ]
   },
   {
-    "name": "Paweł Ostrowski",
-    "zydelion": 10,
-    "commander": [
-      ["Jace, Vryn's Prodigy // Jace, Telepath Unbound", 9],
-      ["Azusa, Lost but Seeking", 15],
-      ["Breya, Etherium Shaper", 2],
-      ["The Gitrog Monster", 1],
-      ["Alesha, Who Smiles at Death", 1],
-      [
-        [
-          ["Silas Renn, Seeker Adept"],
-          ["Akiri, Line-Slinger"]
-        ], 2
-      ]
-    ]
-  },
-  {
-    "name": "Bartosz Jurczyk",
-    "zydelion": 3,
-    "commander": [
-      ["Atraxa, Praetors' Voice", 5],
-      [
-        [
-          ["Silas Renn, Seeker Adept"],
-          ["Akiri, Line-Slinger"]
-        ],
-        1
-      ],
-      ["Jace, Vryn's Prodigy // Jace, Telepath Unbound", 1],
-      ["Grenzo, Dungeon Warden", 5]
-    ]
-  },
-  {
-    "name": "Dawid Czajkowski",
+    "name": "Placeholder",
     "zydelion": 1,
     "commander": [
-      ["Jhoira of the Ghitu", 1],
-      ["Tasigur, the Golden Fang", 1]
-    ]
-  },
-  {
-    "name": "Bartosz Dekański",
-    "zydelion": 1,
-    "commander": [
-      ["Niv-Mizzet, Parun", 3]
-    ]
-  },
-  {
-    "name": "Jakub Szyszko",
-    "zydelion": 1,
-    "commander": [
-      ["Slimefoot, the Stowaway", 2]
-    ]
-  },
-  {
-    "name": "Łukasz Cieniawa",
-    "zydelion": 1,
-    "commander": [
-      ["Inalla, Archmage Ritualist", 1],
-      ["Feather, the Redeemed", 1]
-    ]
-  },
-  {
-    "name": "Krzysztof Ciesielka",
-    "zydelion": 3,
-    "commander": [
-      ["Daretti, Scrap Savant", 5],
-      ["The Ur-Dragon", 1]
-    ]
-  },
-  {
-    "name": "Rafał Krygier",
-    "zydelion": 2,
-    "commander": [
-      ["Prossh, Skyraider of Kher", 3],
-      ["Maelstrom Wanderer", 3],
-      ["Narset, Enlightened Master", 1]
-    ]
-  },
-  {
-    "name": "Karol Esko",
-    "zydelion": 1,
-    "commander": [
-      ["Aminatou, the Fateshifter", 2]
+      ["Ticket To Ride", 1],
     ]
   }
 ];
