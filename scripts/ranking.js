@@ -19,21 +19,21 @@ const players = [
     "name": "Placeholder",
     "zydelion": 1,
     "commander": [
-      ["Ticket To Ride", 1],
+      ["Manila", 1],
     ]
   },
   {
     "name": "Placeholder",
     "zydelion": 1,
     "commander": [
-      ["Ticket To Ride", 1],
+      ["Splendor", 1],
     ]
   },
   {
     "name": "Placeholder",
     "zydelion": 1,
     "commander": [
-      ["Ticket To Ride", 1],
+      ["Red7", 1],
     ]
   }
 ];
