@@ -80,11 +80,11 @@ var rankedPlayers = rankPlayers(sortedPlayers);
 function inflection(num) {
   //funckja która odmienia mi słówka "wygrana"
   if (num == 1) {
-    return ` wygrany mecz `;
+    return ` wygrana gra `;
   } else if (num > 1 && num <= 4) {
-    return ` wygrane mecze `;
+    return ` wygrane gry `;
   } else {
-    return ` wygranych meczów `;
+    return ` wygranych gier `;
   }
 }
 
