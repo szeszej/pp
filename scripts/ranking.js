@@ -2,38 +2,17 @@ const players = [
   // Tabela graczy
   {
     "name": "Magdalena Sośnierz", //imię
-    "zydelion": 10, //ilość wygranych dni
+    "zydelion": 2, //ilość wygranych dni
     "commander": [ //nazwa generała plus ilość wygranych gier danym generałem
       ["Ticket To Ride", 1],
-      ["Catan", 2],
+      ["Discworld: Ankh-Morpork", 1],
     ]
   },
   {
-    "name": "Placeholder",
-    "zydelion": 3,
-    "commander": [
-      ["Game of Thrones", 3],
-    ]
-  },
-  {
-    "name": "Placeholder",
+    "name": "Paweł Warowny",
     "zydelion": 1,
     "commander": [
-      ["Manila", 1],
-    ]
-  },
-  {
-    "name": "Placeholder",
-    "zydelion": 1,
-    "commander": [
-      ["Splendor", 1],
-    ]
-  },
-  {
-    "name": "Placeholder",
-    "zydelion": 1,
-    "commander": [
-      ["Red7", 1],
+      ["Catan", 1],
     ]
   }
 ];
